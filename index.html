@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DailyResource.id — Menyederhanakan yang rumit jadi mudah</title>
+<meta name="description" content="Alat digital sederhana untuk bisnis kecil–menengah & keluarga: keuangan usaha, penawaran harga, atur uang. Semua rumus otomatis — tinggal isi, pilih desain, download PDF. Beli 1× seumur hidup, tanpa langganan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pri:#6C4FE0; --pri-d:#4B37B3; --pri-l:#EFEBFB;
+  --teal:#12B886; --amber:#F0A93B; --blue:#3BA6F0;
+  --ink:#17142B; --body:#4B4763; --mute:#8B87A3; --line:#ECEAF4; --bg:#FFFFFF; --soft:#F7F6FC;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--body);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+h1,h2,h3{color:var(--ink);line-height:1.15;letter-spacing:-.02em}
+a{text-decoration:none;color:inherit}
+.grad{background:linear-gradient(110deg,#7A5CF0,#5B3FD6 60%,#8C5BE0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;padding:13px 24px;border-radius:14px;cursor:pointer;border:0;font-family:inherit;transition:.18s}
+.btn.pri{background:var(--pri);color:#fff;box-shadow:0 10px 24px rgba(108,79,224,.32)}
+.btn.pri:hover{background:var(--pri-d);transform:translateY(-2px)}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--pri);color:var(--pri-d)}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--ink)}
+.logo .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#7A5CF0,#5B3FD6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:800;box-shadow:0 6px 14px rgba(108,79,224,.3)}
+.logo .mark span{transform:translateY(-1px)}
+.navlinks{display:flex;align-items:center;gap:28px}
+.navlinks a{font-size:15px;font-weight:600;color:var(--body)}
+.navlinks a:hover{color:var(--pri-d)}
+.navlinks .btn{padding:10px 18px;font-size:14px}
+.burger{display:none;background:none;border:0;font-size:24px;cursor:pointer;color:var(--ink)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding:78px 0 86px;background:radial-gradient(1100px 500px at 80% -10%,#EFEBFB 0%,rgba(255,255,255,0) 60%),radial-gradient(700px 400px at 0% 20%,#EAF7F2 0%,rgba(255,255,255,0) 55%)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--pri-l);color:var(--pri-d);font-weight:700;font-size:13px;padding:7px 15px;border-radius:30px;margin-bottom:22px}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}
+.hero h1{font-size:52px;font-weight:800;margin-bottom:20px}
+.hero p.lead{font-size:18.5px;max-width:520px;margin-bottom:30px}
+.hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero .stats{display:flex;gap:26px;margin-top:38px;flex-wrap:wrap}
+.hero .stat b{display:block;font-size:22px;color:var(--ink);font-weight:800}
+.hero .stat span{font-size:13px;color:var(--mute)}
+
+/* hero visual */
+.showcase{position:relative;height:420px}
+.pcard{position:absolute;width:230px;border-radius:22px;background:#fff;box-shadow:0 30px 60px rgba(60,45,120,.18);border:1px solid var(--line);overflow:hidden}
+.pcard .bar{height:78px;padding:14px 16px;color:#fff}
+.pcard .bar .t{font-size:11px;opacity:.85}
+.pcard .bar .n{font-size:20px;font-weight:800;margin-top:2px}
+.pcard .body{padding:14px 16px}
+.pcard .li{height:9px;border-radius:5px;background:#EEECF6;margin-bottom:9px}
+.pcard .li.s{width:70%}.pcard .li.m{width:88%}
+.pcard .chipmini{display:inline-block;font-size:10px;font-weight:700;padding:4px 9px;border-radius:20px;margin-top:4px}
+.pc1{top:10px;left:8px;z-index:3;transform:rotate(-5deg)}
+.pc1 .bar{background:linear-gradient(140deg,#7A5CF0,#5B3FD6)}
+.pc2{top:70px;right:0;z-index:2;transform:rotate(4deg)}
+.pc2 .bar{background:linear-gradient(140deg,#16C29A,#0E9E76)}
+.pc3{bottom:0;left:52px;z-index:1;transform:rotate(-2deg)}
+.pc3 .bar{background:linear-gradient(140deg,#F5B14A,#E5922A)}
+
+/* strip */
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--soft)}
+.strip .inner{display:flex;flex-wrap:wrap;gap:14px 40px;justify-content:center;padding:20px 0;font-size:14px;font-weight:600;color:var(--body)}
+.strip .inner i{color:var(--teal);font-style:normal;margin-right:7px;font-weight:800}
+
+/* sections */
+section.pad{padding:84px 0}
+.eyebrow{text-align:center;font-weight:800;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--pri)}
+.h2c{text-align:center;font-size:38px;font-weight:800;margin:12px auto 14px;max-width:640px}
+.subc{text-align:center;font-size:17px;max-width:600px;margin:0 auto 52px;color:var(--body)}
+
+/* products */
+.prod{display:grid;grid-template-columns:1fr;gap:22px}
+.pcardbig{display:grid;grid-template-columns:1fr 1.35fr;gap:0;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 12px 30px rgba(60,45,120,.06)}
+.pcardbig .side{padding:34px 32px;color:#fff;display:flex;flex-direction:column;justify-content:center}
+.pcardbig .side .ic{font-size:30px;width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.pcardbig .side h3{color:#fff;font-size:26px;font-weight:800}
+.pcardbig .side .tl{font-size:15px;opacity:.95;margin-top:6px;font-weight:500}
+.pcardbig .main{padding:34px 34px}
+.pcardbig .main p{font-size:15.5px;margin-bottom:18px}
+.feats{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:24px}
+.feat{background:var(--soft);border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:13px;padding:7px 13px;border-radius:20px}
+.pcardbig .main .foot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.price{font-size:13px;color:var(--mute)}.price b{font-size:20px;color:var(--ink)}
+.v-untung{background:linear-gradient(150deg,#7A5CF0,#5B3FD6)}
+.v-quot{background:linear-gradient(150deg,#16C29A,#0E9E76)}
+.v-atur{background:linear-gradient(150deg,#F5B14A,#E5922A)}
+.thumb{padding:28px 24px;display:flex;align-items:center;justify-content:center}
+.th-u{background:linear-gradient(150deg,#EFEBFB,#E1D6F8)}
+.th-q{background:linear-gradient(150deg,#E3F8F1,#C9EEE1)}
+.th-a{background:linear-gradient(150deg,#FDF1DF,#FBE4C2)}
+.screen{width:100%;max-width:250px;background:#fff;border-radius:18px;box-shadow:0 18px 42px rgba(60,45,120,.18);overflow:hidden}
+.screen .sh{padding:13px 15px;color:#fff}
+.screen .sh .t{font-size:10px;opacity:.85}
+.screen .sh .v{font-size:18px;font-weight:800;margin-top:2px}
+.screen .sb{padding:12px 15px 15px}
+.mk-u .sh{background:linear-gradient(140deg,#7A5CF0,#5B3FD6)}
+.mk-u .st{display:flex;gap:8px}
+.mk-u .st .s{flex:1;background:#F6F4FD;border-radius:10px;padding:8px}
+.mk-u .st .s .l{font-size:8px;color:#8B87A3}
+.mk-u .st .s .n{font-size:12px;font-weight:800;color:#17142B}
+.mk-u .bars{display:flex;align-items:flex-end;gap:5px;height:42px;margin-top:11px}
+.mk-u .bars i{flex:1;background:#6C4FE0;border-radius:4px 4px 0 0;display:block}
+.mk-q .sh{background:linear-gradient(140deg,#16C29A,#0E9E76)}
+.mk-q table{width:100%;border-collapse:collapse;margin-top:4px;font-size:9px}
+.mk-q th{background:#12B886;color:#fff;text-align:left;padding:5px 7px;font-size:8px}
+.mk-q td{padding:5px 7px;border-bottom:1px solid #eee;color:#666}
+.mk-q .tt{display:flex;justify-content:space-between;margin-top:8px;font-weight:800;font-size:11px;color:#0E9E76;border-top:2px solid #12B886;padding-top:6px}
+.mk-a .sh{background:linear-gradient(140deg,#F5B14A,#E5922A)}
+.mk-a .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:6px}
+.mk-a .cal i{aspect-ratio:1;border-radius:5px;background:#F6F1E8;display:flex;align-items:center;justify-content:center;font-size:7.5px;color:#8a6a2a;font-weight:700;font-style:normal}
+.mk-a .cal i.on{background:#F0A93B;color:#fff}
+.mk-a .pk{display:flex;gap:5px;margin-top:8px}
+.mk-a .pk b{flex:1;font-size:8px;background:#FBEFD8;border-radius:7px;padding:5px;color:#8a5a12;font-weight:700;text-align:center}
+
+/* why */
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.whycard{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 22px;transition:.18s}
+.whycard:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(60,45,120,.1)}
+.whycard .ic{font-size:26px;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:var(--pri-l)}
+.whycard h3{font-size:17px;font-weight:700;margin-bottom:6px}
+.whycard p{font-size:14px;color:var(--body)}
+
+/* about */
+.about{background:var(--soft);border-radius:28px;padding:56px 48px;text-align:center}
+.about h2{font-size:32px;font-weight:800;margin-bottom:18px;max-width:640px;margin-left:auto;margin-right:auto}
+.about p{font-size:17px;max-width:720px;margin:0 auto 14px}
+
+/* cta band */
+.ctaband{background:linear-gradient(120deg,#6C4FE0,#4B37B3);border-radius:28px;padding:56px 40px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.ctaband:before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;background:rgba(255,255,255,.1);border-radius:50%}
+.ctaband h2{color:#fff;font-size:34px;font-weight:800;margin-bottom:12px}
+.ctaband p{font-size:17px;opacity:.95;margin-bottom:26px}
+.ctaband .btn.pri{background:#fff;color:var(--pri-d);box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.ctaband .btn.pri:hover{background:#f3f0ff}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:52px 0 34px;margin-top:80px}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px}
+.foot .about-f{max-width:320px;color:var(--body);font-size:14px}
+.foot h4{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--mute);margin-bottom:14px}
+.foot ul{list-style:none}.foot ul li{margin-bottom:9px}
+.foot ul a{font-size:14.5px;color:var(--body)}.foot ul a:hover{color:var(--pri-d)}
+.copy{text-align:center;margin-top:40px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:.6s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+@media(max-width:860px){
+  .hero-grid{grid-template-columns:1fr;gap:10px}
+  .showcase{height:360px;margin-top:14px}
+  .hero h1{font-size:38px}
+  .hero p.lead{font-size:16.5px}
+  .why{grid-template-columns:1fr 1fr}
+  .pcardbig{grid-template-columns:1fr}
+  .foot{grid-template-columns:1fr 1fr}
+  .navlinks{display:none}.burger{display:block}
+  .h2c{font-size:29px}.about{padding:40px 24px}.about h2{font-size:26px}.ctaband h2{font-size:27px}
+  section.pad{padding:60px 0}
+}
+@media(max-width:520px){.why{grid-template-columns:1fr}.foot{grid-template-columns:1fr}.hero h1{font-size:33px}}
+
+/* tutorial play overlay */
+.thumb{position:relative;cursor:pointer}
+.playov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(23,20,43,0);transition:.22s;z-index:6}
+.thumb:hover .playov{background:rgba(23,20,43,.30)}
+.playov .pb{width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 32px rgba(60,45,120,.35);transform:scale(.9);transition:.22s}
+.thumb:hover .playov .pb{transform:scale(1.06)}
+.playov .lbl{font-weight:700;font-size:13px;color:#fff;background:rgba(23,20,43,.6);padding:7px 15px;border-radius:22px;opacity:.92}
+.thumb .screen{transition:.22s}
+.thumb:hover .screen{transform:scale(.97)}
+/* video modal */
+.vmodal{position:fixed;inset:0;z-index:200;background:rgba(15,12,30,.85);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:22px}
+.vmodal.open{display:flex}
+.vmodal .box{position:relative;width:min(92vw,430px)}
+.vmodal .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.vmodal .head b{color:#fff;font-size:17px;font-weight:700}
+.vmodal .x{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;border:0;font-size:19px;cursor:pointer;transition:.18s}
+.vmodal .x:hover{background:rgba(255,255,255,.3)}
+.vmodal video{width:100%;border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.55);display:block;background:#000}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo"><span class="mark"><span>D</span></span> DailyResource<span style="color:var(--pri)">.id</span></a>
+    <nav class="navlinks">
+      <a href="#produk">Produk</a>
+      <a href="#kenapa">Kenapa Kami</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#produk" class="btn pri">Lihat Produk</a>
+    </nav>
+    <button class="burger" id="burger">☰</button>
+  </div>
+</header>
+
+<a id="top"></a>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill"><span class="dot"></span> Alat digital buatan Indonesia</span>
+      <h1>Yang rumit, <span class="grad">kami bikin gampang.</span></h1>
+      <p class="lead">Alat digital sederhana yang <b>semua rumusnya sudah di dalam</b> — tinggal isi, pilih desain, download PDF. Bantu bisnis kecil–menengah &amp; keluarga urus keuangan dan penawaran harga tanpa pusing. Bisa dipakai siapa saja, bahkan yang gaptek.</p>
+      <div class="cta">
+        <a href="#produk" class="btn pri">Jelajahi produk →</a>
+        <a href="#tentang" class="btn ghost">Kenal lebih dekat</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>Beli 1×</b><span>tanpa langganan</span></div>
+        <div class="stat"><b>Offline</b><span>di HP &amp; laptop</span></div>
+        <div class="stat"><b>Tanpa</b><span>install aplikasi</span></div>
+      </div>
+    </div>
+    <div class="showcase" aria-hidden="true">
+      <div class="pcard pc1"><div class="bar"><div class="t">Keuangan usaha</div><div class="n">Untung-in</div></div><div class="body"><div class="li m"></div><div class="li s"></div><span class="chipmini" style="background:#EFEBFB;color:#4B37B3">Laba sehat 💪</span></div></div>
+      <div class="pcard pc2"><div class="bar"><div class="t">Penawaran harga</div><div class="n">Quot-in</div></div><div class="body"><div class="li m"></div><div class="li"></div><span class="chipmini" style="background:#E3F8F1;color:#0E9E76">PDF siap kirim</span></div></div>
+      <div class="pcard pc3"><div class="bar"><div class="t">Keuangan rumah</div><div class="n">Atur-in</div></div><div class="body"><div class="li s"></div><div class="li m"></div><span class="chipmini" style="background:#FDF1DF;color:#8a5a12">Budget aman ✓</span></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap inner">
+    <div><i>✓</i>Semua rumus sudah di dalam</div>
+    <div><i>✓</i>Tanpa install aplikasi</div>
+    <div><i>✓</i>Bisa offline di HP &amp; laptop</div>
+    <div><i>✓</i>Gampang buat semua orang</div>
+  </div>
+</div>
+
+<!-- PRODUK -->
+<section class="pad" id="produk">
+  <div class="wrap">
+    <div class="eyebrow rv">Produk Kami</div>
+    <h2 class="h2c rv">Satu alat, satu masalah beres.</h2>
+    <p class="subc rv">Tiap produk menyederhanakan satu urusan yang biasanya bikin pusing — bukan sekadar tabel penuh angka, tapi alat yang kasih jawaban.</p>
+    <div class="prod">
+
+      <div class="pcardbig rv">
+        <div class="thumb th-u" onclick="openVid('https://files.catbox.moe/6qnyfu.mp4','Untung-in')">
+          <div class="playov"><div class="pb"><svg width="28" height="28" viewBox="0 0 24 24" fill="#5B3FD6"><path d="M8 5v14l11-7z"/></svg></div><div class="lbl">▶ Lihat cara pakai</div></div>
+          <div class="screen mk-u">
+            <div class="sh"><div class="t">💰 Kas usaha</div><div class="v">Rp8.104.000</div></div>
+            <div class="sb">
+              <div class="st"><div class="s"><div class="l">Laba bulan ini</div><div class="n">Rp2,4jt</div></div><div class="s"><div class="l">Margin</div><div class="n">31%</div></div></div>
+              <div class="bars"><i style="height:40%"></i><i style="height:66%"></i><i style="height:52%"></i><i style="height:82%"></i><i style="height:70%"></i><i style="height:92%"></i><i style="height:60%"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="main">
+          <div class="ic" style="background:var(--pri-l);color:var(--pri-d);width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px">📊</div>
+          <h3 style="font-size:25px">Untung-in</h3>
+          <div class="tl" style="color:var(--pri-d);font-weight:600;margin:4px 0 14px">Tahu untung usahamu dalam 10 detik.</div>
+          <p>Semua rumus pembukuan sudah ada di dalam — tinggal isi uang masuk &amp; keluar, laba dan margin langsung muncul. Kelola kasbon, pisahkan uang pribadi, hitung harga jual biar nggak jualan rugi, lalu download laporan PDF. Nggak perlu Excel, nggak perlu install apa pun.</p>
+          <div class="feats"><span class="feat">Rumus otomatis</span><span class="feat">Kasbon &amp; piutang</span><span class="feat">Kalkulator harga jual</span><span class="feat">Laporan PDF</span></div>
+          <div class="foot">
+            <div class="price">Beli 1× · seumur hidup · <b>Rp49.000</b></div>
+            <a href="Untung-in-v2.html" target="_blank" class="btn pri">Coba sekarang →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcardbig rv">
+        <div class="thumb th-q" onclick="openVid('https://files.catbox.moe/hecn70.mp4','Quot-in')">
+          <div class="playov"><div class="pb"><svg width="28" height="28" viewBox="0 0 24 24" fill="#0E9E76"><path d="M8 5v14l11-7z"/></svg></div><div class="lbl">▶ Lihat cara pakai</div></div>
+          <div class="screen mk-q">
+            <div class="sh"><div class="t">Penawaran harga</div><div class="v">QUOTATION</div></div>
+            <div class="sb">
+              <table><tr><th>Item</th><th style="text-align:right">Jumlah</th></tr><tr><td>Produksi</td><td style="text-align:right">Rp12.000.000</td></tr><tr><td>Editing</td><td style="text-align:right">Rp4.500.000</td></tr><tr><td>Talent</td><td style="text-align:right">Rp3.000.000</td></tr></table>
+              <div class="tt"><span>TOTAL</span><span>Rp19.500.000</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="main">
+          <div class="ic" style="background:#E3F8F1;color:#0E9E76;width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px">🧾</div>
+          <h3 style="font-size:25px">Quot-in</h3>
+          <div class="tl" style="color:#0E9E76;font-weight:600;margin:4px 0 14px">Bikin penawaran harga profesional, tanpa pusing hitungan.</div>
+          <p>Rumus pajak &amp; markup semua otomatis — kamu tinggal isi item, harga langsung terhitung rapi. Cocok untuk video, jasa, dagang, sampai event. Pilih dari 4 desain PDF, langsung download &amp; kirim ke klien. Ada juga panduan nego biar tahu sampai mana boleh turun harga.</p>
+          <div class="feats"><span class="feat">Semua bidang usaha</span><span class="feat">Pajak otomatis</span><span class="feat">4 desain PDF</span><span class="feat">Panduan nego</span></div>
+          <div class="foot">
+            <div class="price">Beli 1× · seumur hidup · <b>Rp79.000</b></div>
+            <a href="Quot-in.html" target="_blank" class="btn pri" style="background:var(--teal);box-shadow:0 10px 24px rgba(18,184,134,.3)">Coba sekarang →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcardbig rv">
+        <div class="thumb th-a" onclick="openVid('https://files.catbox.moe/z2b96z.mp4','Atur-in')">
+          <div class="playov"><div class="pb"><svg width="28" height="28" viewBox="0 0 24 24" fill="#E5922A"><path d="M8 5v14l11-7z"/></svg></div><div class="lbl">▶ Lihat cara pakai</div></div>
+          <div class="screen mk-a">
+            <div class="sh"><div class="t">👛 Total saldo keluarga</div><div class="v">Rp6.400.000</div></div>
+            <div class="sb">
+              <div class="cal"><i>1</i><i class="on">2</i><i>3</i><i>4</i><i class="on">5</i><i>6</i><i>7</i><i>8</i><i class="on">9</i><i>10</i><i>11</i><i>12</i><i class="on">13</i><i>14</i></div>
+              <div class="pk"><b>Suami</b><b>Freelance</b><b>Remote</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="main">
+          <div class="ic" style="background:#FDF1DF;color:#8a5a12;width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px">👛</div>
+          <h3 style="font-size:25px">Atur-in</h3>
+          <div class="tl" style="color:#b5771a;font-weight:600;margin:4px 0 14px">Atur uang keluarga biar selalu cukup.</div>
+          <p>Kelola keuangan keluarga tanpa tabel yang bikin bingung. Pisahkan uang dari tiap sumber — gaji suami, freelance, kerja remote — biar nggak tercampur. Pasang budget dengan alert otomatis, catat lewat kalender yang cantik, dan dapat saran hemat. Semua otomatis, tinggal pakai.</p>
+          <div class="feats"><span class="feat">Dompet terpisah</span><span class="feat">Budget &amp; alert</span><span class="feat">Kalender cantik</span><span class="feat">Saran hemat</span></div>
+          <div class="foot">
+            <div class="price">Beli 1× · seumur hidup · <b>Rp49.000</b></div>
+            <a href="Atur-in.html" target="_blank" class="btn pri" style="background:var(--amber);box-shadow:0 10px 24px rgba(240,169,59,.3)">Coba sekarang →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- KENAPA -->
+<section class="pad" id="kenapa" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="eyebrow rv">Kenapa DailyResource</div>
+    <h2 class="h2c rv">Alat yang beneran kepakai.</h2>
+    <p class="subc rv">Kami percaya alat yang baik bukan yang paling canggih, tapi yang benar-benar menyelesaikan masalahmu.</p>
+    <div class="why">
+      <div class="whycard rv"><div class="ic">🧮</div><h3>Rumus sudah di dalam</h3><p>Nggak perlu bikin tabel Excel. Tinggal isi, hitungan &amp; hasilnya langsung keluar.</p></div>
+      <div class="whycard rv"><div class="ic">😌</div><h3>Gampang buat semua</h3><p>Tanpa belajar akuntansi. Tampilan sederhana — yang gaptek pun langsung bisa.</p></div>
+      <div class="whycard rv"><div class="ic">🔑</div><h3>Beli 1×, seumur hidup</h3><p>Tanpa langganan bulanan. Sekali beli, jadi milikmu selamanya.</p></div>
+      <div class="whycard rv"><div class="ic">📱</div><h3>Buka di mana saja</h3><p>Jalan di HP &amp; laptop, bahkan offline. Tanpa perlu install aplikasi.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TENTANG -->
+<section class="pad" id="tentang">
+  <div class="wrap">
+    <div class="about rv">
+      <div class="eyebrow" style="margin-bottom:12px">Tentang Kami</div>
+      <h2>Kami bikin yang rumit jadi sederhana.</h2>
+      <p>DailyResource lahir dari satu keresahan sederhana: terlalu banyak orang stuck dengan urusan yang sebenarnya bisa dipermudah. Ngitung untung usaha, bikin penawaran harga, atur uang keluarga — semuanya kepakai tiap hari, tapi sering bikin pusing.</p>
+      <p>Maka kami membangun tools yang ringan, lokal, dan terjangkau. Bukan yang paling canggih, tapi yang paling <b>kepakai</b>. Untuk pemilik usaha, pekerja kreatif, dan keluarga Indonesia. Satu tool, satu masalah beres.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pad" style="padding-top:0">
+  <div class="wrap">
+    <div class="ctaband rv">
+      <h2>Siap bikin kerjaanmu lebih gampang?</h2>
+      <p>Pilih alat yang kamu butuhkan sekarang — beli 1×, pakai seumur hidup.</p>
+      <a href="#produk" class="btn pri">Lihat semua produk →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#top" class="logo" style="margin-bottom:14px"><span class="mark"><span>D</span></span> DailyResource<span style="color:var(--pri)">.id</span></a>
+        <p class="about-f">Alat digital sederhana untuk bisnis kecil–menengah &amp; keluarga — keuangan usaha, penawaran harga, dan atur uang. Semua rumus otomatis. Dibuat untuk Indonesia.</p>
+      </div>
+      <div>
+        <h4>Produk</h4>
+        <ul>
+          <li><a href="#produk">Untung-in</a></li>
+          <li><a href="#produk">Quot-in</a></li>
+          <li><a href="#produk">Atur-in</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Perusahaan</h4>
+        <ul>
+          <li><a href="#tentang">Tentang kami</a></li>
+          <li><a href="#kenapa">Kenapa kami</a></li>
+          <li><a href="mailto:halo@dailyresource.id">halo@dailyresource.id</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy">© 2026 DailyResource.id — Semua alat dibuat dengan ❤️ di Indonesia.</div>
+  </div>
+</footer>
+
+<!-- VIDEO MODAL -->
+<div class="vmodal" id="vmodal" onclick="if(event.target.id==='vmodal')closeVid()">
+  <div class="box">
+    <div class="head"><b id="vtitle">Tutorial</b><button class="x" onclick="closeVid()" aria-label="Tutup">✕</button></div>
+    <video id="vplayer" controls playsinline preload="metadata"></video>
+  </div>
+</div>
+<script>
+function openVid(url,name){var m=document.getElementById('vmodal');document.getElementById('vtitle').textContent='Cara pakai '+name;var v=document.getElementById('vplayer');v.src=url;m.classList.add('open');document.body.style.overflow='hidden';var p=v.play();if(p&&p.catch)p.catch(function(){});}
+function closeVid(){var m=document.getElementById('vmodal');var v=document.getElementById('vplayer');try{v.pause();}catch(e){}v.removeAttribute('src');v.load();m.classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVid();});
+</script>
+<script>
+// scroll reveal
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(i%4*0.06)+'s';io.observe(el);});
+// mobile menu (simple scroll to produk)
+document.getElementById('burger').onclick=function(){document.getElementById('produk').scrollIntoView({behavior:'smooth'});};
+</script>
+</body>
+</html>
