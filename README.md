@@ -1,0 +1,1 @@
+# DailyResource — website etalase produk
