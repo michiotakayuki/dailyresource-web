@@ -134,6 +134,7 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
 #doc .notes .ttl{text-align:left}
 #doc .notes .ttl{display:block;margin-bottom:5px;font-size:11.5px;font-weight:800}
 #doc .notes b{font-weight:700}
+#doc .foot,#doc .sign,#doc .notes,#doc .summary{break-inside:avoid;page-break-inside:avoid}
 #doc .summary{width:255px;flex-shrink:0}
 #doc .srow{display:flex;justify-content:space-between;padding:5px 13px;font-size:12px}
 #doc .srow.total{font-weight:800;font-size:15px;border-radius:11px;padding:12px 13px;margin-top:5px}
@@ -441,6 +442,22 @@ var state=emptyQuot();
 function load(){try{var r=localStorage.getItem(KEY);if(r){state=JSON.parse(r);}}catch(e){}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
 function ensureH2P(cb){if(typeof html2pdf!=='undefined'){cb();return;}var d=document.getElementById('__h2p');if(d){var t=setInterval(function(){if(typeof html2pdf!=='undefined'){clearInterval(t);cb();}},150);setTimeout(function(){clearInterval(t);cb();},9000);return;}var s=document.createElement('script');s.id='__h2p';s.src='https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js';s.onload=function(){cb();};s.onerror=function(){cb();};document.head.appendChild(s);}
+function showPreview(filename){
+  var doc=document.getElementById('doc');
+  var ov=document.createElement('div');ov.id='pvov';
+  ov.style.cssText='position:fixed;inset:0;background:rgba(20,20,25,.78);z-index:99999;display:flex;flex-direction:column';
+  var bar=document.createElement('div');
+  bar.style.cssText='display:flex;gap:8px;justify-content:center;align-items:center;padding:10px;background:#fff;flex-wrap:wrap';
+  bar.innerHTML='<span style="font-weight:800;color:var(--pri-d);margin-right:4px">Preview dokumen</span><button id="pv-dl" class="btn sm">⬇️ Download PDF</button><button id="pv-print" class="btn g sm">🖨️ Print</button><button id="pv-close" class="btn g sm">✕ Tutup</button>';
+  var scroll=document.createElement('div');scroll.style.cssText='flex:1;overflow:auto;padding:16px';
+  var paper=document.createElement('div');paper.style.cssText='width:794px;margin:0 auto;background:#fff;box-shadow:0 8px 30px rgba(0,0,0,.4)';
+  doc.style.display='block';doc.style.width='794px';doc.style.maxWidth='none';doc.style.margin='0';
+  paper.appendChild(doc);scroll.appendChild(paper);ov.appendChild(bar);ov.appendChild(scroll);document.body.appendChild(ov);
+  function restore(){document.body.appendChild(doc);doc.style.display='';doc.style.width='';doc.style.maxWidth='';doc.style.margin='';if(ov.parentNode)document.body.removeChild(ov);}
+  ov.querySelector('#pv-close').onclick=restore;
+  ov.querySelector('#pv-print').onclick=function(){restore();window.print();};
+  ov.querySelector('#pv-dl').onclick=function(){var b=ov.querySelector('#pv-dl');b.textContent='⏳ Membuat...';ensureH2P(function(){if(typeof html2pdf==='undefined'){restore();window.print();return;}var bg='#ffffff';try{var v=getComputedStyle(document.documentElement).getPropertyValue('--docbg');if(v&&v.trim())bg=v.trim();}catch(e){}html2pdf().set({margin:0,filename:filename,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:bg,useCORS:true},jsPDF:{unit:'pt',format:'a4',orientation:'portrait'},pagebreak:{mode:['avoid-all','css','legacy']}}).from(doc).save().then(function(){b.textContent='✓ Terunduh';setTimeout(function(){b.textContent='⬇️ Download PDF';},1500);}).catch(function(){restore();window.print();});});};
+}
 function dlPDF(el,filename){if(!el){return;}ensureH2P(function(){if(typeof html2pdf==='undefined'){alert('Menyiapkan cetak… jika PDF tidak otomatis terunduh, pilih "Save as PDF" di dialog print.');window.print();return;}var bg='#ffffff';try{var v=getComputedStyle(document.documentElement).getPropertyValue('--docbg');if(v&&v.trim())bg=v.trim();}catch(e){}el.style.display='block';el.style.width='794px';el.style.margin='0 auto';try{window.scrollTo(0,0);}catch(e){}var done=function(){el.style.display='';el.style.width='';el.style.margin='';};html2pdf().set({margin:0,filename:filename,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:bg,useCORS:true},jsPDF:{unit:'pt',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}}).from(el).save().then(done).catch(function(){done();window.print();});});}
 
 
@@ -656,7 +673,7 @@ function buildDoc(){
     '<div class="foot"><div class="notes"><div class="ttl">'+T.tc+'</div>'+mdLite(i.tc)+taxNote+'</div><div class="summary">'+sumRows+'</div></div>'+
     sign;
   var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;
-  dlPDF(document.getElementById('doc'),'Quotation.pdf');
+  showPreview('Quotation.pdf');
 }
 
 /* bind info fields */
@@ -754,7 +771,7 @@ function buildInvoice(idx){
     '<table class="items"><thead><tr><th>'+T.ket+'</th><th class="c">'+T.portion+'</th><th class="n">'+T.amount+'</th></tr></thead><tbody>'+rows+'</tbody></table>'+
     '<div class="foot"><div class="notes">'+bankHtml+(iv.notes?('<div class="ttl" style="margin-top:9px">'+T.notes+'</div>'+mdLite(iv.notes)):'')+'</div><div class="summary">'+ctx+'</div></div>'+
     sign;
-  var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;dlPDF(doc,'Invoice.pdf');
+  var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;showPreview('Invoice.pdf');
 }
 function quid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 function loadClients(){try{return JSON.parse(localStorage.getItem('quotin_clients')||'[]');}catch(e){return [];}}
