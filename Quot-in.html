@@ -272,6 +272,7 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
     <button class="btn g" id="btn-clear" style="width:100%;margin-top:8px;color:#F0526B">🗑️ Kosongkan semua (mulai dari 0)</button>
     <button class="btn g" id="btn-backup" style="width:100%;margin-top:8px">💾 Backup data</button>
     <button class="btn g" id="btn-restore" style="width:100%;margin-top:8px">📂 Pulihkan dari backup</button>
+    <button class="btn g" id="btn-autobak" style="width:100%;margin-top:8px;color:#0E7A57">🛟 Pulihkan data terakhir (cadangan otomatis)</button>
     <button class="btn g" id="btn-reset" style="width:100%;margin-top:8px">↻ Reset ke contoh</button>
   </div>
 
@@ -440,7 +441,8 @@ function invoice3(){return [
 function emptyQuot(){return {info:{usaha:'',logo:'',alamat:'',telp:'',email:'',website:'',ig:'',klien:'',nomor:'QT-'+new Date().getFullYear()+'-001',tgl:iso(),berlaku:14,proyek:'',tc:'Pembayaran DP 50% saat deal, pelunasan setelah proyek selesai.',ttdNama:'',ttdJabatan:'',ttd:''},sections:[{name:'Bagian 1',items:[{nama:'',qty:1,sat:'paket',rate:0,hari:1}]}],feePct:15,kontPct:5,markupPct:10,ppn:'none',pph:'none',template:'pastel',nego:{on:false,target:0,mode:'auto',overrides:{}},invoice:defInvoice()};}
 var state=emptyQuot();
 function load(){try{var r=localStorage.getItem(KEY);if(r){state=JSON.parse(r);}}catch(e){}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+function hasContent(s){try{var val=0;((s&&s.sections)||[]).forEach(function(sec){(sec.items||[]).forEach(function(it){if((parseFloat(it.rate)||0)>0)val++;if(it.subs)it.subs.forEach(function(x){if((parseFloat(x.rate)||0)>0)val++;});});});return val>=2;}catch(e){return false;}}
+function save(){try{var j=JSON.stringify(state);localStorage.setItem(KEY,j);if(hasContent(state)){localStorage.setItem(KEY+'_bak',j);localStorage.setItem(KEY+'_bak_at',new Date().toISOString());}}catch(e){}}
 function ensureH2P(cb){if(typeof html2pdf!=='undefined'){cb();return;}var d=document.getElementById('__h2p');if(d){var t=setInterval(function(){if(typeof html2pdf!=='undefined'){clearInterval(t);cb();}},150);setTimeout(function(){clearInterval(t);cb();},9000);return;}var s=document.createElement('script');s.id='__h2p';s.src='https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js';s.onload=function(){cb();};s.onerror=function(){cb();};document.head.appendChild(s);}
 function showPreview(filename){
   var doc=document.getElementById('doc');
@@ -448,7 +450,7 @@ function showPreview(filename){
   ov.style.cssText='position:fixed;inset:0;background:rgba(20,20,25,.78);z-index:99999;display:flex;flex-direction:column';
   var bar=document.createElement('div');
   bar.style.cssText='display:flex;gap:8px;justify-content:center;align-items:center;padding:10px;background:#fff;flex-wrap:wrap';
-  bar.innerHTML='<span style="font-weight:800;color:var(--pri-d);margin-right:4px">Preview dokumen</span><button id="pv-dl" class="btn sm">⬇️ Download PDF</button><button id="pv-print" class="btn g sm">🖨️ Print</button><button id="pv-close" class="btn g sm">✕ Tutup</button>';
+  bar.innerHTML='<span style="font-weight:800;color:var(--pri-d);margin-right:4px">Preview dokumen</span><button id="pv-print" class="btn sm">🖨️ Simpan / Cetak PDF</button><button id="pv-dl" class="btn g sm">⬇️ Unduh langsung (alternatif)</button><button id="pv-close" class="btn g sm">✕ Tutup</button><span style="width:100%;text-align:center;font-size:11px;color:#666;margin-top:2px">Klik <b>Simpan / Cetak PDF</b> → di dialog print pilih <b>Save as PDF</b> (hasil paling tajam &amp; teks bisa diseleksi)</span>';
   var scroll=document.createElement('div');scroll.style.cssText='flex:1;overflow:auto;padding:16px';
   var paper=document.createElement('div');paper.style.cssText='width:794px;margin:0 auto;background:#fff;box-shadow:0 8px 30px rgba(0,0,0,.4)';
   doc.style.display='block';doc.style.width='794px';doc.style.maxWidth='none';doc.style.margin='0';
@@ -456,7 +458,7 @@ function showPreview(filename){
   function restore(){document.body.appendChild(doc);doc.style.display='';doc.style.width='';doc.style.maxWidth='';doc.style.margin='';if(ov.parentNode)document.body.removeChild(ov);}
   ov.querySelector('#pv-close').onclick=restore;
   ov.querySelector('#pv-print').onclick=function(){restore();window.print();};
-  ov.querySelector('#pv-dl').onclick=function(){var b=ov.querySelector('#pv-dl');b.textContent='⏳ Membuat...';ensureH2P(function(){if(typeof html2pdf==='undefined'){restore();window.print();return;}var bg='#ffffff';try{var v=getComputedStyle(document.documentElement).getPropertyValue('--docbg');if(v&&v.trim())bg=v.trim();}catch(e){}html2pdf().set({margin:0,filename:filename,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:bg,useCORS:true},jsPDF:{unit:'pt',format:'a4',orientation:'portrait'},pagebreak:{mode:['avoid-all','css','legacy']}}).from(doc).save().then(function(){b.textContent='✓ Terunduh';setTimeout(function(){b.textContent='⬇️ Download PDF';},1500);}).catch(function(){restore();window.print();});});};
+  ov.querySelector('#pv-dl').onclick=function(){var b=ov.querySelector('#pv-dl');b.textContent='⏳ Membuat...';ensureH2P(function(){if(typeof html2pdf==='undefined'){restore();window.print();return;}var bg='#ffffff';try{var v=getComputedStyle(document.documentElement).getPropertyValue('--docbg');if(v&&v.trim())bg=v.trim();}catch(e){}var prevMH=doc.style.minHeight;doc.style.minHeight='auto';var w=doc.offsetWidth||794;var done=function(){doc.style.minHeight=prevMH;};var gen=function(){html2pdf().set({margin:0,filename:filename,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:bg,useCORS:true,windowWidth:w,scrollX:0,scrollY:0,onclone:function(cd){var d2=cd.getElementById('doc');if(d2){d2.style.display='block';d2.style.minHeight='auto';d2.style.width=w+'px';}}},jsPDF:{unit:'pt',format:'a4',orientation:'portrait'},pagebreak:{mode:['avoid-all','css','legacy']}}).from(doc).save().then(function(){done();b.textContent='✓ Terunduh';setTimeout(function(){b.textContent='⬇️ Unduh langsung (alternatif)';},1500);}).catch(function(){done();restore();window.print();});};var fr=function(){requestAnimationFrame(function(){setTimeout(gen,120);});};if(document.fonts&&document.fonts.ready){document.fonts.ready.then(fr);}else{setTimeout(fr,150);}});};
 }
 function dlPDF(el,filename){if(!el){return;}ensureH2P(function(){if(typeof html2pdf==='undefined'){alert('Menyiapkan cetak… jika PDF tidak otomatis terunduh, pilih "Save as PDF" di dialog print.');window.print();return;}var bg='#ffffff';try{var v=getComputedStyle(document.documentElement).getPropertyValue('--docbg');if(v&&v.trim())bg=v.trim();}catch(e){}el.style.display='block';el.style.width='794px';el.style.margin='0 auto';try{window.scrollTo(0,0);}catch(e){}var done=function(){el.style.display='';el.style.width='';el.style.margin='';};html2pdf().set({margin:0,filename:filename,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:bg,useCORS:true},jsPDF:{unit:'pt',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}}).from(el).save().then(done).catch(function(){done();window.print();});});}
 
@@ -485,7 +487,7 @@ function computeLines(){
         lines.push({t:'i',key:si+'-'+ii,desc:it.nama||'-',incl:subs.map(function(s){return s.nama||'';}).filter(Boolean),qty:(q>1?q+' '+T.unitPl:T.pkt),unit:a,amount:a,qNum:1,hNum:1});
       } else {
         var u=r1k((parseFloat(it.rate)||0)*factor),a=u*q*h;quotedFull+=a;
-        lines.push({t:'i',key:si+'-'+ii,desc:it.nama||'-',incl:[],qty:q+' '+((T.units&&T.units[it.sat])||it.sat)+(h>1?(' × '+h+' '+T.hariWord):''),unit:u,amount:a,qNum:q,hNum:h});
+        lines.push({t:'i',key:si+'-'+ii,desc:it.nama||'-',incl:subs.map(function(s){return s.nama||'';}).filter(Boolean),qty:q+' '+((T.units&&T.units[it.sat])||it.sat)+(h>1?(' × '+h+' '+T.hariWord):''),unit:u,amount:a,qNum:q,hNum:h});
       }
     });
   });
@@ -661,7 +663,8 @@ function buildDoc(){
   var sign='<div class="sign"><div class="hk">'+T.sincerely+'</div>'+(i.ttd?'<img src="'+i.ttd+'">':'<div class="space"></div>')+'<span class="nm"><b>'+(i.ttdNama||'(..................)')+'</b><br>'+(i.ttdJabatan||'')+(i.usaha?(' · '+i.usaha):'')+'</span></div>';
   var cparts=[];
   if(i.alamat)cparts.push(i.alamat);
-  var l2=[i.telp&&('Telp '+i.telp),i.email].filter(Boolean).join('  ·  ');if(l2)cparts.push(l2);
+  if(i.telp)cparts.push('Telp '+i.telp);
+  if(i.email)cparts.push(i.email);
   var l3=[i.website,i.ig&&('IG @'+String(i.ig).replace(/^@/,''))].filter(Boolean).join('  ·  ');if(l3)cparts.push(l3);
   var contactHtml=cparts.length?'<div class="contact">'+cparts.join('<br>')+'</div>':'';
   var bgmap={pastel:'#ffffff',cream:'#F4EEE1',darkpink:'#242428',darkpurple:'#0E0E14'};
@@ -752,7 +755,8 @@ function buildInvoice(idx){
   var t=terms[idx],amt=amts[idx],paidBefore=amts.slice(0,idx).reduce(function(a,b){return a+b;},0),sisa=total-paidBefore-amt;
   var stTxt=(state.lang==='en')?(t.paid?'PAID ✓':'UNPAID'):(t.paid?'LUNAS ✓':'BELUM DIBAYAR');var stCol=t.paid?'#0E9F6E':'#F0526B';
   var cparts=[];if(i.alamat)cparts.push(i.alamat);
-  var l2=[i.telp&&('Telp '+i.telp),i.email].filter(Boolean).join('  ·  ');if(l2)cparts.push(l2);
+  if(i.telp)cparts.push('Telp '+i.telp);
+  if(i.email)cparts.push(i.email);
   var l3=[i.website,i.ig&&('IG @'+String(i.ig).replace(/^@/,''))].filter(Boolean).join('  ·  ');if(l3)cparts.push(l3);
   var contactHtml=cparts.length?'<div class="contact">'+cparts.join('<br>')+'</div>':'';
   var bankHtml=(iv.bankNama||iv.bankNo||iv.bankAtas)?('<div class="ttl">'+T.payTo+'</div>'+[iv.bankNama,iv.bankNo,iv.bankAtas?('a.n. '+iv.bankAtas):''].filter(Boolean).map(function(x){return '<div>'+x+'</div>';}).join('')):'';
@@ -841,6 +845,7 @@ function init(){
   document.querySelectorAll('#presetBar button').forEach(function(b){b.onclick=function(){applyPreset(b.getAttribute('data-preset'));};});
   document.getElementById('addSection').onclick=function(){state.sections.push({name:'Bagian '+(state.sections.length+1),items:[]});save();renderSections();recalc();};
   document.getElementById('sb-pdf').onclick=buildDoc;
+  var _ab=document.getElementById('btn-autobak');if(_ab)_ab.onclick=function(){try{var r=localStorage.getItem(KEY+'_bak');if(!r){alert('Belum ada cadangan otomatis tersimpan.');return;}var at=localStorage.getItem(KEY+'_bak_at');if(!confirm('Pulihkan ke cadangan otomatis terakhir'+(at?(' ('+new Date(at).toLocaleString('id-ID')+')'):'')+'? Data saat ini akan diganti.'))return;state=JSON.parse(r);if(!state.nego)state.nego={on:false,target:0,mode:'auto',overrides:{}};if(!state.nego.overrides)state.nego.overrides={};if(!state.invoice)state.invoice=defInvoice();save();bindInfo();bindFee();bindTemplates();renderSections();bindNego();bindInvoice();recalc();window.scrollTo(0,0);}catch(e){alert('Gagal memulihkan cadangan.');}};
   var _bcl=document.getElementById('btn-clear');if(_bcl)_bcl.onclick=function(){if(confirm('Kosongkan SEMUA (item, klien, info usaha, invoice) dan mulai dari 0? Tidak bisa dibatalkan.')){state=emptyQuot();save();bindInfo();bindFee();bindTemplates();renderSections();bindNego();bindInvoice();recalc();window.scrollTo(0,0);}};
   document.getElementById('sb-save').onclick=function(){save();addClient(state.info.klien);var b=document.getElementById('sb-save');b.textContent='✓';setTimeout(function(){b.textContent='💾';},1000);};
   var _sh=document.getElementById('sb-hist');if(_sh)_sh.onclick=openHistory;
