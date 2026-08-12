@@ -3,9 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Atur-in — Atur Uang Rumah Tangga</title>
+<title>Atur-in — SAMPLE Learnify</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
+<!-- LICENSE GATE -->
+<div id="drlock" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(160deg,#1b1830,#2a2350);display:flex;align-items:center;justify-content:center;padding:22px;font-family:system-ui,-apple-system,'Segoe UI',sans-serif">
+  <div style="background:#fff;border-radius:22px;max-width:380px;width:100%;padding:30px 26px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.5)">
+    <div style="font-size:40px;margin-bottom:4px">&#128274;</div>
+    <div style="font-weight:800;font-size:20px;color:#1b1830">Atur-in</div>
+    <div style="color:#7a7690;font-size:13.5px;margin:8px 0 20px;line-height:1.55">Masukkan <b>kode lisensi</b> yang kamu terima setelah pembelian untuk membuka aplikasi.</div>
+    <input id="drlock-in" placeholder="ATR-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" style="width:100%;padding:14px;border:1.5px solid #e7e4f2;border-radius:12px;font-size:16px;text-align:center;text-transform:uppercase;letter-spacing:1px;font-family:inherit;color:#1b1830;background:#fbfaff">
+    <div id="drlock-err" style="font-size:12.5px;height:16px;margin:8px 0 0;color:#e0356b"></div>
+    <button id="drlock-go" style="width:100%;margin-top:10px;padding:15px;border:0;border-radius:12px;background:#E5922A;color:#fff;font-weight:800;font-size:15.5px;cursor:pointer;font-family:inherit">Buka aplikasi &rarr;</button>
+    <a href="https://lynk.id/michiotakayuki/5k8ooyp22x8m/checkout" style="display:block;margin-top:16px;color:#E5922A;font-weight:700;font-size:13.5px;text-decoration:none">Belum punya kode? Beli di sini &rarr;</a>
+    <div style="color:#b7b2c8;font-size:11px;margin-top:14px;line-height:1.5">1 kode untuk 1 pengguna &middot; Simpan kodemu baik-baik</div>
+  </div>
+</div>
+<script>
+(function(){
+  var KEY='aturin_lic',PFX='ATR';
+  var HS='k4a5la,7vv8fe,1vu1ljw,ciap01,1q9v2a3,1w33hzd,gfc44,zathey,1ld4i3z,1tx59mp,10mokhe,1yjic1l,mxciy6,b452fc,efu5a3,o6j5z6,1013z3u,1bikdmn,lzs8xh,19rxtsz,ggor9w,1d09f6v,1v5r7nn,1ssquoj,ovwqwc,jbha7l,3g76wu,byo78g,zfx9ez,1gjcvtj,hbe1hh,zglz60,10tmpbl,p5wv7c,5sd5fy,aa33wd,1nlkkcy,obmgmn,1pbaa43,1kczt7q,16dnysr,uo7i1i,wf1c7w,1m8uayq,tllpge,1um801z,1rius3u,189aokk,n8kajy,51kvmd,1u61kv1,103h8x1,1st01bt,5v4cwa,1rdhsa9,i109o9,19i7sx6,ssfn6p,1fgfdke,b8x0jb,d5n3zo,1picrap,1qp7hzn,cvh0y1,a0anhp,1r5en5m,1vrt949,1wg519k,6816dj,1prvdh,8emnj3,k43qv,2l4vhh,1837ls9,1py9inx,meg2p9,f7e7b5,1uiuqr7,1w8cnx6,1os41ks,s7g33u,1tfypar,izhryo,1p6w666,8mjuj2,1fn41b8,qxklko,d68enw,1yreil9,1die3r7,1wamhy0,1mwkm92,f0bvho,1wzqm5s,1dwx9xb,1lao5e0,15yijk3,1niwtk9,d7bnvs,xguppt,16eiy91,8cp7te,l6gblf,pdg2vw,b0mh94,l4sf1c,u3jrir,x8324m,19rkhdi,yb4fpw,12rakf,islb38,1slidh4,1ezte42,128771i,xhskso,aa11ul,ds14h,i27b15,11b8xr2,6fv9r2,1xq2z68,1gpeetp,f1vohc,x17bww,z5wne7,194bb1n,1fyxemm,18r8cpy,1tfpb0l,19vg9as,mygmlw,u5abkb,ixxig7,18os5cl,t8rbaj,17vatgi,6q8z7z,fa8s6p,bne3r2,7ww81p,7f8fh3,5qp1nz,3aj6wx,1ehc69m,nqq9tp,15oyiuh,rdsc6z,bgoij2,1830pf2,dz7nva,cejbd,1avlliw,styzin,19gtr9k,1mz23fx,jrta3v,mmvsax,s2ipcb,4r7v66,ftqjgf,sclik8,1n39g10,54tc7q,lh9fmd,83yeqy,gafybi,cgzs27,34o1vb,gm70un,hkpkt7,1yvkfjh,8gt1g,du4pq8,lpm9vc,fm28tr,gpk0dh,v37t7a,j5o48w,v3cfek,18tui3s,15xt2tl,5c6kxf,1478lcd,6sofqt,17hgjov,1ahzuuk,6v41hv,uuaan6,jlr5ch,hr0ski,uj8cn9,1su5ool,1xtouri,s24op1,16p9iso,xeke4e,hl4sju,1qqxnb6,1pw96he,14a4j1p,q32hf6,1lc16rt,1kbhixz,l1qb70,i2jj1o,oeoqsn,xskod9,14q1px2,n2nh1c,sjjmz6,1x7vb11,11p041t,jvml0i,8ac5d8,15ccnip,1jrwkvz,bfbthl,lxsfdk,vp91l0,3pc3za,igqeqb,1niccnv,cklz1e,36w72p,eazjk,13ohufl,1d8nsdn,11j8snm,r2lc6f,y18h2d,145civ6,10l8bga,1gfmdfp,sdkah9,1aywrdr,1j1mchi,ht0h9y,1fsvrgs,1mq8jw,4jy8w9,2ysj4,1nfn4ut,1l3w0ln,1rcboim,rjz4wd,14r9jc0,10gl2mk,k69486,1x4dssq,1y3xcej,13siq16,faqf1q,obfxmd,1etjmfu,luix5q,esoli9,1qsgoco,1huydxm,1x22az9,18z4p3s,qnkmu0,erpmsk,snpgcu,1vibury,1c4la9h,1u3yrp3,e239t8,1kex4s4,12mzd7j,1n8bp02,sz9rze,1vgongh,1al7tcx,mbgucq,3cm6ox,1hk2jgt,926jl3,kigmov,egaziu,1fonfpf,qdg6m5,19i9bll,164jphr,piuq1r,r4d7fe,1fnoqyk,mqmp6g,hhe7i7,1mexn46,jlmutu,d4qqc7,wqgp69,106xoj5,tr1vtb,1wab62l,5xkzsj,1eltch8,b5r8re,145lftj,17q9u8g,jf4xu8,ebfltb,g5s632,zxe922,aghk7p,1eme634,1wh6ec1,1r3qsu8,1ekl76h,16xxmpn,th3xn6,1gc0u0o,fxvpb7,1jsys01,d9ys2h,16iquum,1q7rxjn,8qyhcf,1jjn0ep,1bdfrwk,38b8ec,1dzk259,1upgohb,156lwtv,bau4q,1apkeg4,oyobya,kqb8we,11kie7,pt00c,3h6oiy,1irk11l,1e8p1uy,1rwlfgt,1lbojx8,lbdflk,ax94xr,kwx9i6,18jx4v,1yo6wfh,ql34i5,5oatwx,19a78ru,1iki41t,1sqso5a,370epr,e40dw2,17n8vt8,1gt9yaq,7fnrjf,vcz2g,s41ncf,tqgj2d,t89310,17yfybq,sfjavs,163bdet,12dw66z,yxs5cf,10w9ooj,1bqw9dj,1ywzh1b,1850zbg,15xt47y,1dese6v,1ki702e,y4itup,1il4j9i,1dd8rcq,lwh1fj,1s31z6d,lzr6z8,1i82gcs,zdu7ps,1svaoh7,12jp7gr,1tuypnl,16pminj,abxccg,10gvbe0,2gd463,vbe4rb,1tew7sj,1km0cvw,173svuj,1hi5i1r,1hn3x29,174ydzx,1hezpbu,1o1z8xe,45s4u4,1wmuvh8,1yjfblf,1shn7j3,1gecjs3,u9666r,nazfvp,1q1fhnd,mlk86c,1dhhxjz,1g1i0hc,kjsvxl,qpphpq,1prhw69,1956exr,5ih6kh,hjs572,1n0ynpu,moteh1,i0zobn,1e3ihp8,ppbgrd,ggnr0c,fpkg2x,2opp1t,gxe2lt,10n7tao,1bwp656,1np6xik,1ehujv1,y33lse,1e2azkx,1wujrno,dthm0x,1w1qd3p,hds2yx,ihfyp8,6nys0z,12di8r5,4p96rc,hbzhnk,swjzti,4jg5yp,59wuyc,1aabr51,15yef0m,1o2bxm7,1ahfrrg,10gx81y,160wjch,jxkbli,1e90w07,1ilvwis,3c16v9,1wyw1qc,xu2ygd,qrbcl3,1ez7adj,nekkyn,18y63o9,1h0nygc,fhwdsk,ibb1g3,1dv8w1e,15oh7n0,1nnjkwn,cdec3t,1qf9boq,1hviepx,1ch21r8,1le24ye,1c2spox,1np5i7l,r38v47,1s97cn1,1ygn88e,o1edry,xb1ebd,69f726,11l4p3t,1c5zr2o,1r6a2is,64ge29,1dg1crx,1a5v762,qpeuj5,1i6m7rt,10i79oi,rx3oi8,x8nthz,19b37wc,1551xhw,8bwcob,1gcy2oe,v4pb8w,1u0bfxg,x6g8on,67ba0h,1ficzdk,1f77omb,jmi3y1,9gg1kt,120c7ai,cojcff,1scbg4p,19s06r3,zqkf1w,1jsma1m,ree8ll'.split(',');
+  function h(s){s=s.toUpperCase();var x=5381;for(var i=0;i<s.length;i++){x=(((x<<5)+x)+s.charCodeAt(i))>>>0;}return x.toString(36);}
+  function ul(){try{return localStorage.getItem(KEY)==='1';}catch(e){return false;}}
+  var lock=document.getElementById('drlock');
+  function open(){if(lock&&lock.parentNode)lock.parentNode.removeChild(lock);document.body.style.overflow='';}
+  if(ul()){open();return;}
+  document.body.style.overflow='hidden';
+  var inp=document.getElementById('drlock-in'),err=document.getElementById('drlock-err'),go=document.getElementById('drlock-go');
+  function submit(){
+    var c=(inp.value||'').toUpperCase().replace(/[^A-Z0-9-]/g,'');
+    if(c.indexOf(PFX+'-')!==0){err.style.color='#e0356b';err.textContent='Kode tidak sesuai produk ini.';return;}
+    if(HS.indexOf(h(c))>=0){try{localStorage.setItem(KEY,'1');}catch(e){}err.style.color='#12b886';err.textContent='Berhasil ✓ Membuka...';setTimeout(open,450);}
+    else{err.style.color='#e0356b';err.textContent='Kode tidak valid. Cek lagi ya.';}
+  }
+  go.onclick=submit;
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')submit();});
+  setTimeout(function(){try{inp.focus();}catch(e){}},100);
+})();
+</script>
+<!-- /LICENSE GATE -->
 
 
 <style>
@@ -274,7 +311,7 @@ function seed(){
 var state={};
 function emptyState(){return {name:'Bunda',pockets:[{id:uid(),name:'Dompet Utama',type:'tetap',color:'#6C4FE0',awal:0}],trx:[],budget:{harian:0,mingguan:0,bulanan:0},cats:[],setup:true};}
 function load(){try{var r=localStorage.getItem(KEY);if(r){state=JSON.parse(r);if(!state.cats)state.cats=[];return;}}catch(e){}state={name:'',pockets:[],trx:[],budget:{harian:0,mingguan:0,bulanan:0},cats:[],setup:false};}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));if(state.trx&&state.trx.length){localStorage.setItem(KEY+'_bak',JSON.stringify(state));localStorage.setItem(KEY+'_bak_at',new Date().toISOString());}}catch(e){}}
 function ensureH2P(cb){if(typeof html2pdf!=='undefined'){cb();return;}var d=document.getElementById('__h2p');if(d){var t=setInterval(function(){if(typeof html2pdf!=='undefined'){clearInterval(t);cb();}},150);setTimeout(function(){clearInterval(t);cb();},9000);return;}var s=document.createElement('script');s.id='__h2p';s.src='https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js';s.onload=function(){cb();};s.onerror=function(){cb();};document.head.appendChild(s);}
 function dlPDF(el,filename){if(!el){return;}ensureH2P(function(){if(typeof html2pdf==='undefined'){alert('Menyiapkan cetak… jika PDF tidak otomatis terunduh, pilih "Save as PDF" di dialog print.');window.print();return;}var bg='#ffffff';try{var v=getComputedStyle(document.documentElement).getPropertyValue('--docbg');if(v&&v.trim())bg=v.trim();}catch(e){}el.style.display='block';el.style.width='794px';el.style.margin='0 auto';try{window.scrollTo(0,0);}catch(e){}var done=function(){el.style.display='';el.style.width='';el.style.margin='';};html2pdf().set({margin:0,filename:filename,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:bg,useCORS:true},jsPDF:{unit:'pt',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}}).from(el).save().then(done).catch(function(){done();window.print();});});}
 
@@ -435,10 +472,11 @@ function renderCalendar(){
   for(i=0;i<startDow;i++){e=document.createElement('div');e.className='cell empty';grid.appendChild(e);}
   for(var dn=1;dn<=days;dn++){
     var ds=iso(new Date(viewY,viewM,dn));
-    var dayTrx=state.trx.filter(function(t){return t.date===ds;});
-    var hasIn=dayTrx.some(function(t){return t.type==='in';}),hasOut=dayTrx.some(function(t){return t.type==='out';});
+    var dayTrx=state.trx.filter(function(t){return t.date===ds&&!t.xfer;});
+    var din=0,dout=0;dayTrx.forEach(function(t){if(t.type==='in')din+=t.amount;else if(t.type==='out')dout+=t.amount;});
     e=document.createElement('div');e.className='cell'+(ds===today?' today':'')+(ds===selDate?' sel':'');
-    e.innerHTML='<span class="dn">'+dn+'</span><span class="dots">'+(hasIn?'<i style="background:var(--green)"></i>':'')+(hasOut?'<i style="background:var(--red)"></i>':'')+'</span>';
+    var chips=(din>0?'<div class="ev ev-in">+'+rpS(din)+'</div>':'')+(dout>0?'<div class="ev ev-out">\u2212'+rpS(dout)+'</div>':'');
+    e.innerHTML='<span class="dn">'+dn+'</span>'+chips;
     e.setAttribute('data-d',ds);
     e.onclick=function(){selDate=this.getAttribute('data-d');renderCalendar();};
     grid.appendChild(e);
@@ -549,5 +587,106 @@ function init(){
 init();
 })();
 </script>
+
+<script>
+(function(){
+ var K='aturin_v1';
+ function boot(){
+   var top=document.querySelector('.top');
+   if(!top){return setTimeout(boot,120);}
+   if(document.getElementById('btn-autobak'))return;
+   var b=document.createElement('button');
+   b.id='btn-autobak'; b.className='iconbtn'; b.title='Pulihkan data (cadangan otomatis)'; b.textContent='🛟';
+   var host=top.querySelector('.actions')||top;
+   host.appendChild(b);
+   b.onclick=function(){
+     var bak=localStorage.getItem(K+'_bak');
+     if(!bak){alert('Belum ada cadangan otomatis. Cadangan dibuat otomatis setiap kamu menambah/mengubah transaksi.');return;}
+     var at=localStorage.getItem(K+'_bak_at');
+     if(!confirm('Pulihkan data ke cadangan otomatis terakhir'+(at?(' ('+new Date(at).toLocaleString('id-ID')+')'):'')+'? Data saat ini akan diganti.'))return;
+     try{localStorage.setItem(K, bak); location.reload();}catch(e){alert('Gagal memulihkan.');}
+   };
+ }
+ if(document.readyState!=='loading')boot(); else document.addEventListener('DOMContentLoaded',boot);
+})();
+</script>
+
+
+<style id="skin-learnify">
+:root{--pri:#F0603C;--pri-d:#c94a2a;--pri-l:#FDE8E1;}
+body,button,input,select,textarea{font-family:'Poppins',system-ui,-apple-system,sans-serif!important}
+body{background:#e7ecf3 !important}
+.app{background:transparent!important}
+.top{padding:16px 18px 8px!important}
+.iconbtn{background:#fff!important;border:1px solid #e6eaf0!important;border-radius:14px!important;box-shadow:0 4px 12px rgba(30,40,60,.05)!important}
+.hero{background:#F7DE7B!important;color:#2a2415!important;border-radius:26px!important;box-shadow:0 16px 34px rgba(210,180,60,.28)!important}
+.hero .lbl,.hero .safe{color:#6a5c22!important;opacity:1!important}
+.hero .big{color:#1e1a10!important}
+.hero .mini,.hero .safe{background:rgba(255,255,255,.5)!important}
+.hero .mini .l{color:#6a5c22!important}
+.hero:before{background:rgba(255,255,255,.3)!important}
+.stat,.mcell{background:#fff!important;border:1px solid #e9edf3!important;border-radius:20px!important;box-shadow:0 10px 26px rgba(30,40,60,.05)!important}
+.stat .ic{border-radius:12px!important;background:rgba(255,255,255,.6)!important}
+.card{background:#fff!important;border:1px solid #e9edf3!important;border-radius:24px!important;box-shadow:0 12px 30px rgba(30,40,60,.06)!important}
+.toggle{background:#fff!important;border:1px solid #e9edf3!important;border-radius:16px!important}
+.toggle button.on{background:#141414!important;color:#fff!important;border-radius:11px!important}
+.seg button{border-radius:16px!important}
+.seg button.on-in{background:#12B886!important;border-color:#12B886!important}
+.seg button.on-out{background:#F0526B!important;border-color:#F0526B!important}
+.chip{border-radius:20px!important}
+.chip.on{background:#141414!important;color:#fff!important;border-color:#141414!important}
+.chip.chip-add,.addrow{border-radius:16px!important;background:#FDE8E1!important;border:1.5px dashed #F0603C!important;color:#c94a2a!important}
+input,select{border-radius:14px!important;background:#f6f8fb!important;border:1px solid #e6eaf0!important}
+input:focus,select:focus{border-color:#F0603C!important;background:#fff!important}
+.btn{background:#F0603C!important;color:#fff!important;border-radius:16px!important;box-shadow:0 10px 22px rgba(240,96,60,.35)!important}
+.btn.g{background:#fff!important;color:#333!important;border:1px solid #e6eaf0!important;box-shadow:none!important}
+.nav{background:#141414!important;border-top:0!important}
+.nav button{color:#8a8a8a!important}
+.nav button.on{color:#141414!important}
+.calcout{background:#141414!important;border-radius:24px!important}
+.calcout .big{color:#F7DE7B!important}
+.modal{border-radius:24px!important}
+/* multi-color pastel (Learnify) */
+.stats .stat:nth-child(1){background:#FCEFBE!important}
+.stats .stat:nth-child(2){background:#DDF3E4!important}
+.stats .stat:nth-child(3){background:#FBE0DA!important}
+.stats .stat:nth-child(4){background:#E7DBFA!important}
+.pockets .pocket{border-top:0!important;border:1px solid rgba(0,0,0,.04)!important;border-radius:18px!important;box-shadow:0 10px 24px rgba(30,40,60,.06)!important}
+.pockets .pocket:nth-child(4n+1){background:#FCEFBE!important}
+.pockets .pocket:nth-child(4n+2){background:#E7DBFA!important}
+.pockets .pocket:nth-child(4n+3){background:#D6ECF8!important}
+.pockets .pocket:nth-child(4n){background:#DDF3E4!important}
+/* calendar intelly-like */
+.calhead #cal-title{font-weight:800!important}
+.calhead button{border-radius:14px!important;background:#fff!important;border:1px solid #e6eaf0!important}
+.calweek span{color:#8a8fa3!important}
+.cell{aspect-ratio:auto!important;min-height:80px!important;align-items:stretch!important;justify-content:flex-start!important;padding:7px!important;gap:4px!important;border-radius:14px!important;background:#fff!important;border:1px solid #e9edf3!important}
+.cell .dn{align-self:flex-start!important;font-weight:700!important;font-size:13px!important}
+.ev{font-size:9.5px;font-weight:800;border-radius:7px;padding:2px 6px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev-in{background:#d8f3e6;color:#0c7a52}
+.ev-out{background:#fde1e6;color:#c02a45}
+.cell.today{border-color:#F0603C!important;border-width:2px!important;background:#fff!important}
+.cell.sel{background:#F0603C!important;border-color:#F0603C!important}
+.cell.sel .dn{color:#fff!important}
+.cell.sel .ev{background:rgba(255,255,255,.28)!important;color:#fff!important}
+@media(min-width:900px){
+  body{background:#20242b !important}
+  .app{background:#eef1f6!important;border-radius:30px!important;margin:22px auto!important;max-width:1180px!important;padding:20px 28px 40px 122px!important;box-shadow:0 30px 80px rgba(0,0,0,.35)!important;min-height:calc(100vh - 44px)!important}
+  .nav{left:34px!important;top:46px!important;bottom:46px!important;right:auto!important;transform:none!important;width:76px!important;max-width:76px!important;height:auto!important;flex-direction:column!important;justify-content:flex-start!important;gap:8px!important;padding:18px 8px!important;border-radius:24px!important;box-shadow:0 18px 44px rgba(0,0,0,.3)!important}
+  .nav button{padding:13px 0!important;border-radius:16px!important}
+  .nav button.on{background:#F7DE7B!important;color:#141414!important;border-radius:16px!important}
+  #pg-home{column-count:2;column-gap:18px}
+  #pg-home>*{break-inside:avoid}
+  #pg-home>.card,#pg-home>.stats{margin-bottom:16px!important}
+  #pg-home .hero{column-span:all;margin-bottom:16px}
+  #pg-home .toggle{column-span:all;max-width:340px}
+  #pg-home h2.sec{column-span:all;margin:10px 2px 4px}
+  #pg-home .pockets{column-span:all}
+  #pg-catat,#pg-kasbon,#pg-harga,#pg-dompet,#pg-target{max-width:920px}
+  .cell{min-height:96px!important}
+}
+@media(min-width:1200px){ #pg-home{column-count:3} }
+</style>
+
 </body>
 </html>
