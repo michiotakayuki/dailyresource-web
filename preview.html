@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DailyResource — Uji Coba Desain Baru</title>
+<style>
+:root{--ink:#1b2138;--mut:#6b6f8c}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--ink);
+ background:
+  radial-gradient(900px 460px at 12% -5%,#e7e0ff 0%,transparent 55%),
+  radial-gradient(900px 480px at 100% 15%,#dff0a8 0%,transparent 55%),
+  #eef1f6;min-height:100vh}
+.wrap{max-width:760px;margin:0 auto;padding:34px 18px 60px}
+.hd{text-align:center;margin-bottom:8px}
+.hd .logo{display:inline-flex;align-items:center;gap:10px;font-weight:900;font-size:22px}
+.hd .logo .m{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#6b4dff,#48c6ef);display:flex;align-items:center;justify-content:center;color:#fff}
+.hd p{color:var(--mut);font-size:14px;margin:10px 0 0;line-height:1.5}
+.flag{max-width:520px;margin:16px auto 22px;text-align:center;background:rgba(108,79,224,.10);border:1px solid rgba(108,79,224,.25);color:#4B37B3;font-size:12.5px;font-weight:700;padding:9px 14px;border-radius:14px}
+.cards{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:640px){.cards{grid-template-columns:1fr 1fr}}
+.card{display:block;text-decoration:none;color:inherit;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.85);
+ border-radius:20px;padding:20px;backdrop-filter:blur(14px);box-shadow:0 16px 34px rgba(60,50,120,.10);transition:.15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 22px 44px rgba(60,50,120,.16)}
+.card .ic{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px}
+.card h3{margin:0 0 4px;font-size:17px;font-weight:800}
+.card p{margin:0;color:var(--mut);font-size:12.5px;line-height:1.5}
+.card .go{margin-top:12px;display:inline-block;font-weight:800;font-size:13px;color:#6b4dff}
+.wide{grid-column:1/-1}
+.note{margin-top:24px;color:var(--mut);font-size:12px;text-align:center;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hd">
+    <div class="logo"><span class="m">▽</span> DailyResource</div>
+    <p>Versi <b>uji coba desain baru</b>. Silakan dicoba di HP maupun laptop — masukan sangat dihargai 🙏</p>
+  </div>
+  <div class="flag">● SAMPLE / UJI COBA — datamu tersimpan di perangkatmu sendiri, terpisah dari versi resmi</div>
+
+  <div class="cards">
+    <a class="card" href="./Untung-in-preview.html">
+      <div class="ic" style="background:#eef7d6">📈</div>
+      <h3>Untung-in</h3>
+      <p>Catat untung-rugi usaha: pemasukan, pengeluaran, kasbon, prive, kalkulator harga jual, laporan.</p>
+      <span class="go">Coba sekarang →</span>
+    </a>
+    <a class="card" href="./Atur-in-preview.html">
+      <div class="ic" style="background:#e9f6c9">👛</div>
+      <h3>Atur-in</h3>
+      <p>Atur uang rumah tangga: multi-dompet, budget per kategori + alert, transfer, target menabung.</p>
+      <span class="go">Coba sekarang →</span>
+    </a>
+    <a class="card wide" href="./Quot-in-preview.html">
+      <div class="ic" style="background:#e7e0ff">📄</div>
+      <h3>Quot-in</h3>
+      <p>Bikin penawaran/quotation profesional: item + rincian, PPN/PPh, markup &amp; nego, invoice per termin, PDF.</p>
+      <span class="go">Coba sekarang →</span>
+    </a>
+  </div>
+
+  <div class="note">Tips: di HP, buka lewat Chrome/Safari untuk hasil terbaik. Ini masih tahap uji — kalau menemukan yang aneh atau bikin bingung, tolong kabari ya.</div>
+</div>
+</body>
+</html>
