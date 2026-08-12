@@ -202,7 +202,7 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
     <div class="card"><h3>Produk paling laris</h3><ul class="rows" id="topList"></ul></div>
 
     <div id="priveInfo"></div>
-    <button class="btn g" id="btnReport2" style="margin-top:14px">📄 Download laporan (PDF)</button>
+    <button class="btn g" id="btnReport2" style="margin-top:14px">📄 Laporan Keuangan (PDF / Excel)</button>
     <p class="muted" style="font-size:11.5px;margin:6px 2px 0">Tip: di kotak print, pilih <b>Tujuan/Printer = Save as PDF</b> lalu Simpan. Di HP: menu ⋯ → Bagikan/Print → Simpan PDF.</p>
   </div>
 
@@ -490,23 +490,81 @@ function calcHarga(){
 }
 
 /* ---------- REPORT ---------- */
-function buildReport(){
-  var now=new Date();var vy=(viewY===undefined?now.getFullYear():viewY),vm=(viewM===undefined?now.getMonth():viewM);var bulan=new Date(vy,vm,1).toLocaleDateString('id-ID',{month:'long',year:'numeric'});
-  var rows=state.trx.filter(function(t){var dd=new Date(t.date);return dd.getMonth()===vm&&dd.getFullYear()===vy;});
-  var omzet=0,out=0,prive=0,catg={};
-  rows.forEach(function(t){if(t.type==='in')omzet+=t.amount;else if(t.type==='out'){out+=t.amount;catg[t.cat]=(catg[t.cat]||0)+t.amount;}else prive+=t.amount;});
-  var laba=omzet-out;
-  var catRows=Object.keys(catg).sort(function(a,b){return catg[b]-catg[a];}).map(function(k){return '<tr><td>'+k+'</td><td class="n">'+rp(catg[k])+'</td></tr>';}).join('');
-  var piutRows=state.debts.filter(function(d){return !d.paid;}).map(function(d){return '<tr><td>'+d.name+(d.note?' ('+d.note+')':'')+'</td><td class="n">'+rp(d.amount)+'</td></tr>';}).join('')||'<tr><td colspan="2">Tidak ada</td></tr>';
+function SECh(t){return '<div style="font-weight:800;font-size:15px;margin:16px 0 6px;border-bottom:2px solid #111;padding-bottom:3px">'+t+'</div>';}
+function _repPeriod(mode){
+  var now=new Date();
+  var vy=(typeof viewY!=='undefined'&&viewY!==undefined)?viewY:now.getFullYear();
+  var vm=(typeof viewM!=='undefined'&&viewM!==undefined)?viewM:now.getMonth();
+  if(mode==='year'){return {rows:state.trx.filter(function(t){return new Date(t.date).getFullYear()===vy;}),label:'Tahun '+vy,vy:vy,vm:null};}
+  return {rows:state.trx.filter(function(t){var d=new Date(t.date);return d.getFullYear()===vy&&d.getMonth()===vm;}),label:new Date(vy,vm,1).toLocaleDateString('id-ID',{month:'long',year:'numeric'}),vy:vy,vm:vm};
+}
+function _repCalc(rows){
+  var peng={},biaya={},setoran=0,prive=0,tp=0,tb=0;
+  rows.forEach(function(t){
+    if(t.type==='in'){ if(t.cat==='Modal tambahan'){setoran+=t.amount;} else {peng[t.cat]=(peng[t.cat]||0)+t.amount;tp+=t.amount;} }
+    else if(t.type==='out'){ biaya[t.cat]=(biaya[t.cat]||0)+t.amount; tb+=t.amount; }
+    else { prive+=t.amount; }
+  });
+  return {peng:peng,biaya:biaya,setoran:setoran,prive:prive,totPeng:tp,totBiaya:tb,laba:tp-tb};
+}
+function buildReport(mode){
+  var p=_repPeriod(mode), c=_repCalc(p.rows), now=new Date();
+  function rowsHtml(obj){var ks=Object.keys(obj).sort(function(a,b){return obj[b]-obj[a];});if(!ks.length)return '<tr><td style="color:#888">— tidak ada —</td><td class="n">Rp 0</td></tr>';return ks.map(function(k){return '<tr><td>'+k+'</td><td class="n">'+rp(obj[k])+'</td></tr>';}).join('');}
+  var yearBreak='';
+  if(mode==='year'){
+    var mm=[];for(var i=0;i<12;i++){var mr=p.rows.filter(function(t){return new Date(t.date).getMonth()===i;});var mc=_repCalc(mr);mm.push({n:new Date(p.vy,i,1).toLocaleDateString('id-ID',{month:'short'}),peng:mc.totPeng,biaya:mc.totBiaya,laba:mc.laba});}
+    yearBreak=SECh('Rekap per Bulan')+'<table><tr><th>Bulan</th><th class="n">Penghasilan</th><th class="n">Biaya</th><th class="n">Laba</th></tr>'+mm.map(function(x){return '<tr><td>'+x.n+'</td><td class="n">'+rp(x.peng)+'</td><td class="n">'+rp(x.biaya)+'</td><td class="n"><b>'+rp(x.laba)+'</b></td></tr>';}).join('')+'<tr style="border-top:2px solid #333"><td><b>Total Setahun</b></td><td class="n"><b>'+rp(c.totPeng)+'</b></td><td class="n"><b>'+rp(c.totBiaya)+'</b></td><td class="n"><b>'+rp(c.laba)+'</b></td></tr></table>';
+  }
+  var lc=c.laba>=0?'#0c6e4d':'#9c2436';
   document.getElementById('report').innerHTML=
-    '<h1>Laporan Keuangan — '+(state.biz.name||'Usahaku')+'</h1>'+
-    '<div class="r-sub">Periode: '+bulan+' · Dicetak: '+now.toLocaleDateString('id-ID')+'</div>'+
-    '<div class="rbox"><div class="rb"><div class="l">Omzet</div><div class="v">'+rp(omzet)+'</div></div><div class="rb"><div class="l">Pengeluaran</div><div class="v">'+rp(out)+'</div></div><div class="rb"><div class="l">Laba Bersih</div><div class="v">'+rp(laba)+'</div></div></div>'+
-    '<h3>Rincian pengeluaran</h3><table><tr><th>Kategori</th><th class="n">Jumlah</th></tr>'+(catRows||'<tr><td colspan="2">Tidak ada</td></tr>')+'</table>'+
-    '<h3>Piutang belum tertagih</h3><table><tr><th>Nama</th><th class="n">Jumlah</th></tr>'+piutRows+'</table>'+
-    '<p style="font-size:12px;color:#666;margin-top:10px">Kas usaha saat ini: <b>'+rp(calcKas())+'</b> · Diambil untuk pribadi bulan ini: '+rp(prive)+'</p>'+
-    '<p style="font-size:11px;color:#999;margin-top:16px">Dibuat dengan Untung-in</p>';
-  dlPDF(document.getElementById('report'),'Laporan-Untung-in.pdf');
+    '<h1>Laporan Keuangan '+(mode==='year'?'Tahunan':'Bulanan')+'</h1>'+
+    '<div class="r-sub">Usaha: <b>'+(state.biz.name||'Usahaku')+'</b> &middot; Periode: '+p.label+' &middot; Dicetak: '+now.toLocaleDateString('id-ID')+'</div>'+
+    SECh('A. Modal')+'<table>'+
+      '<tr><td>Modal awal usaha (kas awal)</td><td class="n">'+rp(state.biz.kasAwal||0)+'</td></tr>'+
+      '<tr><td>Setoran modal (periode ini)</td><td class="n">'+rp(c.setoran)+'</td></tr>'+
+      '<tr style="border-top:1px solid #333"><td><b>Total Modal</b></td><td class="n"><b>'+rp((state.biz.kasAwal||0)+c.setoran)+'</b></td></tr></table>'+
+    SECh('B. Penghasilan (Pendapatan Usaha)')+'<table><tr><th>Sumber</th><th class="n">Jumlah</th></tr>'+rowsHtml(c.peng)+'<tr style="border-top:1px solid #333"><td><b>Total Penghasilan</b></td><td class="n"><b>'+rp(c.totPeng)+'</b></td></tr></table>'+
+    SECh('C. Biaya Usaha')+'<table><tr><th>Kategori</th><th class="n">Jumlah</th></tr>'+rowsHtml(c.biaya)+'<tr style="border-top:1px solid #333"><td><b>Total Biaya Usaha</b></td><td class="n"><b>'+rp(c.totBiaya)+'</b></td></tr></table>'+
+    '<div style="border:2px solid '+lc+';border-radius:12px;padding:14px 16px;margin:16px 0;display:flex;justify-content:space-between;align-items:center"><div style="font-weight:800">D. LABA BERSIH<div style="font-size:11px;color:#666;font-weight:400">Penghasilan &minus; Biaya Usaha</div></div><div style="font-size:22px;font-weight:800;color:'+lc+'">'+rp(c.laba)+'</div></div>'+
+    yearBreak+
+    SECh('Catatan')+'<table>'+
+      '<tr><td>Prive (diambil pemilik &mdash; bukan biaya usaha)</td><td class="n">'+rp(c.prive)+'</td></tr>'+
+      '<tr><td>Kas usaha saat ini</td><td class="n">'+rp(calcKas())+'</td></tr></table>'+
+    '<p style="font-size:11px;color:#666;margin-top:14px;line-height:1.5">Laporan disusun dari pencatatan mandiri di Untung-in. Penghasilan = pemasukan usaha (di luar setoran modal); Biaya Usaha = pengeluaran operasional; Laba Bersih = Penghasilan &minus; Biaya. Dapat dipakai sebagai lampiran pendukung pelaporan pajak. Untuk kepastian, konsultasikan dengan konsultan pajak / petugas KPP.</p>'+
+    '<p style="font-size:10px;color:#aaa;margin-top:8px">Dibuat dengan Untung-in &middot; DailyResource</p>';
+  setTimeout(function(){window.print();},80);
+}
+function exportCSV(mode){
+  var p=_repPeriod(mode);
+  var rows=p.rows.slice().sort(function(a,b){return a.date<b.date?-1:1;});
+  function jenis(t){return t==='in'?'Penghasilan':t==='out'?'Biaya Usaha':'Prive';}
+  var lines=['Tanggal,Jenis,Kategori,Keterangan,Jumlah'];
+  rows.forEach(function(t){var cells=[t.date,jenis(t.type),t.cat||'',(t.note||'').replace(/[\r\n]+/g,' '),t.amount];lines.push(cells.map(function(x){var s=String(x);return /[",\n]/.test(s)?('"'+s.replace(/"/g,'""')+'"'):s;}).join(','));});
+  var csv='﻿'+lines.join('\r\n');
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Untung-in-transaksi-'+(mode==='year'?('tahun-'+p.vy):p.label.replace(/\s+/g,'-'))+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
+function openReportMenu(){
+  var now=new Date();
+  var vy=(typeof viewY!=='undefined'&&viewY!==undefined)?viewY:now.getFullYear();
+  var vm=(typeof viewM!=='undefined'&&viewM!==undefined)?viewM:now.getMonth();
+  var bl=new Date(vy,vm,1).toLocaleDateString('id-ID',{month:'long',year:'numeric'});
+  var ov=document.createElement('div');ov.className='overlay';
+  ov.innerHTML='<div class="modal"><h3>Laporan Keuangan</h3><p>Rincian Modal, Penghasilan, Biaya Usaha, dan Laba Bersih &mdash; siap jadi lampiran laporan pajak. Pilih periode &amp; format:</p>'+
+   '<button class="btn" id="rp-mo">Laporan Bulanan &mdash; '+bl+' (PDF)</button>'+
+   '<button class="btn" id="rp-yr" style="margin-top:8px">Laporan Tahunan &mdash; '+vy+' (PDF)</button>'+
+   '<div style="height:1px;background:var(--line);margin:12px 0 2px"></div>'+
+   '<button class="btn g" id="rp-csv-mo" style="margin-top:6px">Export transaksi bulan ini (Excel/CSV)</button>'+
+   '<button class="btn g" id="rp-csv-yr" style="margin-top:8px">Export transaksi setahun (Excel/CSV)</button>'+
+   '<button class="btn g" id="rp-x" style="margin-top:12px">Tutup</button></div>';
+  document.body.appendChild(ov);
+  function close(){if(ov.parentNode)document.body.removeChild(ov);}
+  ov.querySelector('#rp-mo').onclick=function(){close();buildReport('month');};
+  ov.querySelector('#rp-yr').onclick=function(){close();buildReport('year');};
+  ov.querySelector('#rp-csv-mo').onclick=function(){exportCSV('month');};
+  ov.querySelector('#rp-csv-yr').onclick=function(){exportCSV('year');};
+  ov.querySelector('#rp-x').onclick=close;
+  ov.onclick=function(e){if(e.target===ov)close();};
 }
 
 /* ---------- NAV & INIT ---------- */
@@ -548,7 +606,7 @@ function init(){
   document.getElementById('c-add').onclick=addTrx;
   var _clt=document.getElementById('clearTrx');if(_clt)_clt.onclick=function(){if(!state.trx.length){alert('Belum ada transaksi.');return;}if(confirm('Hapus SEMUA transaksi? (kasbon & profil usaha tetap) Tidak bisa dibatalkan.')){state.trx=[];save();renderTrxList();renderHome();}};
   document.getElementById('k-add').onclick=addDebt;
-  document.getElementById('btnReport').onclick=buildReport;document.getElementById('btnReport2').onclick=buildReport;
+  document.getElementById('btnReport').onclick=openReportMenu;document.getElementById('btnReport2').onclick=openReportMenu;
   document.getElementById('btnSetting').onclick=function(){openSetup(false);};
   ['ha-name','ha-cost','ha-ops','ha-margin','ha-fee'].forEach(function(id){document.getElementById(id).addEventListener('input',calcHarga);});
   setType('in');renderHome();renderTrxList();
@@ -584,14 +642,8 @@ init();
 
 
 <style id="skin-lime">
-/* ===== SKIN: Lime / Black Dashboard (SAMPLE) — responsive ===== */
 :root{ --pri:#7fae00; --pri-d:#3c5a10; --pri-l:#eef7d6; }
-body{
- background:
-  radial-gradient(1000px 460px at 82% -12%, #dff0a8 0%, transparent 60%),
-  radial-gradient(900px 500px at -10% 30%, #e9f6c9 0%, transparent 55%),
-  #eef7d6 !important;
-}
+body{background:radial-gradient(1000px 460px at 82% -12%,#dff0a8 0%,transparent 60%),radial-gradient(900px 500px at -10% 30%,#e9f6c9 0%,transparent 55%),#eef7d6 !important;}
 .app{background:transparent!important}
 .hero{background:linear-gradient(140deg,#141414,#242424)!important;color:#fff!important;box-shadow:0 18px 40px rgba(20,30,10,.28)!important}
 .hero .big{color:#c7f04a!important}
@@ -615,10 +667,7 @@ input:focus,select:focus{border-color:#a9d92f!important;background:#fff!importan
 @media(min-width:900px){
   .app{max-width:1120px!important;margin:0 auto!important;padding:22px 28px 44px 116px!important;min-height:100vh!important}
   .top{padding:10px 6px 2px!important}
-  .nav{left:20px!important;top:20px!important;bottom:20px!important;right:auto!important;transform:none!important;
-    width:76px!important;max-width:76px!important;height:auto!important;flex-direction:column!important;
-    justify-content:flex-start!important;gap:6px!important;padding:18px 8px!important;border-radius:24px!important;
-    box-shadow:0 18px 44px rgba(0,0,0,.28)!important}
+  .nav{left:20px!important;top:20px!important;bottom:20px!important;right:auto!important;transform:none!important;width:76px!important;max-width:76px!important;height:auto!important;flex-direction:column!important;justify-content:flex-start!important;gap:6px!important;padding:18px 8px!important;border-radius:24px!important;box-shadow:0 18px 44px rgba(0,0,0,.28)!important}
   .nav button{padding:13px 0!important;border-radius:16px!important}
   .nav button.on{background:#c7f04a!important;color:#141414!important;border-radius:16px!important}
   #pg-home{column-count:2;column-gap:18px}
