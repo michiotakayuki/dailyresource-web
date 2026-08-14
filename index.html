@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1309442807983979');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1309442807983979&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DailyResource.id — Menyederhanakan yang rumit jadi mudah</title>
@@ -418,5 +426,19 @@ document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay
 // mobile menu (simple scroll to produk)
 document.getElementById('burger').onclick=function(){document.getElementById('produk').scrollIntoView({behavior:'smooth'});};
 </script>
+<!-- Meta InitiateCheckout on Beli -->
+<script>
+(function(){
+ var M={'7o8qqn0kgn3d':['Untung-in',49000],'pm4nn2erxln6':['Quot-in',79000],'5k8ooyp22x8m':['Atur-in',49000],'1w8yy04erjj8':['Paket Lengkap DailyResource',100000]};
+ document.addEventListener('click',function(e){
+  var a=e.target.closest && e.target.closest('a[href*="lynk.id/michiotakayuki/"]'); if(!a)return;
+  var m=a.href.match(/michiotakayuki\/([a-z0-9]+)/); if(!m)return;
+  var p=M[m[1]]; if(!p||!window.fbq)return;
+  fbq('track','InitiateCheckout',{value:p[1],currency:'IDR',content_name:p[0],content_ids:[m[1]]});
+ },true);
+})();
+</script>
+<!-- End InitiateCheckout -->
+
 </body>
 </html>
