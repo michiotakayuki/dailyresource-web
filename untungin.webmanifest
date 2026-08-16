@@ -1,0 +1,14 @@
+{
+ "name": "Untung-in — Pembukuan UMKM",
+ "short_name": "Untung-in",
+ "start_url": "/Untung-in-v2.html",
+ "scope": "/",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#e7ecf3",
+ "theme_color": "#F0603C",
+ "icons": [
+  {"src": "/ic-untungin-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+  {"src": "/ic-untungin-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+ ]
+}

@@ -1,0 +1,14 @@
+{
+ "name": "Atur-in — Atur Uang Rumah",
+ "short_name": "Atur-in",
+ "start_url": "/Atur-in.html",
+ "scope": "/",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#e7ecf3",
+ "theme_color": "#F0A93B",
+ "icons": [
+  {"src": "/ic-aturin-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+  {"src": "/ic-aturin-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+ ]
+}
