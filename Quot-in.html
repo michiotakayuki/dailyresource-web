@@ -11,7 +11,7 @@
 <script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){})});}</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quot-in — SAMPLE Learnify</title>
+<title>Quot-in — Penawaran Harga Profesional</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
@@ -1016,7 +1016,7 @@ input:focus,select:focus,.secname:focus{border-color:#F0603C!important;backgroun
    var activity=totals.slice(0,4).map(function(x){return '<div class="act" data-open="'+x.q.id+'"><div class="row"><div class="cir" style="background:#22b07d">📄</div><div><div class="t">'+esc(x.q.name)+'</div><div style="font-size:11.5px;color:#7b81a0">'+esc(x.q.at||'')+'</div></div><div style="margin-left:auto;font-weight:800">'+rp(x.t)+'</div></div></div>';}).join('') || '<div style="color:#7b81a0;font-size:13px;margin-top:8px">Aktivitas akan muncul di sini setelah kamu simpan quotation.</div>';
 
    dash.innerHTML=''+
-    '<div class="flag">● SAMPLE — Light Holographic · fungsional, belum di-deploy</div>'+
+    '' +
     '<div class="panel">'+
      '<div class="hd"><div class="logo">Q</div><h1>Quot-in</h1><div class="sp"></div>'+
        '<button class="cta" id="d-new2">+ Quotation baru</button></div>'+
