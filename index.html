@@ -11,192 +11,359 @@ fbq('init','1309442807983979');fbq('track','PageView');
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DailyResource.id — Menyederhanakan yang rumit jadi mudah</title>
-<meta name="description" content="Alat digital sederhana untuk bisnis kecil–menengah & keluarga: keuangan usaha, penawaran harga, atur uang. Semua rumus otomatis — tinggal isi, pilih desain, download PDF. Beli 1× seumur hidup, tanpa langganan.">
+<title>DailyResource.id — Tools digital biar kerja jadi lebih gampang</title>
+<meta name="description" content="Tools digital sederhana untuk menghitung harga jual, membuat quotation, dan mengatur keuangan. Rumus sudah jadi — tinggal isi. Sekali beli, pakai selamanya, tanpa langganan. Jalan di HP & laptop.">
+<meta name="keywords" content="kalkulator harga jual, aplikasi quotation, tools UMKM, tools freelancer, pengelolaan keuangan keluarga, hitung margin keuntungan">
+<link rel="canonical" href="https://dailyresource.id/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DailyResource.id — Bikin kerja jadi lebih gampang">
+<meta property="og:description" content="Tools digital sederhana: hitung harga jual, bikin quotation, atur keuangan. Sekali beli, pakai selamanya.">
+<meta property="og:url" content="https://dailyresource.id/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --pri:#6C4FE0; --pri-d:#4B37B3; --pri-l:#EFEBFB;
-  --teal:#12B886; --amber:#F0A93B; --blue:#3BA6F0;
+  --teal:#12B886; --teal-d:#0E9E76; --teal-l:#E3F8F1;
+  --amber:#F0A93B; --amber-d:#B5771A; --amber-l:#FDF1DF;
   --ink:#17142B; --body:#4B4763; --mute:#8B87A3; --line:#ECEAF4; --bg:#FFFFFF; --soft:#F7F6FC;
+  --red:#E5533D;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--body);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--body);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
-h1,h2,h3{color:var(--ink);line-height:1.15;letter-spacing:-.02em}
+h1,h2,h3,h4{color:var(--ink);line-height:1.15;letter-spacing:-.02em}
 a{text-decoration:none;color:inherit}
+img,video{max-width:100%;display:block}
 .grad{background:linear-gradient(110deg,#7A5CF0,#5B3FD6 60%,#8C5BE0);-webkit-background-clip:text;background-clip:text;color:transparent}
-.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;padding:13px 24px;border-radius:14px;cursor:pointer;border:0;font-family:inherit;transition:.18s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:15px;padding:14px 26px;border-radius:14px;cursor:pointer;border:0;font-family:inherit;transition:.18s;text-align:center}
 .btn.pri{background:var(--pri);color:#fff;box-shadow:0 10px 24px rgba(108,79,224,.32)}
 .btn.pri:hover{background:var(--pri-d);transform:translateY(-2px)}
 .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
 .btn.ghost:hover{border-color:var(--pri);color:var(--pri-d)}
+.btn.lg{padding:16px 32px;font-size:16.5px}
+.pad{padding:88px 0}
+.eyebrow{font-size:12.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--pri);margin-bottom:12px}
+.h2c{font-size:38px;font-weight:800;text-align:center;margin-bottom:14px}
+.subc{text-align:center;max-width:600px;margin:0 auto 46px;font-size:17px;color:var(--body)}
+.eyebrow.c{text-align:center}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.rv.in{opacity:1;transform:none}
 
 /* header */
-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:66px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--ink)}
 .logo .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#7A5CF0,#5B3FD6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:800;box-shadow:0 6px 14px rgba(108,79,224,.3)}
-.logo .mark span{transform:translateY(-1px)}
-.navlinks{display:flex;align-items:center;gap:28px}
+.navlinks{display:flex;align-items:center;gap:26px}
 .navlinks a{font-size:15px;font-weight:600;color:var(--body)}
 .navlinks a:hover{color:var(--pri-d)}
 .navlinks .btn{padding:10px 18px;font-size:14px}
-.burger{display:none;background:none;border:0;font-size:24px;cursor:pointer;color:var(--ink)}
+.burger{display:none;background:none;border:0;font-size:24px;cursor:pointer;color:var(--ink);padding:4px 8px}
 
 /* hero */
-.hero{position:relative;overflow:hidden;padding:78px 0 86px;background:radial-gradient(1100px 500px at 80% -10%,#EFEBFB 0%,rgba(255,255,255,0) 60%),radial-gradient(700px 400px at 0% 20%,#EAF7F2 0%,rgba(255,255,255,0) 55%)}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
-.pill{display:inline-flex;align-items:center;gap:8px;background:var(--pri-l);color:var(--pri-d);font-weight:700;font-size:13px;padding:7px 15px;border-radius:30px;margin-bottom:22px}
+.hero{position:relative;overflow:hidden;padding:76px 0 70px;background:radial-gradient(1100px 500px at 82% -10%,#EFEBFB 0%,rgba(255,255,255,0) 60%),radial-gradient(700px 400px at 0% 25%,#EAF7F2 0%,rgba(255,255,255,0) 55%)}
+.hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:52px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--pri-l);color:var(--pri-d);font-weight:700;font-size:13px;padding:7px 15px;border-radius:30px;margin-bottom:20px}
 .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}
-.hero h1{font-size:52px;font-weight:800;margin-bottom:20px}
-.hero p.lead{font-size:18.5px;max-width:520px;margin-bottom:30px}
-.hero .cta{display:flex;gap:14px;flex-wrap:wrap}
-.hero .stats{display:flex;gap:26px;margin-top:38px;flex-wrap:wrap}
-.hero .stat b{display:block;font-size:22px;color:var(--ink);font-weight:800}
-.hero .stat span{font-size:13px;color:var(--mute)}
+.hero h1{font-size:53px;font-weight:800;margin-bottom:18px;letter-spacing:-.03em}
+.hero p.lead{font-size:18.5px;max-width:540px;margin-bottom:22px}
+.nolist{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:28px}
+.nochip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:8px 14px;font-size:13.5px;font-weight:600;color:var(--ink)}
+.nochip b{color:var(--teal-d);font-size:14px}
+.hero .cta{display:flex;gap:13px;flex-wrap:wrap}
 
-/* hero visual */
+/* hero showcase */
 .showcase{position:relative;height:420px}
-.pcard{position:absolute;width:230px;border-radius:22px;background:#fff;box-shadow:0 30px 60px rgba(60,45,120,.18);border:1px solid var(--line);overflow:hidden}
-.pcard .bar{height:78px;padding:14px 16px;color:#fff}
-.pcard .bar .t{font-size:11px;opacity:.85}
-.pcard .bar .n{font-size:20px;font-weight:800;margin-top:2px}
-.pcard .body{padding:14px 16px}
-.pcard .li{height:9px;border-radius:5px;background:#EEECF6;margin-bottom:9px}
-.pcard .li.s{width:70%}.pcard .li.m{width:88%}
-.pcard .chipmini{display:inline-block;font-size:10px;font-weight:700;padding:4px 9px;border-radius:20px;margin-top:4px}
-.pc1{top:10px;left:8px;z-index:3;transform:rotate(-5deg)}
-.pc1 .bar{background:linear-gradient(140deg,#7A5CF0,#5B3FD6)}
-.pc2{top:70px;right:0;z-index:2;transform:rotate(4deg)}
-.pc2 .bar{background:linear-gradient(140deg,#16C29A,#0E9E76)}
-.pc3{bottom:0;left:52px;z-index:1;transform:rotate(-2deg)}
-.pc3 .bar{background:linear-gradient(140deg,#F5B14A,#E5922A)}
+.pcard{position:absolute;width:250px;background:#fff;border-radius:18px;border:1px solid var(--line);box-shadow:0 22px 48px rgba(23,20,43,.11);overflow:hidden;animation:float 7s ease-in-out infinite}
+.pcard .bar{padding:13px 16px;border-bottom:1px solid var(--line)}
+.pcard .bar .t{font-size:11px;color:var(--mute);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.pcard .bar .n{font-size:16px;font-weight:800;color:var(--ink)}
+.pcard .body{padding:15px 16px}
+.pcard .li{height:8px;border-radius:5px;background:var(--soft);margin-bottom:8px}
+.pcard .li.m{width:78%}.pcard .li.s{width:52%}
+.chipmini{display:inline-block;font-size:11.5px;font-weight:700;padding:5px 11px;border-radius:8px;margin-top:5px}
+.pc1{top:8px;left:0;z-index:3;animation-delay:0s}
+.pc2{top:128px;right:8px;z-index:4;animation-delay:1.1s}
+.pc3{bottom:8px;left:38px;z-index:2;animation-delay:2.2s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
 
-/* strip */
-.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--soft)}
-.strip .inner{display:flex;flex-wrap:wrap;gap:14px 40px;justify-content:center;padding:20px 0;font-size:14px;font-weight:600;color:var(--body)}
-.strip .inner i{color:var(--teal);font-style:normal;margin-right:7px;font-weight:800}
+/* rotating benefits */
+.ticker{background:var(--ink);color:#fff;padding:34px 0;overflow:hidden}
+.ticker .inner{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;text-align:center}
+.ticker .lbl{font-size:11.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:#A996F5;white-space:nowrap}
+.rot{position:relative;height:34px;min-width:330px;display:flex;align-items:center;justify-content:center}
+.rot span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateY(14px);opacity:0;font-size:23px;font-weight:800;letter-spacing:-.01em;white-space:nowrap;color:#fff;transition:opacity .5s ease,transform .5s ease}
+.rot span.on{opacity:1;transform:translate(-50%,-50%) translateY(0)}
+.rot span.out{opacity:0;transform:translate(-50%,-50%) translateY(-14px)}
 
-/* sections */
-section.pad{padding:84px 0}
-.eyebrow{text-align:center;font-weight:800;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--pri)}
-.h2c{text-align:center;font-size:38px;font-weight:800;margin:12px auto 14px;max-width:640px}
-.subc{text-align:center;font-size:17px;max-width:600px;margin:0 auto 52px;color:var(--body)}
+/* problem */
+.prob{background:var(--soft)}
+.problist{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;max-width:900px;margin:0 auto}
+.probitem{background:#fff;border:1px solid var(--line);border-radius:15px;padding:19px 21px;display:flex;gap:13px;align-items:flex-start}
+.probitem .x{flex:0 0 26px;width:26px;height:26px;border-radius:8px;background:#FDECE9;color:var(--red);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+.probitem p{font-size:15px;color:var(--ink);font-weight:600;line-height:1.5}
+.bridge{text-align:center;margin-top:52px;max-width:640px;margin-left:auto;margin-right:auto}
+.bridge .arrowdown{font-size:26px;color:var(--pri);margin-bottom:14px}
+.bridge h3{font-size:31px;font-weight:800;margin-bottom:13px}
+.bridge p{font-size:17px}
 
-/* products */
-.prod{display:grid;grid-template-columns:1fr;gap:22px}
-.pcardbig{display:grid;grid-template-columns:1fr 1.35fr;gap:0;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 12px 30px rgba(60,45,120,.06)}
-.pcardbig .side{padding:34px 32px;color:#fff;display:flex;flex-direction:column;justify-content:center}
-.pcardbig .side .ic{font-size:30px;width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.pcardbig .side h3{color:#fff;font-size:26px;font-weight:800}
-.pcardbig .side .tl{font-size:15px;opacity:.95;margin-top:6px;font-weight:500}
-.pcardbig .main{padding:34px 34px}
-.pcardbig .main p{font-size:15.5px;margin-bottom:18px}
-.feats{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:24px}
-.feat{background:var(--soft);border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:13px;padding:7px 13px;border-radius:20px}
-.pcardbig .main .foot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.price{font-size:13px;color:var(--mute)}.price b{font-size:20px;color:var(--ink)}
-.v-untung{background:linear-gradient(150deg,#7A5CF0,#5B3FD6)}
-.v-quot{background:linear-gradient(150deg,#16C29A,#0E9E76)}
-.v-atur{background:linear-gradient(150deg,#F5B14A,#E5922A)}
-.thumb{padding:28px 24px;display:flex;align-items:center;justify-content:center}
-.th-u{background:linear-gradient(150deg,#EFEBFB,#E1D6F8)}
-.th-q{background:linear-gradient(150deg,#E3F8F1,#C9EEE1)}
-.th-a{background:linear-gradient(150deg,#FDF1DF,#FBE4C2)}
-.screen{width:100%;max-width:250px;background:#fff;border-radius:18px;box-shadow:0 18px 42px rgba(60,45,120,.18);overflow:hidden}
-.screen .sh{padding:13px 15px;color:#fff}
-.screen .sh .t{font-size:10px;opacity:.85}
-.screen .sh .v{font-size:18px;font-weight:800;margin-top:2px}
-.screen .sb{padding:12px 15px 15px}
-.mk-u .sh{background:linear-gradient(140deg,#7A5CF0,#5B3FD6)}
-.mk-u .st{display:flex;gap:8px}
-.mk-u .st .s{flex:1;background:#F6F4FD;border-radius:10px;padding:8px}
-.mk-u .st .s .l{font-size:8px;color:#8B87A3}
-.mk-u .st .s .n{font-size:12px;font-weight:800;color:#17142B}
-.mk-u .bars{display:flex;align-items:flex-end;gap:5px;height:42px;margin-top:11px}
-.mk-u .bars i{flex:1;background:#6C4FE0;border-radius:4px 4px 0 0;display:block}
-.mk-q .sh{background:linear-gradient(140deg,#16C29A,#0E9E76)}
-.mk-q table{width:100%;border-collapse:collapse;margin-top:4px;font-size:9px}
-.mk-q th{background:#12B886;color:#fff;text-align:left;padding:5px 7px;font-size:8px}
-.mk-q td{padding:5px 7px;border-bottom:1px solid #eee;color:#666}
-.mk-q .tt{display:flex;justify-content:space-between;margin-top:8px;font-weight:800;font-size:11px;color:#0E9E76;border-top:2px solid #12B886;padding-top:6px}
-.mk-a .sh{background:linear-gradient(140deg,#F5B14A,#E5922A)}
-.mk-a .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:6px}
-.mk-a .cal i{aspect-ratio:1;border-radius:5px;background:#F6F1E8;display:flex;align-items:center;justify-content:center;font-size:7.5px;color:#8a6a2a;font-weight:700;font-style:normal}
-.mk-a .cal i.on{background:#F0A93B;color:#fff}
-.mk-a .pk{display:flex;gap:5px;margin-top:8px}
-.mk-a .pk b{flex:1;font-size:8px;background:#FBEFD8;border-radius:7px;padding:5px;color:#8a5a12;font-weight:700;text-align:center}
+/* product */
+.prod{display:flex;flex-direction:column;gap:34px}
+.pbig{display:grid;grid-template-columns:0.85fr 1fr;gap:0;background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 16px 40px rgba(23,20,43,.06)}
+.pbig .media{position:relative;background:var(--soft);display:flex;align-items:center;justify-content:center}
+/* video selalu 1:1 — tidak pernah terpotong */
+.pbig .media video{width:100%;height:100%;object-fit:contain;background:#eceaf4;display:block}
+.vwrap{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden}
+/* desktop: beri jarak biar video square terlihat rapi di dalam kartu */
+@media(min-width:961px){
+  .pbig .media{padding:20px}
+  .vwrap{border-radius:16px}
+}
+.vbadge{position:absolute;left:13px;top:13px;z-index:3;background:rgba(23,20,43,.72);color:#fff;font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:20px;backdrop-filter:blur(6px);display:flex;align-items:center;gap:7px;pointer-events:none}
+.vbadge .rec{width:7px;height:7px;border-radius:50%;background:#4ADE80;animation:pulse 1.9s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.sndbtn{position:absolute;right:13px;bottom:13px;z-index:3;background:rgba(23,20,43,.72);color:#fff;border:0;font-family:inherit;font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:20px;cursor:pointer;backdrop-filter:blur(6px);transition:.18s}
+.sndbtn:hover{background:rgba(23,20,43,.92)}
+.pbig .main{padding:34px 34px 32px}
+.picon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:13px}
+.pbig h3{font-size:27px;font-weight:800;margin-bottom:5px}
+.ptag{font-weight:700;font-size:16.5px;margin-bottom:17px;line-height:1.35}
+.blk{margin-bottom:16px}
+.blk .bt{font-size:12px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--mute);margin-bottom:9px}
+.forlist{display:flex;flex-direction:column;gap:6px}
+.forlist li{list-style:none;font-size:14.8px;color:var(--body);display:flex;gap:9px;align-items:flex-start;line-height:1.5}
+.forlist li:before{content:"—";color:var(--mute);flex:0 0 auto}
+.feats{display:flex;flex-wrap:wrap;gap:7px}
+.feat{font-size:13px;font-weight:600;background:var(--soft);border:1px solid var(--line);color:var(--ink);padding:6px 12px;border-radius:9px}
+.pfoot{border-top:1px solid var(--line);margin-top:20px;padding-top:19px}
+.priceline{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.priceline .amt{font-size:31px;font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.priceline .once{font-size:12px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--teal-d);background:var(--teal-l);padding:5px 11px;border-radius:8px}
+.pbtns{display:flex;gap:9px;flex-wrap:wrap}
+
+/* bundle */
+.bundle{background:linear-gradient(135deg,#1b1830,#3a2f6b);border-radius:24px;padding:40px 42px;color:#fff;box-shadow:0 24px 56px rgba(27,24,48,.26);display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;margin-top:34px}
+.bundle .save{display:inline-block;font-weight:800;font-size:11.5px;letter-spacing:1.1px;text-transform:uppercase;color:#1b1830;background:#FFD166;padding:6px 13px;border-radius:8px;margin-bottom:13px}
+.bundle h3{color:#fff;font-size:29px;font-weight:800;margin-bottom:9px}
+.bundle p{opacity:.86;font-size:15.5px;line-height:1.55;max-width:490px}
+.bprice{text-align:right}
+.bprice .old{font-size:16px;opacity:.55;text-decoration:line-through;display:block}
+.bprice .new{font-size:41px;font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1.1;display:block;margin-bottom:14px}
+
+/* who */
+.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.whocard{background:#fff;border:1px solid var(--line);border-radius:17px;padding:24px 22px;transition:.2s}
+.whocard:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(23,20,43,.09);border-color:#DED8F6}
+.whocard .em{font-size:27px;margin-bottom:11px}
+.whocard h3{font-size:17.5px;font-weight:800;margin-bottom:7px}
+.whocard p{font-size:14.3px;line-height:1.55}
 
 /* why */
-.why{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.whycard{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 22px;transition:.18s}
-.whycard:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(60,45,120,.1)}
-.whycard .ic{font-size:26px;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:var(--pri-l)}
-.whycard h3{font-size:17px;font-weight:700;margin-bottom:6px}
-.whycard p{font-size:14px;color:var(--body)}
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:16px}
+.whycard{background:#fff;border:1px solid var(--line);border-radius:17px;padding:26px 24px}
+.whycard .ic{width:44px;height:44px;border-radius:12px;background:var(--pri-l);color:var(--pri-d);display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:13px}
+.whycard h3{font-size:17.5px;font-weight:800;margin-bottom:7px}
+.whycard p{font-size:14.4px;line-height:1.55}
 
-/* about */
-.about{background:var(--soft);border-radius:28px;padding:56px 48px;text-align:center}
-.about h2{font-size:32px;font-weight:800;margin-bottom:18px;max-width:640px;margin-left:auto;margin-right:auto}
-.about p{font-size:17px;max-width:720px;margin:0 auto 14px}
+/* one-time */
+.onetime{background:var(--ink);color:#fff;text-align:center}
+.onetime h2{color:#fff;font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1.08;margin-bottom:14px}
+.onetime h2 em{font-style:normal;color:#A996F5}
+.onetime .sub{font-size:19px;opacity:.8;max-width:560px;margin:0 auto 34px}
+.nots{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:44px}
+.notchip{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:13px;padding:15px 26px;font-size:15.5px;font-weight:700;color:#fff}
+.notchip s{color:#FF8A75;text-decoration-thickness:2px}
+.cmp{max-width:760px;margin:0 auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:18px;overflow:hidden}
+.cmp table{width:100%;border-collapse:collapse;font-size:14.5px}
+.cmp th,.cmp td{padding:14px 16px;text-align:center;border-bottom:1px solid rgba(255,255,255,.09)}
+.cmp tr:last-child th,.cmp tr:last-child td{border-bottom:0}
+.cmp thead th{font-size:12.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#C9BFF5;background:rgba(255,255,255,.05)}
+.cmp thead th.hi{color:#fff;background:rgba(108,79,224,.34)}
+.cmp tbody th{text-align:left;font-weight:600;color:rgba(255,255,255,.9);font-size:14.5px}
+.cmp td.hi{background:rgba(108,79,224,.16)}
+.yes{color:#4ADE80;font-weight:800;font-size:17px}
+.no{color:rgba(255,255,255,.3);font-weight:700;font-size:17px}
 
-/* cta band */
-.ctaband{background:linear-gradient(120deg,#6C4FE0,#4B37B3);border-radius:28px;padding:56px 40px;text-align:center;color:#fff;position:relative;overflow:hidden}
-.ctaband:before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;background:rgba(255,255,255,.1);border-radius:50%}
-.ctaband h2{color:#fff;font-size:34px;font-weight:800;margin-bottom:12px}
-.ctaband p{font-size:17px;opacity:.95;margin-bottom:26px}
-.ctaband .btn.pri{background:#fff;color:var(--pri-d);box-shadow:0 10px 24px rgba(0,0,0,.18)}
-.ctaband .btn.pri:hover{background:#f3f0ff}
+/* founder note */
+.fnote{max-width:900px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;padding:38px 40px;display:grid;grid-template-columns:1fr 210px;gap:36px;box-shadow:0 16px 40px rgba(23,20,43,.06)}
+.fn-body p{font-size:16px;line-height:1.72;margin-bottom:15px;color:var(--body)}
+.fn-body p:last-child{margin-bottom:0}
+.fn-body b{color:var(--ink)}
+.fn-side{border-left:1px solid var(--line);padding-left:30px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.fn-av{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#7A5CF0,#5B3FD6);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:23px;margin-bottom:13px;box-shadow:0 8px 18px rgba(108,79,224,.3)}
+.fn-nm{font-size:17px;font-weight:800;color:var(--ink);line-height:1.25}
+.fn-rl{font-size:13.5px;color:var(--mute);margin-bottom:12px}
+.fn-ig{font-size:13.5px;font-weight:700;color:var(--pri-d)}
+.fn-ig:hover{text-decoration:underline}
+.promise{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;max-width:900px;margin:24px auto 0}
+.pcard2{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 22px}
+.pcard2 .pic{font-size:24px;margin-bottom:10px}
+.pcard2 h3{font-size:16.5px;font-weight:800;margin-bottom:6px}
+.pcard2 p{font-size:14.2px;line-height:1.55}
+
+/* proof */
+.proofnote{max-width:760px;margin:0 auto 26px;background:#FFFBEB;border:1px dashed #E0B44C;border-radius:14px;padding:15px 20px;font-size:13.6px;color:#8a6516;text-align:center}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:16px}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:17px;padding:25px 24px}
+.tcard .stars{color:#F0A93B;font-size:15px;margin-bottom:11px;letter-spacing:2px}
+.tcard p{font-size:15.3px;color:var(--ink);line-height:1.6;margin-bottom:15px}
+.tcard .who2{display:flex;align-items:center;gap:11px}
+.tcard .av{width:38px;height:38px;border-radius:50%;background:var(--pri-l);color:var(--pri-d);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px}
+.tcard .nm{font-size:14px;font-weight:700;color:var(--ink);line-height:1.3}
+.tcard .rl{font-size:12.5px;color:var(--mute)}
+.tdisc{text-align:center;font-size:13px;color:var(--mute);margin-top:24px}
+
+/* faq */
+.faq{max-width:760px;margin:0 auto}
+.fq{border:1px solid var(--line);border-radius:14px;margin-bottom:10px;background:#fff;overflow:hidden}
+.fq summary{cursor:pointer;padding:18px 22px;font-weight:700;font-size:16px;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.fq summary::-webkit-details-marker{display:none}
+.fq summary:after{content:"+";font-size:22px;font-weight:700;color:var(--pri);flex:0 0 auto;transition:.2s}
+.fq[open] summary:after{transform:rotate(45deg)}
+.fq .ans{padding:0 22px 20px;font-size:15.2px;line-height:1.65}
+.fq[open]{border-color:#DED8F6}
+
+/* final cta */
+.ctaband{background:linear-gradient(135deg,#6C4FE0,#4B37B3 55%,#8C5BE0);border-radius:26px;padding:60px 40px;text-align:center;color:#fff;box-shadow:0 26px 60px rgba(75,55,179,.3)}
+.ctaband h2{color:#fff;font-size:38px;font-weight:800;letter-spacing:-.03em;margin-bottom:14px;line-height:1.14}
+.ctaband p{font-size:17.5px;opacity:.92;max-width:520px;margin:0 auto 30px}
+.ctaband .btn.pri{background:#fff;color:var(--pri-d);box-shadow:0 12px 28px rgba(0,0,0,.18)}
+.ctaband .btn.pri:hover{background:#F4F1FF}
+.ctaband .btn.ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5)}
+.ctaband .btn.ghost:hover{background:rgba(255,255,255,.12);color:#fff;border-color:#fff}
+.ctarow{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
 
 /* footer */
-footer{border-top:1px solid var(--line);padding:52px 0 34px;margin-top:80px}
-.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px}
-.foot .about-f{max-width:320px;color:var(--body);font-size:14px}
-.foot h4{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--mute);margin-bottom:14px}
-.foot ul{list-style:none}.foot ul li{margin-bottom:9px}
-.foot ul a{font-size:14.5px;color:var(--body)}.foot ul a:hover{color:var(--pri-d)}
-.copy{text-align:center;margin-top:40px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
+footer{border-top:1px solid var(--line);padding:52px 0 30px;background:var(--soft)}
+.foot{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:34px;margin-bottom:34px}
+.about-f{font-size:14.3px;max-width:360px;line-height:1.6}
+footer h4{font-size:14px;font-weight:800;margin-bottom:13px;color:var(--ink)}
+footer ul{list-style:none}
+footer ul li{margin-bottom:9px}
+footer ul a{font-size:14.3px;color:var(--body)}
+footer ul a:hover{color:var(--pri-d)}
+.copy{border-top:1px solid var(--line);padding-top:22px;font-size:13.2px;color:var(--mute);text-align:center}
 
-/* reveal */
-.rv{opacity:0;transform:translateY(24px);transition:.6s cubic-bezier(.2,.7,.2,1)}
-.rv.in{opacity:1;transform:none}
 
-@media(max-width:860px){
-  .hero-grid{grid-template-columns:1fr;gap:10px}
-  .showcase{height:360px;margin-top:14px}
-  .hero h1{font-size:38px}
-  .hero p.lead{font-size:16.5px}
-  .why{grid-template-columns:1fr 1fr}
-  .pcardbig{grid-template-columns:1fr}
-  .foot{grid-template-columns:1fr 1fr}
-  .navlinks{display:none}.burger{display:block}
-  .h2c{font-size:29px}.about{padding:40px 24px}.about h2{font-size:26px}.ctaband h2{font-size:27px}
-  section.pad{padding:60px 0}
+/* --- micro-copy pengiriman dekat tombol beli --- */
+.deliver{margin-top:12px;font-size:13px;line-height:1.5;color:var(--body);background:var(--teal-l);border:1px solid #CBEEE1;border-radius:11px;padding:10px 13px}
+.deliver b{color:var(--teal-d)}
+.deliver.light{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.92);margin-top:14px}
+.deliver.light b{color:#fff}
+
+
+/* --- section PWA --- */
+.pwa{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:960px;margin:0 auto}
+.pwacol{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px 28px 24px;box-shadow:0 12px 30px rgba(23,20,43,.05)}
+.pwahead{display:flex;align-items:center;gap:14px;padding-bottom:18px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+.pwaic{width:48px;height:48px;flex:0 0 48px;border-radius:14px;background:var(--pri-l);display:flex;align-items:center;justify-content:center;font-size:24px}
+.pwahead h3{font-size:19px;font-weight:800;line-height:1.2}
+.pwahead span{font-size:13px;color:var(--mute)}
+.stepgrp{display:flex;flex-direction:column;gap:17px}
+.stp{display:flex;gap:14px;align-items:flex-start}
+.stp i{flex:0 0 27px;width:27px;height:27px;border-radius:50%;background:var(--pri);color:#fff;font-style:normal;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.stp b{display:block;font-size:15px;font-weight:700;color:var(--ink);line-height:1.35;margin-bottom:3px}
+.stp span{font-size:13.8px;line-height:1.55;color:var(--body)}
+.pwanote{max-width:960px;margin:20px auto 0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 24px;font-size:14.3px;line-height:1.6;display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.pwanote b{color:var(--ink)}
+.pwahelp{flex:0 0 auto;font-size:14px;font-weight:700;color:#0E9E76;white-space:nowrap}
+.pwahelp:hover{text-decoration:underline}
+
+/* --- tombol WhatsApp mengambang --- */
+.wafab{position:fixed;right:20px;bottom:22px;z-index:65;display:inline-flex;align-items:center;gap:9px;background:#25D366;color:#fff;font-weight:700;font-size:14.5px;padding:13px 19px 13px 15px;border-radius:40px;box-shadow:0 10px 26px rgba(37,211,102,.42);transition:.2s}
+.wafab:hover{background:#1EBE5B;transform:translateY(-2px);color:#fff}
+
+/* sticky mobile bar */
+.mbar{display:none}
+
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero h1{font-size:40px}
+  /* width:100% wajib — tanpa ini grid item menyusut jadi 0 (anak-anaknya absolute) */
+  .showcase{height:360px;width:100%;max-width:420px;margin:0 auto}
+  .pbig{grid-template-columns:1fr}
+  .bundle{grid-template-columns:1fr;padding:32px 28px}
+  .bprice{text-align:left}
+  .foot{grid-template-columns:1fr 1fr;gap:26px}
 }
-@media(max-width:520px){.why{grid-template-columns:1fr}.foot{grid-template-columns:1fr}.hero h1{font-size:33px}}
+@media(max-width:760px){
+  .navlinks{display:none}
+  .burger{display:block}
+  .navlinks.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#fff;flex-direction:column;align-items:stretch;gap:0;padding:10px 22px 18px;border-bottom:1px solid var(--line);box-shadow:0 14px 30px rgba(23,20,43,.09)}
+  .navlinks.open a{padding:12px 0;border-bottom:1px solid var(--line)}
+  .navlinks.open .btn{margin-top:12px;border-bottom:0}
+  .pad{padding:64px 0}
+  .hero{padding:52px 0 56px}
+  .hero h1{font-size:33px}
+  .hero p.lead{font-size:16.5px}
+  /* kartu hero ikut mengecil biar tidak pernah keluar layar di HP kecil */
+  .showcase{height:320px}
+  .pcard{width:min(250px,68vw)}
+  .pc1{top:4px;left:0}
+  .pc2{top:112px;right:0}
+  .pc3{bottom:4px;left:30px}
+  .burger{font-size:26px;padding:9px 12px;line-height:1}
+  .sndbtn{padding:13px 16px;font-size:13px}
+  .h2c{font-size:29px}
+  .subc{font-size:15.5px;margin-bottom:34px}
+  .rot{min-width:0;width:100%;height:60px}
+  .rot span{font-size:18px;white-space:normal;width:100%;line-height:1.3}
+  .ticker .inner{gap:14px}
+  .bridge h3{font-size:25px}
+  .fnote{grid-template-columns:1fr;padding:26px 24px;gap:22px}
+  .fn-body p{font-size:15.2px}
+  .fn-side{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:20px;align-items:flex-start}
+  .pbig .main{padding:26px 24px 26px}
+  .pbig h3{font-size:23px}
+  .ptag{font-size:15.5px}
+  .onetime h2{font-size:31px}
+  .onetime .sub{font-size:16.5px}
+  .notchip{padding:12px 18px;font-size:14px}
+  /* tabel dipadatkan agar muat penuh di HP kecil tanpa terpotong */
+  .cmp{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .cmp table{font-size:11.5px;min-width:0}
+  .cmp th,.cmp td{padding:9px 4px}
+  .cmp thead th{font-size:9.5px;letter-spacing:.2px;line-height:1.25}
+  .cmp tbody th{font-size:11.5px;padding-left:9px;line-height:1.35}
+  .yes,.no{font-size:14px}
+  .ctaband{padding:44px 24px}
+  .ctaband h2{font-size:28px}
+  .ctaband p{font-size:16px}
+  .bundle h3{font-size:24px}
+  .bprice .new{font-size:35px}
+  .foot{grid-template-columns:1fr}
+  .btn{width:100%}
+  .pbtns .btn{width:100%}
+  .hero .cta .btn{width:100%}
+  .ctarow .btn{width:100%}
 
-/* tutorial play overlay */
-.thumb{position:relative;cursor:pointer}
-.playov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(23,20,43,0);transition:.22s;z-index:6}
-.thumb:hover .playov{background:rgba(23,20,43,.30)}
-.playov .pb{width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 32px rgba(60,45,120,.35);transform:scale(.9);transition:.22s}
-.thumb:hover .playov .pb{transform:scale(1.06)}
-.playov .lbl{font-weight:700;font-size:13px;color:#fff;background:rgba(23,20,43,.6);padding:7px 15px;border-radius:22px;opacity:.92}
-.thumb .screen{transition:.22s}
-.thumb:hover .screen{transform:scale(.97)}
-/* video modal */
-.vmodal{position:fixed;inset:0;z-index:200;background:rgba(15,12,30,.85);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:22px}
-.vmodal.open{display:flex}
-.vmodal .box{position:relative;width:min(92vw,430px)}
-.vmodal .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.vmodal .head b{color:#fff;font-size:17px;font-weight:700}
-.vmodal .x{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;border:0;font-size:19px;cursor:pointer;transition:.18s}
-.vmodal .x:hover{background:rgba(255,255,255,.3)}
-.vmodal video{width:100%;border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.55);display:block;background:#000}
+  /* HASIL + PWA di HP */
+  .pwa{grid-template-columns:1fr;gap:16px}
+  .pwacol{padding:24px 22px 22px}
+  .pwahead h3{font-size:17.5px}
+  .stp span{font-size:13.4px}
+  .pwanote{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px;font-size:13.8px}
+  .pwahelp{width:auto}
+  .deliver{font-size:12.6px;padding:10px 12px}
+  /* WA fab mengecil & naik di atas bar bawah */
+  .wafab{right:14px;bottom:80px;padding:12px 16px;font-size:13.5px}
+  .wafab svg{width:22px;height:22px}
+  body{padding-bottom:72px}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:11px 16px;gap:12px;align-items:center;box-shadow:0 -6px 20px rgba(23,20,43,.07)}
+  .mbar .txt{flex:1;min-width:0}
+  .mbar .txt b{display:block;font-size:13.5px;color:var(--ink);font-weight:800;line-height:1.25}
+  .mbar .txt span{font-size:11.5px;color:var(--mute)}
+  .mbar .btn{width:auto;flex:0 0 auto;padding:12px 20px;font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
@@ -204,180 +371,447 @@ footer{border-top:1px solid var(--line);padding:52px 0 34px;margin-top:80px}
 <header>
   <div class="wrap nav">
     <a href="#top" class="logo"><span class="mark"><span>D</span></span> DailyResource<span style="color:var(--pri)">.id</span></a>
-    <nav class="navlinks">
-      <a href="#produk">Produk</a>
-      <a href="#kenapa">Kenapa Kami</a>
-      <a href="#tentang">Tentang</a>
-      <a href="#produk" class="btn pri">Lihat Produk</a>
+    <nav class="navlinks" id="navlinks">
+      <a href="#tools">Tools</a>
+      <a href="#untuk-siapa">Untuk siapa</a>
+      <a href="#pasang">Pasang di HP</a>
+      <a href="#kenapa">Kenapa kami</a>
+      <a href="#faq">FAQ</a>
+      <a href="#tools" class="btn pri">Lihat Tools</a>
     </nav>
-    <button class="burger" id="burger">☰</button>
+    <button class="burger" id="burger" aria-label="Buka menu">☰</button>
   </div>
 </header>
 
 <a id="top"></a>
-<!-- HERO -->
+
+<!-- ============ HERO ============ -->
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="pill"><span class="dot"></span> Alat digital buatan Indonesia</span>
-      <h1>Yang rumit, <span class="grad">kami bikin gampang.</span></h1>
-      <p class="lead">Alat digital sederhana yang <b>semua rumusnya sudah di dalam</b> — tinggal isi, pilih desain, download PDF. Bantu bisnis kecil–menengah &amp; keluarga urus keuangan dan penawaran harga tanpa pusing. Bisa dipakai siapa saja, bahkan yang gaptek.</p>
-      <div class="cta">
-        <a href="#produk" class="btn pri">Jelajahi produk →</a>
-        <a href="#tentang" class="btn ghost">Kenal lebih dekat</a>
+      <span class="pill"><span class="dot"></span> Tools digital buatan Indonesia</span>
+      <h1>Kerjaan yang susah, <span class="grad">bisa dibuat lebih gampang.</span></h1>
+      <p class="lead">Tools digital sederhana untuk menghitung harga jual, membuat penawaran harga, dan mengatur keuangan sehari-hari. <b>Rumusnya sudah jadi di dalam</b> — kamu tinggal isi angkanya.</p>
+      <div class="nolist">
+        <span class="nochip"><b>✓</b> Tanpa Excel yang rumit</span>
+        <span class="nochip"><b>✓</b> Tanpa install aplikasi</span>
+        <span class="nochip"><b>✓</b> Tanpa langganan</span>
       </div>
-      <div class="stats">
-        <div class="stat"><b>Beli 1×</b><span>tanpa langganan</span></div>
-        <div class="stat"><b>Offline</b><span>di HP &amp; laptop</span></div>
-        <div class="stat"><b>Tanpa</b><span>install aplikasi</span></div>
+      <div class="cta">
+        <a href="#tools" class="btn pri lg">Lihat Tools</a>
+        <a href="#cara-kerja" class="btn ghost lg">Cara Kerjanya →</a>
       </div>
     </div>
     <div class="showcase" aria-hidden="true">
-      <div class="pcard pc1"><div class="bar"><div class="t">Keuangan usaha</div><div class="n">Untung-in</div></div><div class="body"><div class="li m"></div><div class="li s"></div><span class="chipmini" style="background:#EFEBFB;color:#4B37B3">Laba sehat 💪</span></div></div>
+      <div class="pcard pc1"><div class="bar"><div class="t">Harga jual &amp; untung</div><div class="n">Untung-in</div></div><div class="body"><div class="li m"></div><div class="li s"></div><span class="chipmini" style="background:#EFEBFB;color:#4B37B3">Margin 31% 💪</span></div></div>
       <div class="pcard pc2"><div class="bar"><div class="t">Penawaran harga</div><div class="n">Quot-in</div></div><div class="body"><div class="li m"></div><div class="li"></div><span class="chipmini" style="background:#E3F8F1;color:#0E9E76">PDF siap kirim</span></div></div>
-      <div class="pcard pc3"><div class="bar"><div class="t">Keuangan rumah</div><div class="n">Atur-in</div></div><div class="body"><div class="li s"></div><div class="li m"></div><span class="chipmini" style="background:#FDF1DF;color:#8a5a12">Budget aman ✓</span></div></div>
+      <div class="pcard pc3"><div class="bar"><div class="t">Keuangan keluarga</div><div class="n">Atur-in</div></div><div class="body"><div class="li s"></div><div class="li m"></div><span class="chipmini" style="background:#FDF1DF;color:#8a5a12">Budget aman ✓</span></div></div>
     </div>
   </div>
 </section>
 
-<div class="strip">
+<!-- ============ ROTATING BENEFITS ============ -->
+<div class="ticker">
   <div class="wrap inner">
-    <div><i>✓</i>Semua rumus sudah di dalam</div>
-    <div><i>✓</i>Tanpa install aplikasi</div>
-    <div><i>✓</i>Bisa offline di HP &amp; laptop</div>
-    <div><i>✓</i>Gampang buat semua orang</div>
+    <div class="lbl">Kenapa DailyResource?</div>
+    <div class="rot" id="rot" aria-live="polite">
+      <span class="on">Sekali beli. Pakai selamanya.</span>
+      <span>Tanpa langganan bulanan.</span>
+      <span>Tanpa Excel yang rumit.</span>
+      <span>Bisa dipakai di HP &amp; laptop.</span>
+      <span>Tanpa install aplikasi.</span>
+      <span>Dibuat biar gampang.</span>
+    </div>
   </div>
 </div>
 
-<!-- PRODUK -->
-<section class="pad" id="produk">
+<!-- ============ PROBLEM ============ -->
+<section class="pad prob">
   <div class="wrap">
-    <div class="eyebrow rv">Produk Kami</div>
-    <h2 class="h2c rv">Satu alat, satu masalah beres.</h2>
-    <p class="subc rv">Tiap produk menyederhanakan satu urusan yang biasanya bikin pusing — bukan sekadar tabel penuh angka, tapi alat yang kasih jawaban.</p>
+    <div class="eyebrow c rv">Kayaknya kamu kenal ini</div>
+    <h2 class="h2c rv">Masih sering begini?</h2>
+    <p class="subc rv">Hal-hal kecil yang tiap minggu makan waktu — dan diam-diam bikin kamu rugi.</p>
+    <div class="problist">
+      <div class="probitem rv"><span class="x">✕</span><p>Buka Excel cuma buat hitung harga jual satu produk.</p></div>
+      <div class="probitem rv"><span class="x">✕</span><p>Nggak yakin margin sebenarnya berapa — untung atau malah nombok.</p></div>
+      <div class="probitem rv"><span class="x">✕</span><p>Bikin penawaran harga dari nol tiap ada klien baru.</p></div>
+      <div class="probitem rv"><span class="x">✕</span><p>Catatan keuangan tersebar di notes, chat, dan kertas.</p></div>
+      <div class="probitem rv"><span class="x">✕</span><p>Bayar langganan tiap bulan buat fitur yang jarang dipakai.</p></div>
+      <div class="probitem rv"><span class="x">✕</span><p>Niat rapikan pakai spreadsheet, tapi rumusnya keburu bikin pusing.</p></div>
+    </div>
+    <div class="bridge rv" id="cara-kerja">
+      <div class="arrowdown">↓</div>
+      <h3>Sebenarnya bisa lebih gampang.</h3>
+      <p>DailyResource dibuat untuk menyederhanakan pekerjaan yang sehari-hari sering terasa lebih rumit dari seharusnya. Buka lewat browser, isi angkanya, hasilnya langsung keluar. Selesai.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCTS ============ -->
+<section class="pad" id="tools">
+  <div class="wrap">
+    <div class="eyebrow c rv">Tools Kami</div>
+    <h2 class="h2c rv">Satu tool, satu urusan beres.</h2>
+    <p class="subc rv">Lihat sendiri cara pakainya — videonya jalan otomatis sambil kamu scroll.</p>
+
     <div class="prod">
 
-      <div class="pcardbig rv">
-        <div class="thumb th-u" onclick="openVid('Tutorial-Untung-in.mp4','Untung-in')">
-          <div class="playov"><div class="pb"><svg width="28" height="28" viewBox="0 0 24 24" fill="#5B3FD6"><path d="M8 5v14l11-7z"/></svg></div><div class="lbl">▶ Lihat cara pakai</div></div>
-          <div class="screen mk-u">
-            <div class="sh"><div class="t">💰 Kas usaha</div><div class="v">Rp8.104.000</div></div>
-            <div class="sb">
-              <div class="st"><div class="s"><div class="l">Laba bulan ini</div><div class="n">Rp2,4jt</div></div><div class="s"><div class="l">Margin</div><div class="n">31%</div></div></div>
-              <div class="bars"><i style="height:40%"></i><i style="height:66%"></i><i style="height:52%"></i><i style="height:82%"></i><i style="height:70%"></i><i style="height:92%"></i><i style="height:60%"></i></div>
-            </div>
+      <!-- UNTUNG-IN -->
+      <article class="pbig rv">
+        <div class="media">
+          <div class="vwrap">
+            <div class="vbadge"><span class="rec"></span> Cara pakai Untung-in</div>
+            <video class="demo" data-src="Tutorial-Untung-in.mp4" muted loop playsinline preload="metadata" aria-label="Video cara pakai Untung-in: menghitung harga jual dan keuntungan"></video>
+            <button class="sndbtn" type="button">🔇 Nyalakan suara</button>
           </div>
         </div>
         <div class="main">
-          <div class="ic" style="background:var(--pri-l);color:var(--pri-d);width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px">📊</div>
-          <a href="lp-untung-in.html"><h3 style="font-size:25px">Untung-in</h3></a>
-          <div class="tl" style="color:var(--pri-d);font-weight:600;margin:4px 0 14px">Tahu untung usahamu dalam 10 detik.</div>
-          <p>Semua rumus pembukuan sudah ada di dalam — tinggal isi uang masuk &amp; keluar, laba dan margin langsung muncul. Kelola kasbon, pisahkan uang pribadi, hitung harga jual biar nggak jualan rugi, lalu download laporan PDF. Nggak perlu Excel, nggak perlu install apa pun.</p>
-          <div class="feats"><span class="feat">Rumus otomatis</span><span class="feat">Kasbon &amp; piutang</span><span class="feat">Kalkulator harga jual</span><span class="feat">Laporan PDF</span></div>
-          <div class="foot">
-            <div class="price">Beli 1× · seumur hidup · <b>Rp49.000</b></div>
-            <a href="lp-untung-in.html" class="btn ghost" style="margin-right:8px">Lihat detail →</a>
-            <a href="https://lynk.id/michiotakayuki/7o8qqn0kgn3d" target="_blank" class="btn pri">Beli sekarang →</a>
-          </div>
-        </div>
-      </div>
+          <div class="picon" style="background:var(--pri-l);color:var(--pri-d)">📊</div>
+          <h3>Untung-in</h3>
+          <div class="ptag" style="color:var(--pri-d)">Hitung harga jual &amp; keuntungan tanpa Excel.</div>
 
-      <div class="pcardbig rv">
-        <div class="thumb th-q" onclick="openVid('Tutorial-Quot-in.mp4','Quot-in')">
-          <div class="playov"><div class="pb"><svg width="28" height="28" viewBox="0 0 24 24" fill="#0E9E76"><path d="M8 5v14l11-7z"/></svg></div><div class="lbl">▶ Lihat cara pakai</div></div>
-          <div class="screen mk-q">
-            <div class="sh"><div class="t">Penawaran harga</div><div class="v">QUOTATION</div></div>
-            <div class="sb">
-              <table><tr><th>Item</th><th style="text-align:right">Jumlah</th></tr><tr><td>Produksi</td><td style="text-align:right">Rp12.000.000</td></tr><tr><td>Editing</td><td style="text-align:right">Rp4.500.000</td></tr><tr><td>Talent</td><td style="text-align:right">Rp3.000.000</td></tr></table>
-              <div class="tt"><span>TOTAL</span><span>Rp19.500.000</span></div>
-            </div>
+          <div class="blk">
+            <div class="bt">Untuk kamu yang</div>
+            <ul class="forlist">
+              <li>sering nentuin harga jual produk</li>
+              <li>pengin tahu margin &amp; untung yang sebenarnya</li>
+              <li>masih ngandelin Excel atau kalkulator HP</li>
+              <li>sering kasih kasbon dan lupa nagihnya</li>
+            </ul>
           </div>
-        </div>
-        <div class="main">
-          <div class="ic" style="background:#E3F8F1;color:#0E9E76;width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px">🧾</div>
-          <a href="lp-quot-in.html"><h3 style="font-size:25px">Quot-in</h3></a>
-          <div class="tl" style="color:#0E9E76;font-weight:600;margin:4px 0 14px">Bikin penawaran harga profesional, tanpa pusing hitungan.</div>
-          <p>Rumus pajak &amp; markup semua otomatis — kamu tinggal isi item, harga langsung terhitung rapi. Cocok untuk video, jasa, dagang, sampai event. Pilih dari 4 desain PDF, langsung download &amp; kirim ke klien. Ada juga panduan nego biar tahu sampai mana boleh turun harga.</p>
-          <div class="feats"><span class="feat">Semua bidang usaha</span><span class="feat">Pajak otomatis</span><span class="feat">4 desain PDF</span><span class="feat">Panduan nego</span></div>
-          <div class="foot">
-            <div class="price">Beli 1× · seumur hidup · <b>Rp79.000</b></div>
-            <a href="lp-quot-in.html" class="btn ghost" style="margin-right:8px">Lihat detail →</a>
-            <a href="https://lynk.id/michiotakayuki/pm4nn2erxln6" target="_blank" class="btn pri" style="background:var(--teal);box-shadow:0 10px 24px rgba(18,184,134,.3)">Beli sekarang →</a>
-          </div>
-        </div>
-      </div>
 
-      <div class="pcardbig rv">
-        <div class="thumb th-a" onclick="openVid('Tutorial-Atur-in.mp4','Atur-in')">
-          <div class="playov"><div class="pb"><svg width="28" height="28" viewBox="0 0 24 24" fill="#E5922A"><path d="M8 5v14l11-7z"/></svg></div><div class="lbl">▶ Lihat cara pakai</div></div>
-          <div class="screen mk-a">
-            <div class="sh"><div class="t">👛 Total saldo keluarga</div><div class="v">Rp6.400.000</div></div>
-            <div class="sb">
-              <div class="cal"><i>1</i><i class="on">2</i><i>3</i><i>4</i><i class="on">5</i><i>6</i><i>7</i><i>8</i><i class="on">9</i><i>10</i><i>11</i><i>12</i><i class="on">13</i><i>14</i></div>
-              <div class="pk"><b>Suami</b><b>Freelance</b><b>Remote</b></div>
+          <div class="blk">
+            <div class="bt">Yang bisa kamu lakukan</div>
+            <div class="feats">
+              <span class="feat">Hitung harga jual</span>
+              <span class="feat">Lihat margin &amp; laba</span>
+              <span class="feat">Catat kas masuk–keluar</span>
+              <span class="feat">Kasbon &amp; piutang</span>
+              <span class="feat">Laporan PDF</span>
             </div>
+          </div>
+
+          <div class="pfoot">
+            <div class="priceline">
+              <span class="amt">Rp49.000</span>
+              <span class="once">Sekali beli</span>
+            </div>
+            <div class="pbtns">
+              <a href="https://lynk.id/michiotakayuki/7o8qqn0kgn3d" target="_blank" rel="noopener" class="btn pri">Dapatkan Untung-in</a>
+              <a href="lp-untung-in.html" class="btn ghost">Lihat detail →</a>
+            </div>
+            <div class="deliver">📩 Link akses + kode lisensi <b>dikirim otomatis ke email</b> setelah pembayaran berhasil.</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- QUOT-IN -->
+      <article class="pbig rv">
+        <div class="media">
+          <div class="vwrap">
+            <div class="vbadge"><span class="rec"></span> Cara pakai Quot-in</div>
+            <video class="demo" data-src="Tutorial-Quot-in.mp4" muted loop playsinline preload="metadata" aria-label="Video cara pakai Quot-in: membuat penawaran harga dan export PDF"></video>
+            <button class="sndbtn" type="button">🔇 Nyalakan suara</button>
           </div>
         </div>
         <div class="main">
-          <div class="ic" style="background:#FDF1DF;color:#8a5a12;width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px">👛</div>
-          <a href="lp-atur-in.html"><h3 style="font-size:25px">Atur-in</h3></a>
-          <div class="tl" style="color:#b5771a;font-weight:600;margin:4px 0 14px">Atur uang keluarga biar selalu cukup.</div>
-          <p>Kelola keuangan keluarga tanpa tabel yang bikin bingung. Pisahkan uang dari tiap sumber — gaji suami, freelance, kerja remote — biar nggak tercampur. Pasang budget dengan alert otomatis, catat lewat kalender yang cantik, dan dapat saran hemat. Semua otomatis, tinggal pakai.</p>
-          <div class="feats"><span class="feat">Dompet terpisah</span><span class="feat">Budget &amp; alert</span><span class="feat">Kalender cantik</span><span class="feat">Saran hemat</span></div>
-          <div class="foot">
-            <div class="price">Beli 1× · seumur hidup · <b>Rp49.000</b></div>
-            <a href="lp-atur-in.html" class="btn ghost" style="margin-right:8px">Lihat detail →</a>
-            <a href="https://lynk.id/michiotakayuki/5k8ooyp22x8m" target="_blank" class="btn pri" style="background:var(--amber);box-shadow:0 10px 24px rgba(240,169,59,.3)">Beli sekarang →</a>
+          <div class="picon" style="background:var(--teal-l);color:var(--teal-d)">🧾</div>
+          <h3>Quot-in</h3>
+          <div class="ptag" style="color:var(--teal-d)">Bikin penawaran harga profesional jadi lebih gampang.</div>
+
+          <div class="blk">
+            <div class="bt">Untuk kamu yang</div>
+            <ul class="forlist">
+              <li>freelancer video, desain, atau fotografi</li>
+              <li>punya agency atau tim kreatif kecil</li>
+              <li>jalanin bisnis jasa, event, atau dagang</li>
+              <li>capek nyusun penawaran dari nol tiap ada klien</li>
+            </ul>
+          </div>
+
+          <div class="blk">
+            <div class="bt">Yang bisa kamu lakukan</div>
+            <div class="feats">
+              <span class="feat">Susun quotation cepat</span>
+              <span class="feat">Total &amp; pajak otomatis</span>
+              <span class="feat">Atur markup &amp; nego</span>
+              <span class="feat">4 desain PDF</span>
+              <span class="feat">Invoice per termin</span>
+            </div>
+          </div>
+
+          <div class="pfoot">
+            <div class="priceline">
+              <span class="amt">Rp79.000</span>
+              <span class="once">Sekali beli</span>
+            </div>
+            <div class="pbtns">
+              <a href="https://lynk.id/michiotakayuki/pm4nn2erxln6" target="_blank" rel="noopener" class="btn pri" style="background:var(--teal);box-shadow:0 10px 24px rgba(18,184,134,.3)">Dapatkan Quot-in</a>
+              <a href="lp-quot-in.html" class="btn ghost">Lihat detail →</a>
+            </div>
+            <div class="deliver">📩 Link akses + kode lisensi <b>dikirim otomatis ke email</b> setelah pembayaran berhasil.</div>
           </div>
         </div>
-      </div>
+      </article>
+
+      <!-- ATUR-IN -->
+      <article class="pbig rv">
+        <div class="media">
+          <div class="vwrap">
+            <div class="vbadge"><span class="rec"></span> Cara pakai Atur-in</div>
+            <video class="demo" data-src="Tutorial-Atur-in.mp4" muted loop playsinline preload="metadata" aria-label="Video cara pakai Atur-in: mengatur keuangan keluarga per dompet"></video>
+            <button class="sndbtn" type="button">🔇 Nyalakan suara</button>
+          </div>
+        </div>
+        <div class="main">
+          <div class="picon" style="background:var(--amber-l);color:var(--amber-d)">👛</div>
+          <h3>Atur-in</h3>
+          <div class="ptag" style="color:var(--amber-d)">Bikin keuangan keluarga lebih gampang dipantau.</div>
+
+          <div class="blk">
+            <div class="bt">Untuk kamu yang</div>
+            <ul class="forlist">
+              <li>punya penghasilan dari lebih dari satu sumber</li>
+              <li>sering bingung uang bulan ini habis ke mana</li>
+              <li>pengin punya budget tapi susah disiplin</li>
+              <li>ngatur uang bareng pasangan</li>
+            </ul>
+          </div>
+
+          <div class="blk">
+            <div class="bt">Yang bisa kamu lakukan</div>
+            <div class="feats">
+              <span class="feat">Pisah dompet per sumber</span>
+              <span class="feat">Budget + alert otomatis</span>
+              <span class="feat">Catat lewat kalender</span>
+              <span class="feat">Transfer antar dompet</span>
+              <span class="feat">Rekap bulanan</span>
+            </div>
+          </div>
+
+          <div class="pfoot">
+            <div class="priceline">
+              <span class="amt">Rp49.000</span>
+              <span class="once">Sekali beli</span>
+            </div>
+            <div class="pbtns">
+              <a href="https://lynk.id/michiotakayuki/5k8ooyp22x8m" target="_blank" rel="noopener" class="btn pri" style="background:var(--amber);box-shadow:0 10px 24px rgba(240,169,59,.3)">Dapatkan Atur-in</a>
+              <a href="lp-atur-in.html" class="btn ghost">Lihat detail →</a>
+            </div>
+            <div class="deliver">📩 Link akses + kode lisensi <b>dikirim otomatis ke email</b> setelah pembayaran berhasil.</div>
+          </div>
+        </div>
+      </article>
 
     </div>
-    <div class="rv" style="margin-top:24px;background:linear-gradient(135deg,#1b1830,#3a2f6b);border-radius:22px;padding:26px 28px;display:flex;flex-wrap:wrap;align-items:center;gap:18px;box-shadow:0 20px 50px rgba(27,24,48,.25)">
-      <div style="flex:1;min-width:240px;color:#fff">
-        <div style="font-weight:800;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:#c7b6ff">Paling hemat · Rp77.000 lebih murah</div>
-        <div style="font-weight:800;font-size:23px;margin:5px 0 4px">Paket Lengkap — 3 Aplikasi Sekaligus</div>
-        <div style="opacity:.88;font-size:14px;line-height:1.5">Untung-in + Quot-in + Atur-in. Harga satuan Rp177.000, ambil paket cuma <b>Rp100.000</b>. Beli 1×, seumur hidup.</div>
+
+    <!-- BUNDLE -->
+    <div class="bundle rv">
+      <div>
+        <span class="save">Hemat Rp77.000</span>
+        <h3>Mau semuanya?</h3>
+        <p>Ambil ketiga tools sekaligus — Untung-in, Quot-in, dan Atur-in. Satu kali bayar, ketiganya jadi milikmu selamanya.</p>
       </div>
-      <a href="https://lynk.id/michiotakayuki/1w8yy04erjj8" target="_blank" class="btn pri" style="background:#F0603C;box-shadow:0 10px 24px rgba(240,96,60,.4);white-space:nowrap">Beli Paket — Rp100.000 →</a>
+      <div class="bprice">
+        <span class="old">Rp177.000</span>
+        <span class="new">Rp100.000</span>
+        <a href="https://lynk.id/michiotakayuki/1w8yy04erjj8" target="_blank" rel="noopener" class="btn pri" style="background:#F0603C;box-shadow:0 12px 28px rgba(240,96,60,.4);white-space:nowrap">Dapatkan Semua Tools</a>
+        <div class="deliver light">📩 Ketiga link + kode lisensi dikirim otomatis ke email.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- KENAPA -->
-<section class="pad" id="kenapa" style="background:var(--soft)">
+
+<!-- ============ WHO IS THIS FOR ============ -->
+<section class="pad" id="untuk-siapa" style="background:var(--soft)">
   <div class="wrap">
-    <div class="eyebrow rv">Kenapa DailyResource</div>
-    <h2 class="h2c rv">Alat yang beneran kepakai.</h2>
-    <p class="subc rv">Kami percaya alat yang baik bukan yang paling canggih, tapi yang benar-benar menyelesaikan masalahmu.</p>
+    <div class="eyebrow c rv">Cocok untuk</div>
+    <h2 class="h2c rv">Dibuat untuk kamu yang…</h2>
+    <p class="subc rv">Kalau salah satu ini terdengar seperti kamu, tools-nya kemungkinan besar kepakai tiap minggu.</p>
+    <div class="who">
+      <div class="whocard rv"><div class="em">🎬</div><h3>Freelancer</h3><p>Hitung harga jasa dan bikin penawaran ke klien tanpa mulai dari nol tiap kali.</p></div>
+      <div class="whocard rv"><div class="em">🏪</div><h3>UMKM &amp; Warung</h3><p>Tahu harga jual, margin, dan untung sebenarnya tanpa perlu jago pembukuan.</p></div>
+      <div class="whocard rv"><div class="em">📦</div><h3>Online Seller</h3><p>Lihat keuntungan asli tiap produk setelah dipotong modal dan biaya lain.</p></div>
+      <div class="whocard rv"><div class="em">✏️</div><h3>Agency Kreatif</h3><p>Susun quotation project lengkap dengan markup, pajak, dan termin pembayaran.</p></div>
+      <div class="whocard rv"><div class="em">🏡</div><h3>Keluarga</h3><p>Pantau uang masuk dan keluar dari beberapa sumber tanpa bikin tabel sendiri.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section class="pad" id="kenapa">
+  <div class="wrap">
+    <div class="eyebrow c rv">Kenapa DailyResource</div>
+    <h2 class="h2c rv">Tools yang beneran kepakai.</h2>
+    <p class="subc rv">Bukan yang paling canggih — tapi yang paling gampang dipakai setiap hari.</p>
     <div class="why">
-      <div class="whycard rv"><div class="ic">🧮</div><h3>Rumus sudah di dalam</h3><p>Nggak perlu bikin tabel Excel. Tinggal isi, hitungan &amp; hasilnya langsung keluar.</p></div>
-      <div class="whycard rv"><div class="ic">😌</div><h3>Gampang buat semua</h3><p>Tanpa belajar akuntansi. Tampilan sederhana — yang gaptek pun langsung bisa.</p></div>
-      <div class="whycard rv"><div class="ic">🔑</div><h3>Beli 1×, seumur hidup</h3><p>Tanpa langganan bulanan. Sekali beli, jadi milikmu selamanya.</p></div>
-      <div class="whycard rv"><div class="ic">📱</div><h3>Buka di mana saja</h3><p>Jalan di HP &amp; laptop, bahkan offline. Tanpa perlu install aplikasi.</p></div>
+      <div class="whycard rv"><div class="ic">🧮</div><h3>Rumus sudah jadi</h3><p>Nggak perlu bikin formula sendiri. Tinggal isi angkanya, hasilnya langsung keluar.</p></div>
+      <div class="whycard rv"><div class="ic">😌</div><h3>Gampang dipakai</h3><p>Nggak perlu jago Excel atau paham akuntansi. Tampilannya sederhana dan jelas.</p></div>
+      <div class="whycard rv"><div class="ic">🔑</div><h3>Sekali beli</h3><p>Nggak ada tagihan bulanan. Sekali bayar, tools-nya jadi milikmu.</p></div>
+      <div class="whycard rv"><div class="ic">📱</div><h3>Jalan di HP &amp; laptop</h3><p>Buka lewat browser. Nggak perlu install aplikasi apa pun.</p></div>
+      <div class="whycard rv"><div class="ic">✈️</div><h3>Tetap jalan tanpa internet</h3><p>Setelah dibuka sekali, bisa dipakai lagi walau lagi nggak ada sinyal.</p></div>
+      <div class="whycard rv"><div class="ic">🔒</div><h3>Datamu tinggal di HP-mu</h3><p>Catatan tersimpan di perangkat sendiri, bukan di server orang lain.</p></div>
     </div>
   </div>
 </section>
 
-<!-- TENTANG -->
-<section class="pad" id="tentang">
+<!-- ============ ONE-TIME PURCHASE ============ -->
+<section class="pad onetime">
   <div class="wrap">
-    <div class="about rv">
-      <div class="eyebrow" style="margin-bottom:12px">Tentang Kami</div>
-      <h2>Kami bikin yang rumit jadi sederhana.</h2>
-      <p>DailyResource lahir dari satu keresahan sederhana: terlalu banyak orang stuck dengan urusan yang sebenarnya bisa dipermudah. Ngitung untung usaha, bikin penawaran harga, atur uang keluarga — semuanya kepakai tiap hari, tapi sering bikin pusing.</p>
-      <p>Maka kami membangun tools yang ringan, lokal, dan terjangkau. Bukan yang paling canggih, tapi yang paling <b>kepakai</b>. Untuk pemilik usaha, pekerja kreatif, dan keluarga Indonesia. Satu tool, satu masalah beres.</p>
+    <h2 class="rv">Tanpa langganan bulanan.<br><em>Sekali beli, pakai selamanya.</em></h2>
+    <p class="sub rv">Bayar satu kali di awal. Setelah itu tools-nya jadi milikmu — nggak ada tagihan yang muncul lagi tiap bulan.</p>
+    <div class="nots">
+      <div class="notchip rv"><s>Biaya bulanan</s></div>
+      <div class="notchip rv"><s>Biaya tahunan</s></div>
+      <div class="notchip rv"><s>Upgrade paksa</s></div>
+    </div>
+
+    <div class="cmp rv">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">&nbsp;</th>
+            <th class="hi">DailyResource</th>
+            <th>Bikin sendiri<br>di Excel</th>
+            <th>Aplikasi<br>langganan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>Rumus sudah jadi, tinggal isi</th><td class="hi"><span class="yes">✓</span></td><td><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><th>Bayar sekali, tanpa biaya bulanan</th><td class="hi"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="no">—</span></td></tr>
+          <tr><th>Bisa dipakai tanpa jago Excel</th><td class="hi"><span class="yes">✓</span></td><td><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><th>Tetap bisa dibuka tanpa internet</th><td class="hi"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="no">—</span></td></tr>
+          <tr><th>Data tersimpan di perangkatmu</th><td class="hi"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="no">—</span></td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
+<!-- ============ SOCIAL PROOF (testimoni asli tester, nama disamarkan) ============
+     CARA TAMBAH: duplikat satu blok <div class="tcard rv"> lalu isi kutipannya
+     apa adanya sesuai tulisan mereka. Jangan dirapikan berlebihan.
+-->
+<section class="pad" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="eyebrow c rv">Kata pengguna</div>
+    <h2 class="h2c rv">Mereka yang sudah coba</h2>
+    <p class="subc rv">Testimoni dari pengguna awal yang mencoba langsung tools-nya.</p>
+
+    <div class="tgrid">
+
+      <div class="tcard rv">
+        <div class="stars">★★★★★</div>
+        <p>“Klien semua suka yang cepet, tapi selalu lama buat quotation. Pakai Quot-in end game, cepet banget. Ada bonus buat invoice-nya juga. Gokil.”</p>
+        <div class="who2"><div class="av">F</div><div><div class="nm">Fajar</div><div class="rl">Pengguna Quot-in</div></div></div>
+      </div>
+
+      <!-- SLOT 2 — tempel testimoni asli Untung-in di sini
+      <div class="tcard rv">
+        <div class="stars">★★★★★</div>
+        <p>“(tulisan asli tester)”</p>
+        <div class="who2"><div class="av">?</div><div><div class="nm">(nama samaran)</div><div class="rl">Pengguna Untung-in</div></div></div>
+      </div>
+      -->
+
+      <!-- SLOT 3 — tempel testimoni asli Atur-in di sini
+      <div class="tcard rv">
+        <div class="stars">★★★★★</div>
+        <p>“(tulisan asli tester)”</p>
+        <div class="who2"><div class="av">?</div><div><div class="nm">(nama samaran)</div><div class="rl">Pengguna Atur-in</div></div></div>
+      </div>
+      -->
+
+    </div>
+
+    <p class="tdisc rv">Testimoni dari pengguna yang sudah mencoba tools ini. Nama disamarkan demi privasi mereka.</p>
+  </div>
+</section>
+
+
+<!-- ============ PASANG DI HP/LAPTOP (PWA) ============ -->
+<section class="pad" id="pasang" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="eyebrow c rv">Sering nggak disadari</div>
+    <h2 class="h2c rv">Bisa dijadikan aplikasi di HP &amp; laptop</h2>
+    <p class="subc rv">Tanpa Play Store, tanpa App Store, tanpa install file apa pun. Cukup sekali atur, ikonnya nempel di layar seperti aplikasi biasa.</p>
+
+    <div class="pwa">
+      <div class="pwacol rv">
+        <div class="pwahead"><span class="pwaic">📱</span><div><h3>Di HP</h3><span>Android &amp; iPhone</span></div></div>
+        <div class="stepgrp">
+          <div class="stp"><i>1</i><div><b>Buka link tools-nya</b><span>Dari email yang kamu terima setelah pembayaran.</span></div></div>
+          <div class="stp"><i>2</i><div><b>Ketuk menu browser</b><span>Android: ikon ⋮ di kanan atas. iPhone: ikon Bagikan ⬆️ di bawah.</span></div></div>
+          <div class="stp"><i>3</i><div><b>Pilih "Tambahkan ke Layar Utama"</b><span>Di Android kadang tertulis "Install aplikasi" atau "Add to Home screen".</span></div></div>
+          <div class="stp"><i>4</i><div><b>Selesai</b><span>Ikonnya muncul di layar HP. Buka dari situ — tampil penuh tanpa alamat browser.</span></div></div>
+        </div>
+      </div>
+
+      <div class="pwacol rv">
+        <div class="pwahead"><span class="pwaic">💻</span><div><h3>Di Laptop</h3><span>Chrome &amp; Edge</span></div></div>
+        <div class="stepgrp">
+          <div class="stp"><i>1</i><div><b>Buka link tools-nya</b><span>Pakai Chrome atau Microsoft Edge.</span></div></div>
+          <div class="stp"><i>2</i><div><b>Cari ikon install</b><span>Ada di ujung kanan kolom alamat — bentuknya layar dengan panah ke bawah.</span></div></div>
+          <div class="stp"><i>3</i><div><b>Klik "Install"</b><span>Kalau ikonnya nggak kelihatan: menu ⋮ → Cast, save, and share → Install page as app.</span></div></div>
+          <div class="stp"><i>4</i><div><b>Selesai</b><span>Tools-nya jalan di jendela sendiri, bisa di-pin ke taskbar atau Dock.</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pwanote rv">
+      <div><b>Kenapa berguna?</b> Setelah dipasang, tools-nya kebuka lebih cepat, tampil penuh tanpa kolom alamat, dan tetap bisa dipakai walau sedang nggak ada sinyal.</div>
+      <a href="https://wa.me/6282114434195" target="_blank" rel="noopener" class="pwahelp">Bingung? Chat WhatsApp →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="pad" id="faq">
+  <div class="wrap">
+    <div class="eyebrow c rv">Pertanyaan umum</div>
+    <h2 class="h2c rv">Biar nggak ragu</h2>
+    <p class="subc rv">Hal-hal yang paling sering ditanyakan sebelum beli.</p>
+    <div class="faq">
+      <details class="fq rv"><summary>Apakah harus install aplikasi?</summary><div class="ans">Nggak perlu. Tools-nya dibuka lewat browser di HP atau laptop, sama seperti membuka website biasa. Kalau mau, kamu bisa simpan ke layar utama HP supaya gampang dibuka lagi — tapi itu opsional.</div></details>
+
+      <details class="fq rv"><summary>Bisa dipakai di HP?</summary><div class="ans">Bisa. Tampilannya memang dirancang supaya nyaman dipakai dari layar HP, bukan hasil mengecilkan tampilan laptop.</div></details>
+
+      <details class="fq rv"><summary>Bisa dipakai di laptop juga?</summary><div class="ans">Bisa. Buka lewat browser apa pun di laptop — Chrome, Safari, Edge, atau Firefox.</div></details>
+
+      <details class="fq rv"><summary>Apakah bisa dipakai tanpa internet?</summary><div class="ans">Bisa. Setelah dibuka pertama kali dengan internet, tools-nya tersimpan di perangkatmu dan tetap bisa dibuka lagi walau sedang tidak ada koneksi.</div></details>
+
+      <details class="fq rv"><summary>Ada biaya bulanan?</summary><div class="ans">Nggak ada. Kamu bayar satu kali di awal, lalu tools-nya bisa dipakai terus tanpa tagihan bulanan atau tahunan.</div></details>
+
+      <details class="fq rv"><summary>Saya nggak bisa Excel, apa tetap bisa pakai?</summary><div class="ans">Justru itu alasan tools ini dibuat. Semua rumus sudah disiapkan di dalam — kamu cuma perlu mengisi angka, sisanya dihitung otomatis.</div></details>
+
+      <details class="fq rv"><summary>Setelah bayar, saya dapat apa?</summary><div class="ans">Kamu akan menerima link untuk membuka tools-nya plus kode lisensi, dikirim otomatis setelah pembayaran berhasil. Tinggal buka link, masukkan kodenya sekali, dan tools-nya langsung bisa dipakai.</div></details>
+
+      <details class="fq rv"><summary>Ada tutorialnya?</summary><div class="ans">Ada. Setiap tools punya video cara pakai — videonya bisa kamu tonton langsung di halaman ini, dan di dalam tools juga tersedia panduan singkat.</div></details>
+
+      <details class="fq rv"><summary>Bisa dijadikan aplikasi di HP saya?</summary><div class="ans">Bisa. Buka link tools-nya, lalu pilih “Tambahkan ke Layar Utama” dari menu browser — ikonnya langsung nempel di layar HP seperti aplikasi biasa. Di laptop juga bisa lewat Chrome/Edge. Langkah lengkapnya ada di <a href="#pasang" style="color:var(--pri-d);font-weight:600">bagian ini</a>.</div></details>
+
+      <details class="fq rv"><summary>Data saya disimpan di mana?</summary><div class="ans">Semua catatanmu tersimpan di perangkat yang kamu pakai, bukan di server kami. Karena itu, kami sarankan sesekali menyimpan cadangan datanya lewat fitur backup di dalam tools.</div></details>
+
+      <details class="fq rv"><summary>Bisa dipakai berkali-kali untuk banyak klien atau produk?</summary><div class="ans">Bisa, tanpa batas. Nggak ada kuota berapa kali kamu boleh menghitung, bikin penawaran, atau mencatat transaksi.</div></details>
+
+      <details class="fq rv"><summary>Bisa dipakai untuk bisnis?</summary><div class="ans">Bisa. Tools ini memang dibuat untuk keperluan kerja sehari-hari — usaha kecil, freelancer, sampai tim kreatif kecil.</div></details>
+
+      <details class="fq rv"><summary>Kalau saya bingung waktu memakainya?</summary><div class="ans">Paling cepat lewat <b>WhatsApp</b> di <a href="https://wa.me/6282114434195" target="_blank" rel="noopener" style="color:#0E9E76;font-weight:700">0821-1443-4195</a>. Bisa juga DM Instagram <a href="https://instagram.com/dailyresource.id" target="_blank" rel="noopener" style="color:var(--pri-d);font-weight:600">@dailyresource.id</a> atau email <a href="mailto:halo@dailyresource.id" style="color:var(--pri-d);font-weight:600">halo@dailyresource.id</a>. Kami bantu sampai tools-nya bisa kamu pakai.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
 <section class="pad" style="padding-top:0">
   <div class="wrap">
     <div class="ctaband rv">
-      <h2>Siap bikin kerjaanmu lebih gampang?</h2>
-      <p>Pilih alat yang kamu butuhkan sekarang — beli 1×, pakai seumur hidup.</p>
-      <a href="#produk" class="btn pri">Lihat semua produk →</a>
+      <h2>Kerjaan boleh banyak.<br>Bikin cara ngerjainnya lebih gampang.</h2>
+      <p>Pilih tools yang kamu butuhkan sekarang — sekali beli, pakai selamanya.</p>
+      <div class="ctarow">
+        <a href="#tools" class="btn pri lg">Lihat Semua Tools</a>
+        <a href="#faq" class="btn ghost lg">Masih ada pertanyaan?</a>
+      </div>
     </div>
   </div>
 </section>
@@ -387,48 +821,156 @@ footer{border-top:1px solid var(--line);padding:52px 0 34px;margin-top:80px}
     <div class="foot">
       <div>
         <a href="#top" class="logo" style="margin-bottom:14px"><span class="mark"><span>D</span></span> DailyResource<span style="color:var(--pri)">.id</span></a>
-        <p class="about-f">Alat digital sederhana untuk bisnis kecil–menengah &amp; keluarga — keuangan usaha, penawaran harga, dan atur uang. Semua rumus otomatis. Dibuat untuk Indonesia.</p>
+        <p class="about-f">Tools digital sederhana untuk menghitung harga jual, membuat penawaran harga, dan mengatur keuangan sehari-hari. Rumusnya sudah jadi — tinggal isi. Dibuat di Indonesia.</p>
       </div>
       <div>
-        <h4>Produk</h4>
+        <h4>Tools</h4>
         <ul>
-          <li><a href="#produk">Untung-in</a></li>
-          <li><a href="#produk">Quot-in</a></li>
-          <li><a href="#produk">Atur-in</a></li>
+          <li><a href="lp-untung-in.html">Untung-in</a></li>
+          <li><a href="lp-quot-in.html">Quot-in</a></li>
+          <li><a href="lp-atur-in.html">Atur-in</a></li>
+          <li><a href="#tools">Paket Lengkap</a></li>
         </ul>
       </div>
       <div>
-        <h4>Perusahaan</h4>
+        <h4>Info</h4>
         <ul>
-          <li><a href="#tentang">Tentang kami</a></li>
-          <li><a href="#kenapa">Kenapa kami</a></li>
+          <li><a href="#untuk-siapa">Untuk siapa</a></li>
+          <li><a href="#pasang">Pasang di HP</a>
+      <a href="#kenapa">Kenapa kami</a></li>
+          <li><a href="#pasang">Pasang di HP &amp; laptop</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="https://wa.me/6282114434195" target="_blank" rel="noopener">WhatsApp 0821-1443-4195</a></li>
+          <li><a href="https://instagram.com/dailyresource.id" target="_blank" rel="noopener">@dailyresource.id</a></li>
           <li><a href="mailto:halo@dailyresource.id">halo@dailyresource.id</a></li>
         </ul>
       </div>
     </div>
-    <div class="copy">© 2026 DailyResource.id — Semua alat dibuat dengan ❤️ di Indonesia.</div>
+    <div class="copy">© 2026 DailyResource.id — Dibuat dengan ❤️ di Indonesia.</div>
   </div>
 </footer>
 
-<!-- VIDEO MODAL -->
-<div class="vmodal" id="vmodal" onclick="if(event.target.id==='vmodal')closeVid()">
-  <div class="box">
-    <div class="head"><b id="vtitle">Tutorial</b><button class="x" onclick="closeVid()" aria-label="Tutup">✕</button></div>
-    <video id="vplayer" controls playsinline preload="metadata"></video>
-  </div>
+<a href="https://wa.me/6282114434195" target="_blank" rel="noopener" class="wafab" aria-label="Chat WhatsApp 0821-1443-4195"><svg viewBox="0 0 24 24" width="26" height="26" fill="#fff" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.470 1.42 1.06 2.79 1.21 2.98.15.2 2.09 3.2 5.07 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.33 4.97L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.36c0-4.53 3.7-8.22 8.24-8.22 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.2-8.24 8.2z"/></svg><span>Chat kami</span></a>
+
+<!-- sticky mobile CTA -->
+<div class="mbar">
+  <div class="txt"><b>Mulai dari Rp49.000</b><span>Sekali beli, pakai selamanya</span></div>
+  <a href="#tools" class="btn pri">Lihat Tools</a>
 </div>
+
 <script>
-function openVid(url,name){var m=document.getElementById('vmodal');document.getElementById('vtitle').textContent='Cara pakai '+name;var v=document.getElementById('vplayer');v.src=url;m.classList.add('open');document.body.style.overflow='hidden';var p=v.play();if(p&&p.catch)p.catch(function(){});}
-function closeVid(){var m=document.getElementById('vmodal');var v=document.getElementById('vplayer');try{v.pause();}catch(e){}v.removeAttribute('src');v.load();m.classList.remove('open');document.body.style.overflow='';}
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVid();});
+/* ---------- scroll reveal ---------- */
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el,i){el.style.transitionDelay=((i%4)*0.06)+'s';io.observe(el);});
+})();
+
+/* ---------- rotating benefits ---------- */
+(function(){
+  var box=document.getElementById('rot'); if(!box)return;
+  var items=box.querySelectorAll('span'); if(items.length<2)return;
+  var i=0, reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce)return;
+  setInterval(function(){
+    items[i].classList.remove('on'); items[i].classList.add('out');
+    var prev=i; i=(i+1)%items.length;
+    items[i].classList.remove('out'); items[i].classList.add('on');
+    setTimeout(function(){items[prev].classList.remove('out');},520);
+  },2600);
+})();
+
+/* ---------- autoplay demo videos on scroll ---------- */
+(function(){
+  var vids=[].slice.call(document.querySelectorAll('video.demo'));
+  if(!vids.length)return;
+
+  function attach(v){
+    if(!v.src && v.dataset.src){v.src=v.dataset.src;v.load();}
+  }
+  function go(v){
+    var p=v.play(); if(p&&p.catch)p.catch(function(){});
+  }
+  // request playback; waits until the media is actually ready
+  function wantPlay(v){
+    attach(v);
+    v._want=true;
+    if(v.readyState>=2){go(v);return;}
+    if(v._hooked)return;
+    v._hooked=true;
+    ['loadeddata','canplay'].forEach(function(ev){
+      v.addEventListener(ev,function(){ if(v._want)go(v); });
+    });
+  }
+  function wantPause(v){
+    v._want=false;
+    try{v.pause();}catch(err){}
+  }
+
+  if('IntersectionObserver' in window){
+    // lazy-attach source slightly before entering viewport
+    var loader=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting)return;
+        attach(e.target);
+        loader.unobserve(e.target);
+      });
+    },{rootMargin:'400px 0px'});
+    vids.forEach(function(v){loader.observe(v);});
+
+    // play / pause based on visibility (~50%)
+    var player=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting && e.intersectionRatio>=0.5){wantPlay(e.target);}
+        else{wantPause(e.target);}
+      });
+    },{threshold:[0,0.5,1]});
+    vids.forEach(function(v){player.observe(v);});
+  }else{
+    // fallback: just load and let user tap
+    vids.forEach(function(v){if(v.dataset.src){v.src=v.dataset.src;}v.setAttribute('controls','');});
+  }
+
+  // pause everything when tab hidden (saves battery/data)
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden)vids.forEach(function(v){try{v.pause();}catch(e){}});
+  });
+
+  // sound toggle — only one video may have sound at a time
+  document.querySelectorAll('.sndbtn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var v=btn.parentNode.querySelector('video.demo');
+      if(!v)return;
+      var turningOn=v.muted;
+      if(turningOn){
+        vids.forEach(function(o){
+          o.muted=true;
+          var b=o.parentNode.querySelector('.sndbtn');
+          if(b)b.innerHTML='🔇 Nyalakan suara';
+        });
+        v.muted=false;
+        btn.innerHTML='🔊 Matikan suara';
+        wantPlay(v);
+      }else{
+        v.muted=true;
+        btn.innerHTML='🔇 Nyalakan suara';
+      }
+    });
+  });
+})();
+
+/* ---------- mobile menu ---------- */
+(function(){
+  var b=document.getElementById('burger'), n=document.getElementById('navlinks');
+  if(!b||!n)return;
+  b.onclick=function(){n.classList.toggle('open');};
+  n.addEventListener('click',function(e){if(e.target.tagName==='A')n.classList.remove('open');});
+})();
 </script>
-<script>
-// scroll reveal
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
-document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(i%4*0.06)+'s';io.observe(el);});
-// mobile menu (simple scroll to produk)
-document.getElementById('burger').onclick=function(){document.getElementById('produk').scrollIntoView({behavior:'smooth'});};
-</script>
+
 <!-- Meta InitiateCheckout on Beli -->
 <script>
 (function(){
