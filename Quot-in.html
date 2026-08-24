@@ -139,6 +139,7 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
 .sw.on{border-color:var(--ink);box-shadow:0 0 0 2px #fff inset}
 .tip{font-size:11.5px;color:var(--mute);margin-top:8px;line-height:1.45}
 .logoprev{width:54px;height:54px;border-radius:12px;object-fit:contain;border:1px solid var(--line);background:#fff;margin-top:6px;display:none}
+.satcustom{margin-top:6px}
 
 /* template picker */
 .tpls{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:6px}
@@ -262,6 +263,13 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
       <div><label>Berlaku (hari)</label><input type="number" id="i-berlaku" value="14" inputmode="numeric"></div>
     </div>
     <label>Judul / nama proyek</label><input id="i-proyek" placeholder="mis. Company Profile Video">
+    <label>Rekening pembayaran</label>
+    <div class="grid3">
+      <div><div class="miniL">Bank</div><input id="q-bank" placeholder="mis. BCA"></div>
+      <div><div class="miniL">No. Rekening</div><input id="q-norek" placeholder="1234567890"></div>
+      <div><div class="miniL">Atas nama</div><input id="q-atas" placeholder="Nama pemilik"></div>
+    </div>
+    <p class="tip">Muncul di <b>quotation dan invoice</b>. Cukup diisi sekali — nanti terbawa terus, dan tetap bisa kamu ubah kapan saja. Kosongkan kalau tidak mau ditampilkan.</p>
   </div>
 
   <h2 class="sec"><span class="n">2</span> Isi Quotation</h2>
@@ -272,7 +280,8 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
     <button data-preset="event">🎉 Event</button>
     <button data-preset="kosong">➕ Kosong</button>
   </div>
-  <p class="tip" style="margin:8px 2px">Pilih preset untuk mulai cepat, atau susun sendiri — <b>bagian bisa ditambah, di-rename, dihapus, dan diurutkan.</b> Satuan <b>paket</b> = harga borongan (tidak dikali qty/hari); satuan lain dikali qty × harga × hari.</p>
+  <p class="tip" style="margin:8px 2px">Pilih preset untuk mulai cepat, atau susun sendiri — <b>bagian bisa ditambah, di-rename, dihapus, dan diurutkan.</b> Di kolom <b>Satuan</b>, pilih dari daftar — atau pilih <b>➕ Tulis sendiri…</b> kalau satuanmu belum ada (mis. roll, box, sesi, titik). Satuan <b>paket</b> = harga borongan (tidak dikali qty/hari); satuan lain dikali qty × harga × hari.</p>
+  <datalist id="satuanList"></datalist>
   <div id="sections"></div>
   <button class="addrow" id="addSection">+ Tambah bagian</button>
 
@@ -414,7 +423,9 @@ function mdLite(t){
   }).join('');
 }
 var GROUPS={pra:'Pra-Produksi',prod:'Produksi',post:'Post-Produksi'};
-var SATUAN=['paket','hari','orang','unit','lokasi','jam'];
+var SATUAN=['paket','hari','orang','unit','pcs','lokasi','jam','meter','kg','bulan','minggu'];
+/* 'paket' = harga borongan. Dibuat tahan huruf besar/kecil & spasi karena satuan sekarang bisa diketik bebas. */
+function isPaket(s){return String(s||'').trim().toLowerCase()==='paket';}
 var LANG={
  id:{quotation:'QUOTATION',invoice:'INVOICE',date:'Tanggal',no:'No',validUntil:'Berlaku s/d',to:'Kepada',project:'Proyek',desc:'Deskripsi',qty:'Qty',price:'Harga',amount:'Jumlah',subtotal:'Subtotal',vat:'PPN 11%',inclVat:'Termasuk PPN 11%',pph:'PPh 23 (2%)',total:'TOTAL',cutPph:'*Dipotong PPh 23 (2%)',tc:'Syarat & Ketentuan',sincerely:'Hormat kami,',billedTo:'Tagihan kepada',term:'Termin Pembayaran',portion:'Porsi',ket:'Keterangan',amountDue:'JUMLAH DITAGIH',projectValue:'Nilai proyek',prevBilled:'Sudah ditagih sebelumnya',dueThis:'Tagihan termin ini',remaining:'Sisa (termin berikutnya)',payTo:'Pembayaran transfer ke:',notes:'Catatan',locale:'id-ID',
    units:{paket:'paket',hari:'hari',orang:'orang',unit:'unit',lokasi:'lokasi',jam:'jam'},hariWord:'hari',pkt:'paket',unitPl:'unit',
@@ -507,7 +518,7 @@ function showPreview(filename){
 function dlPDF(el,filename){if(!el){return;}ensureH2P(function(){if(typeof html2pdf==='undefined'){alert('Menyiapkan cetak… jika PDF tidak otomatis terunduh, pilih "Save as PDF" di dialog print.');window.print();return;}var bg='#ffffff';try{var v=getComputedStyle(document.documentElement).getPropertyValue('--docbg');if(v&&v.trim())bg=v.trim();}catch(e){}el.style.display='block';el.style.width='794px';el.style.margin='0 auto';try{window.scrollTo(0,0);}catch(e){}var done=function(){el.style.display='';el.style.width='';el.style.margin='';};html2pdf().set({margin:0,filename:filename,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:bg,useCORS:true},jsPDF:{unit:'pt',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}}).from(el).save().then(done).catch(function(){done();window.print();});});}
 
 
-function itemSub(it){var q=parseFloat(it.qty)||0,rate=parseFloat(it.rate)||0,h=parseFloat(it.hari)||1;if(it.subs&&it.subs.length&&it.mode==='sum'){return it.subs.reduce(function(a,s){return a+(parseFloat(s.rate)||0);},0);}return it.sat==='paket'?rate:q*rate*h;}
+function itemSub(it){var q=parseFloat(it.qty)||0,rate=parseFloat(it.rate)||0,h=parseFloat(it.hari)||1;if(it.subs&&it.subs.length&&it.mode==='sum'){return it.subs.reduce(function(a,s){return a+(parseFloat(s.rate)||0);},0);}return isPaket(it.sat)?rate:q*rate*h;}
 function secSum(items){return (items||[]).reduce(function(a,it){return a+itemSub(it);},0);}
 
 function r1k(n){return Math.round(n/1000)*1000;}
@@ -526,7 +537,7 @@ function computeLines(){
       if(isSum){
         lines.push({t:'ih',nama:it.nama||'-'});
         subs.forEach(function(sb,ssi){var a=r1k((parseFloat(sb.rate)||0)*factor);quotedFull+=a;lines.push({t:'s',key:si+'-'+ii+'-'+ssi,nama:sb.nama||'-',amount:a,qNum:1,hNum:1});});
-      } else if(it.sat==='paket'){
+      } else if(isPaket(it.sat)){
         var a=r1k((parseFloat(it.rate)||0)*factor);quotedFull+=a;
         lines.push({t:'i',key:si+'-'+ii,desc:it.nama||'-',incl:subs.map(function(s){return s.nama||'';}).filter(Boolean),qty:(q>1?q+' '+T.unitPl:T.pkt),unit:a,amount:a,qNum:1,hNum:1});
       } else {
@@ -571,13 +582,39 @@ function compute(){
 }
 
 /* render item cards */
+/* Saran untuk kolom custom = satuan yang pernah user ketik sendiri (di luar daftar bawaan) */
+function fillSatuanList(){
+  var dl=document.getElementById('satuanList');if(!dl)return;
+  var baku={};SATUAN.forEach(function(s){baku[s.toLowerCase()]=1;});
+  var seen={},out=[];
+  (state.sections||[]).forEach(function(sec){(sec.items||[]).forEach(function(it){
+    var s=String(it.sat||'').trim();if(!s)return;var k=s.toLowerCase();
+    if(baku[k]||seen[k])return;seen[k]=1;out.push(s);
+  });});
+  dl.innerHTML=out.map(function(s){return '<option value="'+s.replace(/"/g,'&quot;')+'">';}).join('');
+}
+
+/* Satuan: dropdown pilihan siap pakai + opsi "Tulis sendiri" yang membuka kolom ketik */
+function satuanField(si,i,it,isPkt,isSum){
+  var cur=String(it.sat||''),k=cur.trim().toLowerCase();
+  var adaDiDaftar=SATUAN.some(function(s){return s.toLowerCase()===k;});
+  var custom=!!it.satCustom||(cur!==''&&!adaDiDaftar);
+  var dis=isSum?' disabled style="opacity:.4"':'';
+  var opts=SATUAN.map(function(s){
+    return '<option value="'+s+'"'+((!custom&&s.toLowerCase()===k)?' selected':'')+'>'+s+'</option>';
+  }).join('')+'<option value="__custom__"'+(custom?' selected':'')+'>➕ Tulis sendiri…</option>';
+  var sel='<select data-sec="'+si+'" data-i="'+i+'" data-f="satsel"'+dis+'>'+opts+'</select>';
+  if(!custom)return sel;
+  return sel+'<input class="satcustom" list="satuanList" autocomplete="off" data-sec="'+si+'" data-i="'+i+'" data-f="sat" data-waspkt="'+(isPkt?'1':'0')+'" value="'+cur.replace(/"/g,'&quot;')+'" placeholder="mis. roll, box, sesi"'+dis+'>';
+}
 function renderItems(si){
   var items=state.sections[si].items;
+  fillSatuanList();
   var box=document.getElementById('secitems-'+si);if(!box)return;box.innerHTML='';
   items.forEach(function(it,i){
     if(!it.subs)it.subs=[];
     var d=document.createElement('div');d.className='item';
-    var isPkt=it.sat==='paket',isSum=it.subs.length&&it.mode==='sum';
+    var isPkt=isPaket(it.sat),isSum=it.subs.length&&it.mode==='sum';
     var subsHtml='';
     if(it.open){
       subsHtml='<div class="subs"><div class="submode">'+
@@ -589,7 +626,7 @@ function renderItems(si){
     d.innerHTML='<input data-sec="'+si+'" data-i="'+i+'" data-f="nama" value="'+(it.nama||'').replace(/"/g,'&quot;')+'" placeholder="Nama item">'+
       '<div class="r">'+
         '<div><div class="miniL">'+(isPkt||isSum?'Qty (info)':'Qty')+'</div><input type="number" inputmode="numeric" data-sec="'+si+'" data-i="'+i+'" data-f="qty" value="'+it.qty+'"></div>'+
-        '<div><div class="miniL">Satuan</div><select data-sec="'+si+'" data-i="'+i+'" data-f="sat"'+(isSum?' disabled style="opacity:.4"':'')+'>'+SATUAN.map(function(s){return '<option '+(s===it.sat?'selected':'')+'>'+s+'</option>';}).join('')+'</select></div>'+
+        '<div><div class="miniL">Satuan</div>'+satuanField(si,i,it,isPkt,isSum)+'</div>'+
         '<div><div class="miniL">'+(isSum?'Total rincian':(isPkt?'Harga paket':'Harga (Rp)'))+'</div><input type="number" inputmode="numeric" data-sec="'+si+'" data-i="'+i+'" data-f="rate" value="'+(isSum?itemSub(it):it.rate)+'"'+(isSum?' disabled style="opacity:.4"':'')+'></div>'+
         '<div><div class="miniL">Hari/×</div><input type="number" inputmode="numeric" data-sec="'+si+'" data-i="'+i+'" data-f="hari" value="'+it.hari+'"'+((isPkt||isSum)?' disabled style="opacity:.35"':'')+'></div>'+
       '</div>'+
@@ -601,8 +638,29 @@ function renderItems(si){
   box.querySelectorAll('input[data-f],select[data-f]').forEach(function(el){
     el.addEventListener('input',function(){
       var s=+el.getAttribute('data-sec'),ii=+el.getAttribute('data-i'),ff=el.getAttribute('data-f');
+      if(ff==='satsel'){
+        var itx=state.sections[s].items[ii];
+        if(el.value==='__custom__'){itx.satCustom=true;itx.sat='';}
+        else{itx.satCustom=false;itx.sat=el.value;}
+        save();renderItems(s);recalc();
+        if(itx.satCustom){var box2=document.querySelector('input[data-f="sat"][data-sec="'+s+'"][data-i="'+ii+'"]');if(box2)box2.focus();}
+        return;
+      }
       state.sections[s].items[ii][ff]=(ff==='nama'||ff==='sat')?el.value:(parseFloat(el.value)||0);save();
-      if(ff==='sat'){renderItems(s);recalc();return;}
+      if(ff==='sat'){
+        /* hanya render ulang kalau status "paket" berubah — biar ketikan tidak terputus */
+        var wasPkt=el.getAttribute('data-waspkt')==='1', nowPkt=isPaket(el.value);
+        if(wasPkt!==nowPkt){
+          /* status paket berubah → baris harus digambar ulang.
+             Kembalikan fokus + posisi kursor supaya ketikan user tidak terputus. */
+          var pos=el.selectionStart;
+          renderItems(s);recalc();
+          var again=document.querySelector('input[data-f="sat"][data-sec="'+s+'"][data-i="'+ii+'"]');
+          if(again){again.focus();try{again.setSelectionRange(pos,pos);}catch(e){}}
+          return;
+        }
+        document.querySelector('[data-sub="'+s+'-'+ii+'"]').textContent=rp(itemSub(state.sections[s].items[ii]));recalc();return;
+      }
       document.querySelector('[data-sub="'+s+'-'+ii+'"]').textContent=rp(itemSub(state.sections[s].items[ii]));recalc();
     });
   });
@@ -711,13 +769,18 @@ function buildDoc(){
   if(i.email)cparts.push(i.email);
   var l3=[i.website,i.ig&&('IG @'+String(i.ig).replace(/^@/,''))].filter(Boolean).join('  ·  ');if(l3)cparts.push(l3);
   var contactHtml=cparts.length?'<div class="contact">'+cparts.join('<br>')+'</div>':'';
+  /* Rekening pembayaran — datanya sama dengan yang dipakai invoice */
+  var qb=state.invoice||{};
+  var qBankHtml=(qb.bankNama||qb.bankNo||qb.bankAtas)
+    ?('<div class="ttl" style="margin-top:9px">'+T.payTo+'</div>'+[qb.bankNama,qb.bankNo,qb.bankAtas?('a.n. '+qb.bankAtas):''].filter(Boolean).map(function(x){return '<div>'+x+'</div>';}).join(''))
+    :'';
   var bgmap={pastel:'#ffffff',cream:'#F4EEE1',darkpink:'#242428',darkpurple:'#0E0E14'};
   document.documentElement.style.setProperty('--docbg',bgmap[tpl]||'#ffffff');
   var html='<div class="dhead"><div class="brand">'+(i.logo?'<img src="'+i.logo+'">':'')+'<div class="brandtext"><div class="co">'+(i.usaha||'Usahaku')+'</div>'+contactHtml+'</div></div>'+
     '<div class="title"><h2>'+T.quotation+'</h2><div class="metano">'+T.no+': '+(i.nomor||'-')+'<br>'+T.date+': '+new Date(i.tgl||iso()).toLocaleDateString(T.locale,{day:'numeric',month:'short',year:'numeric'})+'<br>'+T.validUntil+': '+berlakuDate+'</div></div></div>'+
     '<div class="parties"><div class="to"><span class="lbl">'+T.to+'</span><div class="klien">'+(i.klien||'-')+'</div><div class="proyek">'+T.project+': '+(i.proyek||'-')+'</div></div></div>'+
     '<table class="items"><thead><tr><th>'+T.desc+'</th><th class="c">'+T.qty+'</th><th class="n">'+T.price+'</th><th class="n">'+T.amount+'</th></tr></thead>'+body+'</table>'+
-    '<div class="foot"><div class="notes"><div class="ttl">'+T.tc+'</div>'+mdLite(i.tc)+taxNote+'</div><div class="summary">'+sumRows+'</div></div>'+
+    '<div class="foot"><div class="notes"><div class="ttl">'+T.tc+'</div>'+mdLite(i.tc)+taxNote+qBankHtml+'</div><div class="summary">'+sumRows+'</div></div>'+
     sign;
   var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;
   showPreview('Quotation.pdf');
@@ -729,6 +792,16 @@ function bindInfo(){
   Object.keys(map).forEach(function(id){var el=document.getElementById(id);el.value=state.info[map[id]]||'';el.addEventListener('input',function(){state.info[map[id]]=el.value;save();});});
   var lg=document.getElementById('logoPrev');if(state.info.logo){lg.src=state.info.logo;lg.style.display='block';}
   document.getElementById('i-logo').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){state.info.logo=rd.result;lg.src=rd.result;lg.style.display='block';save();};rd.readAsDataURL(f);});
+  /* Rekening: sumber datanya sama dengan yang di bagian Invoice, jadi cukup diisi sekali */
+  [['q-bank','iv-bank','bankNama'],['q-norek','iv-norek','bankNo'],['q-atas','iv-atas','bankAtas']].forEach(function(p){
+    var a=document.getElementById(p[0]);if(!a)return;
+    a.value=(state.invoice&&state.invoice[p[2]])||'';
+    a.addEventListener('input',function(){
+      state.invoice[p[2]]=a.value;
+      var b=document.getElementById(p[1]);if(b)b.value=a.value;
+      save();
+    });
+  });
   var tg=document.getElementById('ttdPrev');if(state.info.ttd){tg.src=state.info.ttd;tg.style.display='block';}
   document.getElementById('i-ttd').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){state.info.ttd=rd.result;tg.src=rd.result;tg.style.display='block';save();};rd.readAsDataURL(f);});
 }
@@ -767,7 +840,8 @@ function renderNegoManual(){
 function bindInvoice(){
   var iv=state.invoice;
   var m={'iv-no':'no','iv-tgl':'tgl','iv-bank':'bankNama','iv-norek':'bankNo','iv-atas':'bankAtas','iv-notes':'notes'};
-  Object.keys(m).forEach(function(id){var el=document.getElementById(id);el.value=iv[m[id]]||'';el.oninput=function(){state.invoice[m[id]]=el.value;save();};});
+  var twin={'iv-bank':'q-bank','iv-norek':'q-norek','iv-atas':'q-atas'};
+  Object.keys(m).forEach(function(id){var el=document.getElementById(id);el.value=iv[m[id]]||'';el.oninput=function(){state.invoice[m[id]]=el.value;var t=twin[id]&&document.getElementById(twin[id]);if(t)t.value=el.value;save();};});
   document.getElementById('iv-p2').onclick=function(){state.invoice.termins=defInvoice().termins;save();renderTermins();recalc();};
   document.getElementById('iv-p3').onclick=function(){state.invoice.termins=invoice3();save();renderTermins();recalc();};
   document.getElementById('iv-add').onclick=function(){state.invoice.termins.push({label:'Termin '+(state.invoice.termins.length+1),pct:0,note:''});save();renderTermins();recalc();};
