@@ -3,13 +3,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>In This Economy — Cara Realistis Dapat Penghasilan Tambahan dari Produk Digital</title>
-<meta name="description" content="Gaji habis sebelum tanggal tua, paylater jalan terus. Ini cara realistis bangun penghasilan tambahan dari produk digital — tanpa skill khusus, tanpa stok barang, tanpa resign.">
+<meta name="description" content="Gaji baru masuk, belum seminggu sudah habis, ujungnya paylater lagi. Ini cara realistis bangun penghasilan tambahan dari produk digital — tanpa skill khusus, tanpa stok barang, tanpa resign.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
  --paper:#FFFCF7; --cream:#F7F2E9; --cream2:#F1EADC;
  --ink:#1A1613; --body:#544B41; --mute:#948A7C; --line:#E8DFD0;
- --gold:#C08A17; --gold-d:#A2740E; --deep:#16181C; --red:#B4472F;
+ --gold:#C08A17; --deep:#16181C; --red:#B4472F; --grn:#2E8B57;
 }
 html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--body);
@@ -20,21 +20,26 @@ h1,h2,h3{color:var(--ink);letter-spacing:-.02em;line-height:1.22}
 strong{color:var(--ink);font-weight:650}
 section{padding:44px 0;border-bottom:1px solid var(--line)}
 .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px}
+h2{font-size:23px;margin-bottom:12px}
+p+p{margin-top:12px}
+.sub{color:var(--mute);font-size:14.5px;margin-top:-4px;margin-bottom:16px}
+.mini{font-size:13px;color:var(--mute);margin-top:14px}
 
 /* HERO */
-.hero{background:var(--deep);color:#fff;padding:38px 0 42px;border-bottom:none;position:relative;overflow:hidden}
-.hero:before{content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);
- width:130%;height:80%;background:radial-gradient(ellipse at 50% 50%,rgba(214,160,44,.20),rgba(22,24,28,0) 62%)}
+.hero{background:var(--deep);color:#fff;padding:34px 0 40px;border-bottom:none;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;top:-25%;left:50%;transform:translateX(-50%);
+ width:135%;height:85%;background:radial-gradient(ellipse at 50% 50%,rgba(214,160,44,.22),rgba(22,24,28,0) 62%)}
 .hero .wrap{position:relative}
-.brand{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:22px}
-.hero h1{color:#fff;font-size:30px;font-weight:800;margin-bottom:14px}
+.brand{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:20px}
+.hero h1{color:#fff;font-size:29px;font-weight:800;margin-bottom:13px}
 .hero .lead{color:#CFCBC3;font-size:16px}
 .hero .lead b{color:#fff}
-.hcover{display:flex;gap:16px;align-items:center;margin-top:24px;
- background:rgba(255,255,255,.05);border:1px solid rgba(214,160,44,.35);border-radius:14px;padding:14px}
-.hcover img{width:82px;border-radius:6px;flex-shrink:0;box-shadow:0 6px 18px rgba(0,0,0,.5)}
-.hcover .t{font-size:13px;color:#BFB9AF;line-height:1.5}
-.hcover .t b{color:#fff;display:block;font-size:14.5px;margin-bottom:3px}
+.herocov{display:flex;gap:18px;align-items:center;margin-top:26px}
+.herocov img{width:132px;border-radius:8px;flex-shrink:0;
+ box-shadow:0 14px 34px rgba(0,0,0,.6),0 0 0 1px rgba(214,160,44,.4)}
+.herocov .t{font-size:13.5px;color:#BFB9AF;line-height:1.55}
+.herocov .t b{color:#fff;display:block;font-size:16px;margin-bottom:5px;letter-spacing:-.01em}
+.hbtn{margin-top:24px;max-width:340px}
 
 /* SYMPTOM */
 .symp{list-style:none;margin-top:18px}
@@ -43,10 +48,9 @@ section{padding:44px 0;border-bottom:1px solid var(--line)}
 .symp li:before{content:"";position:absolute;left:6px;top:19px;width:8px;height:8px;border-radius:50%;background:var(--red);opacity:.55}
 .note{background:var(--cream);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 10px 10px 0;margin-top:22px}
 .note p{font-size:15px;color:var(--ink)}
-
-h2{font-size:23px;margin-bottom:12px}
-p+p{margin-top:12px}
-.sub{color:var(--mute);font-size:14.5px;margin-top:-4px;margin-bottom:16px}
+.big-note{background:var(--deep);color:#E4E0DA;border-radius:14px;padding:20px 22px;margin:22px 0}
+.big-note p{font-size:16px;line-height:1.6}
+.big-note strong{color:#F0C860}
 
 /* STORY */
 .story{background:var(--cream);border-bottom:1px solid var(--line)}
@@ -57,16 +61,37 @@ p+p{margin-top:12px}
 .tbl tr:last-child td{border-bottom:none}
 .tbl tr.tot td{background:var(--cream2);font-weight:700;color:var(--ink)}
 
+/* VS TABLE */
+.vs{width:100%;border-collapse:collapse;margin:20px 0 4px;font-size:14px;
+ background:var(--paper);border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.vs th{padding:12px 10px;font-size:12.5px;font-weight:700;text-align:left}
+.vs th.a{background:#F3E6E2;color:#8C3B24;text-align:center}
+.vs th.b{background:#16181C;color:#F0C860;text-align:center}
+.vs td{padding:11px 10px;border-top:1px solid var(--line);font-size:13.5px;vertical-align:middle}
+.vs td:first-child{color:var(--ink);font-weight:600;font-size:13.5px}
+.vs td.a{background:#FBF4F2;color:#8C6055;text-align:center;font-size:12.5px}
+.vs td.b{background:#FAF6EC;color:#4E6B45;text-align:center;font-size:12.5px}
+.vs .x{color:#B4472F;font-weight:800;display:block;font-size:14px}
+.vs .v{color:#2E8B57;font-weight:800;display:block;font-size:14px}
+.vs tr.tot td{border-top:2px solid var(--line);font-weight:700;font-size:13px}
+.vs tr.tot td.b{color:var(--ink)}
+
 /* PROOF */
 .proof{background:var(--deep);color:#E8E5E0;border-bottom:none}
 .proof h2{color:#fff}
 .proof .sub{color:#8E8981}
-.kpis{display:flex;gap:10px;margin:20px 0 14px}
-.kpi{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(214,160,44,.3);border-radius:12px;padding:16px 10px;text-align:center}
-.kpi .v{font-size:21px;font-weight:800;color:var(--gold);letter-spacing:-.02em;line-height:1}
+.shot{margin:18px 0 22px;background:#fff;border-radius:12px;padding:8px 8px 0;
+ box-shadow:0 16px 40px rgba(0,0,0,.45);border:1px solid rgba(214,160,44,.28)}
+.shot img{width:100%;display:block;border-radius:7px}
+.shot figcaption{font-size:12.5px;color:#6B6255;text-align:center;padding:10px 6px 11px;line-height:1.5}
+.shot figcaption b{color:#16181C}
+.kpis{display:flex;gap:10px;margin:20px 0 16px}
+.kpi{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(214,160,44,.3);border-radius:12px;padding:16px 8px;text-align:center}
+.kpi .v{font-size:19px;font-weight:800;color:var(--gold);letter-spacing:-.02em;line-height:1}
 .kpi .v.w{color:#fff}
 .kpi .l{font-size:10.5px;color:#8E8981;margin-top:7px;text-transform:uppercase;letter-spacing:.07em;line-height:1.35}
-.proof .cap{font-size:13px;color:#8E8981;line-height:1.6}
+.proof .cap{font-size:13.5px;color:#8E8981;line-height:1.65}
+.proof .cap+.cap{margin-top:12px;font-size:12.5px}
 
 /* GET */
 .get{list-style:none}
@@ -124,18 +149,23 @@ p+p{margin-top:12px}
 .buybar a{background:var(--gold);color:#fff;font-weight:750;font-size:15px;text-decoration:none;
  padding:12px 20px;border-radius:10px;white-space:nowrap}
 .foot{padding:26px 0 34px;text-align:center;font-size:12px;color:var(--mute);line-height:1.7}
-@media(min-width:640px){.hero h1{font-size:36px}h2{font-size:26px}}
+@media(min-width:640px){.hero h1{font-size:35px}h2{font-size:26px}.herocov img{width:160px}}
+@media(max-width:380px){.herocov img{width:108px}.vs td,.vs th{padding:9px 6px}}
 </style></head><body>
 
 <!-- HERO -->
 <div class="hero"><div class="wrap">
   <div class="brand">DailyResource</div>
-  <h1>Gaji masuk tanggal 1, habis sebelum tanggal tua — dan paylater jalan terus.</h1>
-  <p class="lead">Kalau tiap bulan kamu ngalamin ini, masalahnya <b>bukan kamu boros.</b> Masalahnya penghasilanmu cuma satu, dan itu nggak pernah cukup buat ngejar harga yang naik terus.</p>
-  <div class="hcover">
-    <img src="/cov-ite.jpg" alt="Sampul In This Economy">
-    <div class="t"><b>In This Economy</b>Cara realistis bangun penghasilan tambahan dari produk digital — tanpa skill khusus, tanpa stok barang, tanpa resign.</div>
+  <h1>Gaji baru masuk, belum seminggu sudah habis, ujungnya paylater lagi.</h1>
+  <p class="lead">Mungkin masalah kita sama. <b>In this economy, bukan kita yang boros</b> — gaji UMR aja yang memang nggak pernah cukup.</p>
+  <div class="herocov">
+    <img src="/cov-ite.jpg" alt="Sampul ebook In This Economy">
+    <div class="t">
+      <b>In This Economy</b>
+      <span>Cara realistis bangun penghasilan tambahan dari produk digital — tanpa skill khusus, tanpa stok barang, tanpa resign.</span>
+    </div>
   </div>
+  <a class="btn hbtn" href="#beli">Lihat Isinya</a>
 </div></div>
 
 <!-- SYMPTOM -->
@@ -143,12 +173,11 @@ p+p{margin-top:12px}
   <div class="eyebrow">Coba jujur sama diri sendiri</div>
   <h2>Kalau sekarang kamu lagi ngerasain ini, kamu nggak sendirian.</h2>
   <ul class="symp">
-    <li>Gaji masuk, dan <strong>dalam dua minggu udah tinggal receh</strong> — padahal nggak ngerasa belanja apa-apa.</li>
-    <li>Tagihan paylater jalan tiap bulan, dan kadang kamu bayar yang satu <strong>pakai yang lain.</strong></li>
-    <li>Tanggal tua artinya ngirit makan, nunda servis motor, atau pinjam dulu ke teman.</li>
-    <li>Pengen nabung, tapi tiap bulan selalu ada yang "mendadak" dan tabungannya kepakai lagi.</li>
-    <li>Kepikiran nyari tambahan, tapi capek pulang kerja dan nggak tahu harus mulai dari mana.</li>
-    <li>Diam-diam takut: <strong>kalau bulan depan gaji ini berhenti, aku hidup dari apa?</strong></li>
+    <li>Gajian masuk, <strong>seminggu udah mau abis aja</strong> buat bayar ini itu.</li>
+    <li>Belum kasih orang tua, kasih adik, atau kasih mertua — <strong>ujung-ujungnya paylater lagi.</strong></li>
+    <li>Jangankan kepikiran buat nabung. Mikirin lunasin paylater aja udah bingung.</li>
+    <li>Mau cari tambahan dari mana? Kerja udah kantoran dari pagi sampai sore.</li>
+    <li>Terus belum lagi kepikiran <strong>takut kena PHK.</strong></li>
   </ul>
   <div class="note"><p>Kerja keras sebulan penuh, terus balik lagi ke titik nol. Itu bukan salahmu — tapi juga bukan sesuatu yang harus kamu terima selamanya.</p></div>
 </div></section>
@@ -161,45 +190,59 @@ p+p{margin-top:12px}
   <p>Akhirnya dia keluar. Dan tiga tahun setelahnya, dia ngejar hal yang salah satu per satu:</p>
   <table class="tbl">
     <tr><th>Yang dicoba</th><th class="n">Biaya</th></tr>
-    <tr><td>Kelas Etsy — nggak pernah beneran mulai</td><td class="n">±1,2 jt</td></tr>
-    <tr><td>Bootcamp penerjemahan — bayaran telat berbulan-bulan</td><td class="n">±2 jt</td></tr>
+    <tr><td>Kelas Etsy — nggak pernah beneran mulai</td><td class="n">&plusmn;1,2 jt</td></tr>
+    <tr><td>Bootcamp penerjemahan — bayaran telat berbulan-bulan</td><td class="n">&plusmn;2 jt</td></tr>
     <tr><td>Kelas digital marketing — materinya banyak yang gratis di YouTube</td><td class="n">3 jt</td></tr>
-    <tr><td>Agency remote job — nggak dapat kerja</td><td class="n">±1 jt</td></tr>
+    <tr><td>Agency remote job — nggak dapat kerja</td><td class="n">&plusmn;1 jt</td></tr>
     <tr><td>Jualan aksesori — stoknya masih numpuk sampai sekarang</td><td class="n">modal stok</td></tr>
     <tr class="tot"><td>Total yang ludes, hasil nol</td><td class="n">&gt; Rp7 juta</td></tr>
   </table>
   <p>Lihat polanya? Semuanya dibeli dalam kondisi panik. Dan tiap kali satu gagal, jawabannya selalu sama: <strong>beli yang berikutnya.</strong></p>
-  <p>Titik baliknya bukan keajaiban. Titik baliknya adalah waktu dia berhenti nyari "kelas berikutnya", dan fokus ke satu model yang paling masuk akal buat kondisinya: <strong>produk digital.</strong> Bukan karena paling keren — tapi karena modalnya kecil, gagalnya murah, dan kalau berhasil bisa diulang tanpa nambah tenaga.</p>
+  <p>Titik baliknya bukan keajaiban. Titik baliknya waktu dia berhenti nyari "kelas berikutnya", dan fokus ke satu model yang paling masuk akal buat kondisinya: <strong>produk digital.</strong> Bukan karena paling keren — tapi karena modalnya kecil, gagalnya murah, dan kalau berhasil bisa diulang tanpa nambah tenaga.</p>
 </div></section>
 
 <!-- APPROACH -->
 <section><div class="wrap">
   <div class="eyebrow">Kenapa produk digital</div>
-  <h2>Matematikanya beda jauh — dan ini yang bikin masuk akal buat orang yang waktunya habis buat kerja.</h2>
-  <p class="sub">Bayangin dua orang sama-sama nutup 100 penjualan bulan ini. Satu jualan tas, satu jualan file.</p>
-  <table class="tbl">
-    <tr><th>Per 100 penjualan</th><th class="n">Tas fisik</th><th class="n">Produk digital</th></tr>
-    <tr><td>Modal barang</td><td class="n">−Rp90.000</td><td class="n">Rp0</td></tr>
-    <tr><td>Packing &amp; ongkir</td><td class="n">−Rp8.000</td><td class="n">Rp0</td></tr>
-    <tr><td>Retur / rusak</td><td class="n">−Rp4.500</td><td class="n">Rp0</td></tr>
-    <tr class="tot"><td>Sisa &times; 100 penjualan</td><td class="n">Rp4,45 jt</td><td class="n">Rp7,66 jt</td></tr>
-    <tr class="tot"><td>Jam kerja terpakai</td><td class="n">±25 jam</td><td class="n">0 jam</td></tr>
+  <h2>Coba lihat sendiri bedanya.</h2>
+  <p class="sub">Sama-sama jualan. Yang satu ngurusin barang, yang satu nggak.</p>
+
+  <table class="vs">
+    <tr><th></th><th class="a">Produk fisik</th><th class="b">Produk digital</th></tr>
+    <tr><td>Stok barang</td><td class="a"><span class="x">&#10005;</span> Harus modal duluan</td><td class="b"><span class="v">&#10003;</span> Nggak ada</td></tr>
+    <tr><td>Packing &amp; ongkir</td><td class="a"><span class="x">&#10005;</span> Tiap pesanan</td><td class="b"><span class="v">&#10003;</span> Nggak ada</td></tr>
+    <tr><td>Retur / barang rusak</td><td class="a"><span class="x">&#10005;</span> Rugi ditanggung</td><td class="b"><span class="v">&#10003;</span> Nggak ada</td></tr>
+    <tr><td>Antre ekspedisi</td><td class="a"><span class="x">&#10005;</span> Tiap hari</td><td class="b"><span class="v">&#10003;</span> Nggak ada</td></tr>
+    <tr class="tot"><td>Yang beneran kamu bayar</td><td class="a">Barang + packing + ongkir + retur</td><td class="b"><strong>Cuma biaya iklan</strong></td></tr>
   </table>
-  <p>Baris terakhir itu yang paling jarang dihitung orang. Yang jualan barang harus <em>hadir</em> 100 kali — bales chat, packing, antre di ekspedisi. Yang jualan file? Nol. Penjualan ke-100 nggak butuh kerjaan tambahan apa pun dibanding penjualan ke-1.</p>
-  <div class="note"><p><strong>Artinya penghasilanmu berhenti nempel ke jam kerjamu.</strong> Buat orang yang waktunya sudah habis dipakai kerja kantoran, cuma itu satu-satunya cara yang realistis.</p></div>
+
+  <div class="big-note">
+    <p>Bayangin: <strong>1&times; bikin, bisa dijual berkali-kali.</strong> Tanpa drama stok barang, packing, retur, atau refund. Lagi tidur? Lagi boker? Uang tetap bisa masuk.</p>
+  </div>
+
+  <p>Dan ini bagian yang paling jarang orang sadari — <strong>mumpung masih banyak yang mikir produk digital itu bohongan.</strong> Padahal di luar sana banyak orang yang hidupnya sangat layak dari produk digital. Apalagi kalau kamu cuma mau pemasukan tambahan di kisaran Rp6&ndash;10 juta sebulan; itu ukuran yang masuk akal untuk dikejar dari produk digital — bukan angka fantasi.</p>
+  <p class="mini">Tetap perlu kerja dan konsisten, ya. Ini bukan tombol ajaib, dan bukan jaminan penghasilan.</p>
 </div></section>
 
 <!-- PROOF -->
 <div class="proof" style="padding:44px 0"><div class="wrap">
-  <div class="eyebrow">Bukan proyeksi</div>
-  <h2>Ini angka yang beneran masuk.</h2>
-  <p class="sub">Dashboard lynk.id, data per 25 Agustus 2026.</p>
+  <div class="eyebrow">Bukan proyeksi, bukan mockup</div>
+  <h2>Ini screenshot dashboard kami sendiri.</h2>
+  <p class="sub">lynk.id &middot; periode 1&ndash;31 Juli 2026, diambil apa adanya.</p>
+
+  <figure class="shot">
+    <img src="/lynk-proof.jpg" alt="Screenshot dashboard lynk.id periode Juli 2026: Total Sales 6.3JT, Net Value IDR 6.313.000, 69 pesanan">
+    <figcaption>Total Sales <b>6.3JT</b> &middot; Net Value <b>Rp6.313.000</b> &middot; <b>69</b> pesanan terbayar</figcaption>
+  </figure>
+
   <div class="kpis">
-    <div class="kpi"><div class="v">Rp6,31jt</div><div class="l">Juli 2026<br>satu bulan</div></div>
-    <div class="kpi"><div class="v w">112</div><div class="l">Pesanan<br>terbayar</div></div>
-    <div class="kpi"><div class="v w">Rp10,4jt</div><div class="l">Total<br>sejak awal</div></div>
+    <div class="kpi"><div class="v">Rp50rb</div><div class="l">Modal iklan<br>per hari</div></div>
+    <div class="kpi"><div class="v w">Rp1,55jt</div><div class="l">Total iklan<br>sebulan</div></div>
+    <div class="kpi"><div class="v w">Rp6,31jt</div><div class="l">Yang masuk<br>bulan itu</div></div>
   </div>
-  <p class="cap">Juli 2026: penjualan Rp6.313.000 dari 69 pesanan. Biaya iklan bulan itu Rp1.550.000 — jadi tiap Rp1 yang keluar buat iklan, balik jadi sekitar Rp4. Angka ini nilai transaksi masuk, bukan laba bersih; hitungan lengkapnya ada di dalam bukunya, termasuk bulan yang sepi. <strong style="color:#fff">Hasil tiap orang beda</strong> — tergantung produk, konsistensi, modal iklan, dan pasarnya.</p>
+
+  <p class="cap"><strong style="color:#fff">Modalnya Rp50.000 sehari.</strong> Itu nggak lebih mahal dari dua gelas kopi kekinian. Bedanya: kopi habis dalam sepuluh menit, iklan ini yang narik 69 pesanan sebulan. Dan kerannya kamu yang pegang — bisa kamu matikan kapan saja, hari itu juga.</p>
+  <p class="cap">Angka di atas adalah nilai transaksi masuk, bukan laba bersih. Hitungan lengkapnya ada di dalam bukunya, termasuk bulan-bulan yang sepi. <strong style="color:#fff">Hasil tiap orang beda</strong> — tergantung produk, konsistensi, modal iklan, dan pasarnya.</p>
 </div></div>
 
 <!-- WHAT YOU GET -->
@@ -250,9 +293,9 @@ p+p{margin-top:12px}
     <div class="priceline"><span class="big">Rp99.000</span><span class="was">Rp145.000</span></div>
     <ul class="plist">
       <li>Semua isi paket buku utama</li>
-      <li><strong>50 Judul &amp; Nama Produk</strong> — biar produkmu punya nama yang bikin orang berhenti</li>
+      <li><strong>50 Judul dan Nama Produk</strong> — biar produkmu punya nama yang bikin orang berhenti</li>
       <li><strong>Cetak Biru Landing Page</strong> — 8 blok + 3 contoh halaman jadi</li>
-      <li><strong>Bank Angle &amp; Hook</strong> — 40 sudut cerita + 30 hook 3 detik</li>
+      <li><strong>Bank Angle dan Hook</strong> — 40 sudut cerita + 30 hook 3 detik</li>
     </ul>
     <a class="btn" href="https://lynk.id/michiotakayuki/od73glzqxg4m/checkout">Ambil Paket Lengkap — Hemat Rp46.000</a>
     <p class="paynote">Transfer bank, QRIS, atau e-wallet. Filenya langsung dikirim ke email setelah pembayaran berhasil.</p>
