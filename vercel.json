@@ -1,5 +1,11 @@
 {
   "rewrites": [
-    { "source": "/gerd", "destination": "/gerd.html" }
+    { "source": "/gerd", "destination": "/gerd.html" },
+    { "source": "/ite", "destination": "/ite.html" },
+    { "source": "/inthiseconomy", "destination": "/inthiseconomy.html" },
+    { "source": "/judul", "destination": "/judul.html" },
+    { "source": "/cetakbiru", "destination": "/cetakbiru.html" },
+    { "source": "/bankangle", "destination": "/bankangle.html" },
+    { "source": "/paketlengkap", "destination": "/paketlengkap.html" }
   ]
 }
