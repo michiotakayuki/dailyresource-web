@@ -149,7 +149,7 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
 
 /* ===== PDF DOC (renders on print) ===== */
 #doc{display:none}
-#doc{font-family:'Segoe UI',system-ui,sans-serif;color:#1b1830;padding:38px 34px;min-height:100vh;box-sizing:border-box}
+#doc{font-family:'Segoe UI',system-ui,sans-serif;color:#1b1830;padding:38px 34px 26px;box-sizing:border-box}
 #doc .dhead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;gap:16px}
 #doc .brand{display:flex;flex-direction:row;align-items:center;gap:14px}
 #doc .brand img{height:150px;max-width:300px;object-fit:contain;margin:0;flex-shrink:0}
@@ -180,11 +180,13 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
 #doc .notes .ttl{text-align:left}
 #doc .notes .ttl{display:block;margin-bottom:5px;font-size:11.5px;font-weight:800}
 #doc .notes b{font-weight:700}
-#doc .foot,#doc .sign,#doc .notes,#doc .summary{break-inside:avoid;page-break-inside:avoid}
+#doc .foot,#doc .sign,#doc .notes,#doc .summary,#doc .rcol{break-inside:avoid;page-break-inside:avoid}
 #doc .summary{width:255px;flex-shrink:0}
 #doc .srow{display:flex;justify-content:space-between;padding:5px 13px;font-size:12px}
 #doc .srow.total{font-weight:800;font-size:15px;border-radius:11px;padding:12px 13px;margin-top:5px}
-#doc .sign{margin-top:30px;width:230px;margin-left:auto;text-align:center;font-size:11.5px}
+#doc .rcol{width:255px;flex-shrink:0}
+#doc .rcol .summary{width:100%}
+#doc .sign{margin-top:18px;width:100%;margin-left:auto;text-align:center;font-size:11.5px}
 #doc .sign .hk{margin-bottom:2px;opacity:.8}
 #doc .sign img{max-height:64px;max-width:170px;object-fit:contain;margin:2px auto;display:block}
 #doc .sign .space{height:56px}
@@ -780,8 +782,7 @@ function buildDoc(){
     '<div class="title"><h2>'+T.quotation+'</h2><div class="metano">'+T.no+': '+(i.nomor||'-')+'<br>'+T.date+': '+new Date(i.tgl||iso()).toLocaleDateString(T.locale,{day:'numeric',month:'short',year:'numeric'})+'<br>'+T.validUntil+': '+berlakuDate+'</div></div></div>'+
     '<div class="parties"><div class="to"><span class="lbl">'+T.to+'</span><div class="klien">'+(i.klien||'-')+'</div><div class="proyek">'+T.project+': '+(i.proyek||'-')+'</div></div></div>'+
     '<table class="items"><thead><tr><th>'+T.desc+'</th><th class="c">'+T.qty+'</th><th class="n">'+T.price+'</th><th class="n">'+T.amount+'</th></tr></thead>'+body+'</table>'+
-    '<div class="foot"><div class="notes"><div class="ttl">'+T.tc+'</div>'+mdLite(i.tc)+taxNote+qBankHtml+'</div><div class="summary">'+sumRows+'</div></div>'+
-    sign;
+    '<div class="foot"><div class="notes"><div class="ttl">'+T.tc+'</div>'+mdLite(i.tc)+taxNote+qBankHtml+'</div><div class="rcol"><div class="summary">'+sumRows+'</div>'+sign+'</div></div>';
   var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;
   showPreview('Quotation.pdf');
 }
@@ -891,8 +892,7 @@ function buildInvoice(idx){
     '<div class="title"><h2>'+T.invoice+'</h2><div class="metano">'+T.no+': '+(iv.no||'-')+'/T'+(idx+1)+'<br>'+T.date+': '+new Date(iv.tgl||iso()).toLocaleDateString(T.locale,{day:'numeric',month:'short',year:'numeric'})+'<br>'+T.termOf(idx+1,terms.length)+'<br><b style="color:'+stCol+'">'+stTxt+'</b></div></div></div>'+
     '<div class="parties"><div class="to"><span class="lbl">'+T.billedTo+'</span><div class="klien">'+(i.klien||'-')+'</div><div class="proyek">'+T.project+': '+(i.proyek||'-')+'</div></div></div>'+
     '<table class="items"><thead><tr><th>'+T.ket+'</th><th class="c">'+T.portion+'</th><th class="n">'+T.amount+'</th></tr></thead><tbody>'+rows+'</tbody></table>'+
-    '<div class="foot"><div class="notes">'+bankHtml+(iv.notes?('<div class="ttl" style="margin-top:9px">'+T.notes+'</div>'+mdLite(iv.notes)):'')+'</div><div class="summary">'+ctx+'</div></div>'+
-    sign;
+    '<div class="foot"><div class="notes">'+bankHtml+(iv.notes?('<div class="ttl" style="margin-top:9px">'+T.notes+'</div>'+mdLite(iv.notes)):'')+'</div><div class="rcol"><div class="summary">'+ctx+'</div>'+sign+'</div></div>';
   var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;showPreview('Invoice.pdf');
 }
 function quid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
