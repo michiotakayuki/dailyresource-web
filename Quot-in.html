@@ -234,7 +234,7 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
 @media print{
   @page{margin:0}
   html,body{margin:0;background:var(--docbg,#fff);-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .wrap,.sumbar,.overlay{display:none!important}
+  .wrap,.sumbar,.overlay,#backHome,#dash{display:none!important}
   #doc{display:block!important}
   #doc *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
@@ -517,7 +517,7 @@ function showPreview(filename){
   ov.querySelector('#pv-close').onclick=restore;
   ov.querySelector('#pv-print').onclick=function(){restore();setTimeout(function(){window.print();},60);};
 }
-function dlPDF(el,filename){if(!el){return;}ensureH2P(function(){if(typeof html2pdf==='undefined'){alert('Menyiapkan cetak… jika PDF tidak otomatis terunduh, pilih "Save as PDF" di dialog print.');window.print();return;}var bg='#ffffff';try{var v=getComputedStyle(document.documentElement).getPropertyValue('--docbg');if(v&&v.trim())bg=v.trim();}catch(e){}el.style.display='block';el.style.width='794px';el.style.margin='0 auto';try{window.scrollTo(0,0);}catch(e){}var done=function(){el.style.display='';el.style.width='';el.style.margin='';};html2pdf().set({margin:0,filename:filename,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:bg,useCORS:true},jsPDF:{unit:'pt',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}}).from(el).save().then(done).catch(function(){done();window.print();});});}
+function dlPDF(el,filename){if(!el){return;}ensureH2P(function(){if(typeof html2pdf==='undefined'){alert('Menyiapkan cetak… jika PDF tidak otomatis terunduh, pilih "Save as PDF" di dialog print.');window.print();return;}var bg='#ffffff';try{var v=getComputedStyle(document.documentElement).getPropertyValue('--docbg');if(v&&v.trim())bg=v.trim();}catch(e){}el.style.display='block';el.style.width='794px';el.style.margin='0 auto';try{window.scrollTo(0,0);}catch(e){}var done=function(){el.style.display='';el.style.width='';el.style.margin='';};html2pdf().set({margin:0,filename:filename,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,backgroundColor:bg,useCORS:true,ignoreElements:function(n){return !!(n&&n.id&&(n.id==='backHome'||n.id==='dash'));}},jsPDF:{unit:'pt',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}}).from(el).save().then(done).catch(function(){done();window.print();});});}
 
 
 function itemSub(it){var q=parseFloat(it.qty)||0,rate=parseFloat(it.rate)||0,h=parseFloat(it.hari)||1;if(it.subs&&it.subs.length&&it.mode==='sum'){return it.subs.reduce(function(a,s){return a+(parseFloat(s.rate)||0);},0);}return isPaket(it.sat)?rate:q*rate*h;}
