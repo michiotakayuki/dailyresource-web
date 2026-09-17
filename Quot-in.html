@@ -958,7 +958,7 @@ function buildDoc(){
     if(l.t==='h')return '<tr class="grp"><td colspan="4">'+l.label+'</td></tr>';
     if(l.t==='ih')return '<tr class="itemhdr"><td colspan="3">'+l.nama+'</td><td class="n"></td></tr>';
     if(l.t==='s')return '<tr class="subr"><td colspan="3">– '+l.nama+'</td><td class="n">'+rp(l.amount)+'</td></tr>';
-    var incl=(l.incl&&l.incl.length)?'<div class="inclist">'+l.incl.map(function(n){return '– '+n;}).join('<br>')+'</div>':'';
+    var incl=(l.incl&&l.incl.length)?'<div class="inclist'+(l.inclRaw?' raw':'')+'">'+l.incl.map(function(n){return l.inclRaw?n:('– '+n);}).join('<br>')+'</div>':'';
     if(l.t==='sub')return '<tr class="subtot"><td colspan="3">'+T.subtotal+' '+l.label+'</td><td class="n">'+rp(l.amount)+rp2span(l.amount)+'</td></tr>';
     if(l.ringkas)return '<tr><td>'+(l.desc?('<b>'+l.desc+'</b>'):'')+incl+'</td><td class="c">'+l.qty+'</td><td class="n">—</td><td class="n">'+rp(l.amount)+rp2span(l.amount)+'</td></tr>';
     return '<tr><td>'+l.desc+incl+'</td><td class="c">'+l.qty+'</td><td class="n">'+rp(l.unit)+'</td><td class="n">'+rp(l.amount)+'</td></tr>';
@@ -971,10 +971,11 @@ function buildDoc(){
      nama item tetap tampil sebagai daftar kecil, harga satuannya tidak.
      Ini murni lapisan tampilan — c.lines (dan totalnya) tidak diubah sama sekali,
      jadi perhitungan, pajak, dan fitur nego tetap jalan apa adanya. */
+  var SUBMARK='&nbsp;&nbsp;&nbsp;· ';
   var disp=[],acc=null;
   function flushAcc(){
     if(!acc)return;
-    disp.push({t:'i',ringkas:true,key:'rk-'+acc.si,desc:acc.label,incl:acc.names,
+    disp.push({t:'i',ringkas:true,inclRaw:true,key:'rk-'+acc.si,desc:acc.label,incl:acc.names,
                qty:T.pkt,unit:0,amount:acc.amount,qNum:1,hNum:1});
     acc=null;
   }
@@ -993,9 +994,15 @@ function buildDoc(){
     flushSub();
     if(l.t==='h'){flushAcc();disp.push(l);acc={si:l.si,label:'',names:[],amount:0};return;}
     if(!acc)acc={si:l.si,label:'',names:[],amount:0};
-    if(l.t==='ih'){if(l.nama)acc.names.push(l.nama);return;}
+    /* Nama item ikut tampil beserta isinya, supaya lingkup kerja (mis. daftar
+       gear di dalam satu paket) tetap terbaca klien walau harganya ditutup. */
+    if(l.t==='ih'){if(l.nama)acc.names.push('– '+l.nama);return;}
+    if(l.t==='s'){if(l.nama)acc.names.push(SUBMARK+l.nama);acc.amount+=(l.amount||0);return;}
     acc.amount+=(l.amount||0);
-    if(l.t==='i'&&l.desc)acc.names.push(l.desc);
+    if(l.t==='i'&&l.desc){
+      acc.names.push('– '+l.desc);
+      (l.incl||[]).forEach(function(n){acc.names.push(SUBMARK+n);});
+    }
   });
   flushAcc();flushSub();
   var blocks=[],cur=null,pend=null;
