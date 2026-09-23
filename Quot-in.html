@@ -465,6 +465,7 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
       <div><div class="miniL" id="curratelbl">Kurs</div><input type="number" id="f-currate" step="any" inputmode="decimal" placeholder="0"></div>
       <div><div class="miniL">Kurs per tanggal</div><input type="date" id="f-curtgl"></div>
     </div>
+    <div id="curnotebox" style="margin-top:8px"><label style="display:flex;align-items:center;gap:8px;margin:0;font-weight:400"><input type="checkbox" id="f-curhidenote" style="width:auto;margin:0;flex:0 0 auto"><span>Sembunyikan catatan kurs di dokumen</span></label></div>
     <p class="tip" id="curtip"></p>
     <div class="grid2" style="margin-top:6px">
       <div><label>PPN 11%</label><select id="f-ppn"><option value="none">Tidak pakai PPN</option><option value="charge">Dibebankan ke klien (+11%)</option><option value="include">Sudah termasuk harga</option></select></div>
@@ -607,7 +608,7 @@ var CUR={
   MYR:{sym:'RM',dec:2,loc:'en-US',nama:'Ringgit Malaysia'},
   THB:{sym:'฿',dec:2,loc:'en-US',nama:'Baht Thailand'}
 };
-function curOf(){var c=(typeof state!=='undefined'&&state&&state.cur)||{};return {pri:CUR[c.pri]?c.pri:'IDR',sec:CUR[c.sec]?c.sec:'',rate:parseFloat(c.rate)||0,rateTgl:c.rateTgl||''};}
+function curOf(){var c=(typeof state!=='undefined'&&state&&state.cur)||{};return {pri:CUR[c.pri]?c.pri:'IDR',sec:CUR[c.sec]?c.sec:'',rate:parseFloat(c.rate)||0,rateTgl:c.rateTgl||'',hideNote:!!c.hideNote};}
 function curFmt(n,code){
   var c=CUR[code]||CUR.IDR;n=parseFloat(n)||0;var neg=n<0;n=Math.abs(n);
   return (neg?'-':'')+c.sym+n.toLocaleString(c.loc,{minimumFractionDigits:c.dec,maximumFractionDigits:c.dec});
@@ -1020,7 +1021,7 @@ function buildDoc(){
     '<div class="srow total"><span>'+T.total+'</span><span>'+rp(c.total)+rp2span(c.total)+'</span></div>'+
     (state.pph==='tanggung'?'<div class="srow" style="font-size:10px;opacity:.7"><span>'+T.cutPph+'</span><span>'+rp(c.pphAmt)+'</span></div>':'');
   var taxNote='';
-  if(dual)taxNote+='<br>• '+T.nKurs(curOf(),curFmt(curOf().rate,curOf().pri));
+  if(dual&&!curOf().hideNote)taxNote+='<br>• '+T.nKurs(curOf(),curFmt(curOf().rate,curOf().pri));
   if(state.ppn==='charge')taxNote+='<br>• '+T.nVatCharge;
   if(state.ppn==='include')taxNote+='<br>• '+T.nVatIncl;
   if(state.pph==='tanggung')taxNote+='<br>• '+T.nPphCut(rp(c.pphAmt));
@@ -1133,21 +1134,25 @@ function bindFee(){
   [['f-ppn','ppn'],['f-pph','pph']].forEach(function(p){var el=document.getElementById(p[0]);el.value=state[p[1]];el.addEventListener('change',function(){state[p[1]]=el.value;recalc();save();});});
   bindCur();
 }
-function defCur(){return {pri:'IDR',sec:'',rate:0,rateTgl:''};}
+function defCur(){return {pri:'IDR',sec:'',rate:0,rateTgl:'',hideNote:false};}
 function bindCur(){
   if(!state.cur)state.cur=defCur();
   var pri=document.getElementById('f-curpri'),sec=document.getElementById('f-cursec'),
-      rate=document.getElementById('f-currate'),tgl=document.getElementById('f-curtgl');
+      rate=document.getElementById('f-currate'),tgl=document.getElementById('f-curtgl'),
+      hnote=document.getElementById('f-curhidenote');
   if(!pri)return;
   var opts=Object.keys(CUR).map(function(k){return '<option value="'+k+'">'+k+' — '+CUR[k].nama+'</option>';}).join('');
   pri.innerHTML=opts;
   sec.innerHTML='<option value="">Tidak usah (satu mata uang saja)</option>'+opts;
   pri.value=curOf().pri; sec.value=curOf().sec;
   rate.value=state.cur.rate||''; tgl.value=state.cur.rateTgl||'';
+  if(hnote)hnote.checked=!!state.cur.hideNote;
   function refresh(){
     var k=curOf(),box=document.getElementById('curbox'),tip=document.getElementById('curtip'),
         lbl=document.getElementById('curratelbl');
     box.style.display=k.sec?'':'none';
+    var nbox=document.getElementById('curnotebox');
+    if(nbox)nbox.style.display=(k.sec&&k.rate>0)?'':'none';
     if(k.sec){
       lbl.textContent='Kurs: 1 '+k.sec+' = ... '+k.pri;
       tip.innerHTML=k.rate>0
@@ -1161,6 +1166,7 @@ function bindCur(){
   sec.onchange=function(){state.cur.sec=sec.value;refresh();recalc();save();};
   rate.oninput=function(){state.cur.rate=parseFloat(rate.value)||0;refresh();recalc();save();};
   tgl.onchange=function(){state.cur.rateTgl=tgl.value;recalc();save();};
+  if(hnote)hnote.onchange=function(){state.cur.hideNote=hnote.checked;recalc();save();};
   refresh();
 }
 function bindTemplates(){
@@ -1246,7 +1252,7 @@ function buildInvoice(idx){
     '<table class="items"><thead><tr><th>'+T.ket+'</th><th class="c">'+T.portion+'</th><th class="n">'+T.amount+'</th></tr></thead><tbody>'+rows+'</tbody></table>'+
     '<div class="totwrap"><div class="summary">'+ctx+'</div></div>'+
     '<div class="closing"><div class="cl-grid">'+
-      '<div class="notes">'+(iv.notes?('<div class="ttl">'+T.notes+'</div>'+mdLite(iv.notes)):'')+((curOf().sec&&curOf().rate>0)?('<div class="taxnote">• '+T.nKurs(curOf(),curFmt(curOf().rate,curOf().pri))+'</div>'):'')+'</div>'+
+      '<div class="notes">'+(iv.notes?('<div class="ttl">'+T.notes+'</div>'+mdLite(iv.notes)):'')+((curOf().sec&&curOf().rate>0&&!curOf().hideNote)?('<div class="taxnote">• '+T.nKurs(curOf(),curFmt(curOf().rate,curOf().pri))+'</div>'):'')+'</div>'+
       bankHtml+
     '</div>'+signRowHtml(i,T)+'</div>';
   var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;showPreview('Invoice.pdf');
