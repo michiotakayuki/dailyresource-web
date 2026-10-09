@@ -1375,6 +1375,9 @@ input:focus,select:focus,.secname:focus{border-color:#F0603C!important;backgroun
 .addrow{background:#FDE8E1!important;border:1.5px dashed #F0603C!important;color:#c94a2a!important;border-radius:14px!important}
 .submode button.on{background:#141414!important;color:#fff!important;border-color:#141414!important}
 .rinToggle{color:#c94a2a!important}
+.overlay{position:fixed;inset:0;background:rgba(14,16,34,.55);display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;z-index:9999;overflow:auto}
+.overlay .modal{background:#fff;border-radius:22px;padding:20px;width:100%;max-width:480px;margin:auto;box-shadow:0 24px 60px rgba(0,0,0,.28);max-height:88vh;overflow:auto}
+.overlay .modal h3{margin:0 0 12px}
 .overlay .modal{border-radius:22px!important}
 .secctrl button{border-radius:10px!important;background:#fff!important}
 </style>
@@ -1431,6 +1434,7 @@ input:focus,select:focus,.secname:focus{border-color:#F0603C!important;backgroun
   function showDash(){renderDash();if(wrap)wrap.style.display='none';if(sumbar)sumbar.style.display='none';back.style.display='none';dash.style.display='';window.scrollTo(0,0);killWelcome();}
   window.__showBuilderQI=showBuilder; window.__showDashQI=showDash;
 
+  var dashPage=0, DASH_PER=6;
   function renderDash(){
    var saved=[]; try{saved=QI.savedList()||[];}catch(e){}
    var clients=[]; try{clients=QI.clients()||[];}catch(e){}
@@ -1446,7 +1450,10 @@ input:focus,select:focus,.secname:focus{border-color:#F0603C!important;backgroun
    if(!saved.length){
      cards='<div class="empty">Belum ada quotation tersimpan.<br><div style="margin-top:14px"><button class="cta" id="d-new">+ Buat quotation baru</button><button class="cta g" id="d-demo">Lihat contoh</button></div></div>';
    } else {
-     cards='<div class="cards">'+totals.slice(0,6).map(function(x,i){var q=x.q;return '<div class="holo h'+(i%3)+'" data-open="'+q.id+'"><div class="nm">'+esc(q.name)+'</div><div class="no">'+esc(q.no||'—')+'</div><div class="amt">'+rp(x.t)+'</div><div class="ft"><span>'+esc(q.at||'')+'</span><span class="bd">Buka →</span></div></div>';}).join('')+'</div>';
+     var totPg=Math.max(1,Math.ceil(totals.length/DASH_PER));
+     if(dashPage>totPg-1)dashPage=totPg-1; if(dashPage<0)dashPage=0;
+     cards='<div class="cards">'+totals.slice(dashPage*DASH_PER,(dashPage+1)*DASH_PER).map(function(x,i){var q=x.q;return '<div class="holo h'+(i%3)+'" data-open="'+q.id+'"><div class="nm">'+esc(q.name)+'</div><div class="no">'+esc(q.no||'—')+'</div><div class="amt">'+rp(x.t)+'</div><div class="ft"><span>'+esc(q.at||'')+'</span><span class="bd">Buka →</span></div></div>';}).join('')+'</div>';
+     if(totPg>1){cards+='<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px"><button class="cta g" id="d-prev" style="padding:8px 14px"'+(dashPage===0?' disabled':'')+'>\u2039 Sebelumnya</button><span style="font-size:13px;color:#7b81a0;font-weight:700">Halaman '+(dashPage+1)+' dari '+totPg+'</span><button class="cta g" id="d-next" style="padding:8px 14px"'+(dashPage>=totPg-1?' disabled':'')+'>Berikutnya \u203a</button></div>';}
    }
 
    var activity=totals.slice(0,4).map(function(x){return '<div class="act" data-open="'+x.q.id+'"><div class="row"><div class="cir" style="background:#22b07d">📄</div><div><div class="t">'+esc(x.q.name)+'</div><div style="font-size:11.5px;color:#7b81a0">'+esc(x.q.at||'')+'</div></div><div style="margin-left:auto;font-weight:800">'+rp(x.t)+'</div></div></div>';}).join('') || '<div style="color:#7b81a0;font-size:13px;margin-top:8px">Aktivitas akan muncul di sini setelah kamu simpan quotation.</div>';
@@ -1483,6 +1490,8 @@ input:focus,select:focus,.secname:focus{border-color:#F0603C!important;backgroun
    if(e=dash.querySelector('#d-demo'))e.onclick=dm;
    if(e=dash.querySelector('#a-demo'))e.onclick=dm;
    if(e=dash.querySelector('#a-hist'))e.onclick=function(){QI.openHistory();};
+   if(e=dash.querySelector('#d-prev'))e.onclick=function(){dashPage--;renderDash();};
+   if(e=dash.querySelector('#d-next'))e.onclick=function(){dashPage++;renderDash();};
   }
   showDash();
  }
