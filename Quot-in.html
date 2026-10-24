@@ -1511,9 +1511,14 @@ input:focus,select:focus,.secname:focus{border-color:#F0603C!important;backgroun
    if(e=dash.querySelector('#d-prev'))e.onclick=function(){dashPage--;renderDash();};
    if(e=dash.querySelector('#d-next'))e.onclick=function(){dashPage++;renderDash();};
   }
-  var __lq=null; try{__lq=QI.linkQuot?QI.linkQuot():null;}catch(e){}
-  if(__lq){ try{ QI.importLink(__lq); showBuilder(); }catch(e){ showDash(); } }
-  else showDash();
+  function bukaDariLink(){
+   var q=null; try{q=QI.linkQuot?QI.linkQuot():null;}catch(e){}
+   if(!q)return false;
+   try{ QI.importLink(q); showBuilder(); return true; }catch(e){ return false; }
+  }
+  // Kalau Quot-in sudah terbuka lalu link ditempel di tab yang sama, hash berubah tanpa reload
+  window.addEventListener('hashchange',function(){ bukaDariLink(); });
+  if(!bukaDariLink()) showDash();
  }
  if(document.readyState!=='loading')boot(); else document.addEventListener('DOMContentLoaded',boot);
 })();
