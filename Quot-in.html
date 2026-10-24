@@ -709,7 +709,17 @@ function emptyQuot(){return {info:{usaha:'',logo:'',alamat:'',telp:'',email:'',w
 var state=emptyQuot();
 function load(){try{var r=localStorage.getItem(KEY);if(r){state=JSON.parse(r);}}catch(e){}}
 function hasContent(s){try{var val=0;((s&&s.sections)||[]).forEach(function(sec){(sec.items||[]).forEach(function(it){if((parseFloat(it.rate)||0)>0)val++;if(it.subs)it.subs.forEach(function(x){if((parseFloat(x.rate)||0)>0)val++;});});});return val>=2;}catch(e){return false;}}
-function save(){try{var j=JSON.stringify(state);localStorage.setItem(KEY,j);if(hasContent(state)){localStorage.setItem(KEY+'_bak',j);localStorage.setItem(KEY+'_bak_at',new Date().toISOString());}}catch(e){}}
+function save(){try{var j=JSON.stringify(state);localStorage.setItem(KEY,j);if(hasContent(state)){localStorage.setItem(KEY+'_bak',j);localStorage.setItem(KEY+'_bak_at',new Date().toISOString());}saveIdentity();}catch(e){}}
+/* ---- Identitas tersimpan: logo, tanda tangan & data usaha dipakai ulang otomatis ---- */
+var IDKEY='quotin_identity';
+var IDFLD=['usaha','logo','alamat','telp','email','website','ig','ttdNama','ttdJabatan','ttd'];
+function saveIdentity(){try{var i=state.info||{};if(!i.logo&&!i.ttd)return;var o={};IDFLD.forEach(function(k){o[k]=i[k]||'';});localStorage.setItem(IDKEY,JSON.stringify(o));}catch(e){}}
+function getIdentity(){try{return JSON.parse(localStorage.getItem(IDKEY)||'null');}catch(e){return null;}}
+function applyIdentity(st){try{var id=getIdentity();if(!id||!st||!st.info)return st;IDFLD.forEach(function(k){if(!st.info[k]&&id[k])st.info[k]=id[k];});}catch(e){}return st;}
+/* ---- Buka quotation langsung dari link: Quot-in.html#q=<base64url JSON> ---- */
+function b64uDec(s){s=String(s).replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';var bin=atob(s);var by=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)by[i]=bin.charCodeAt(i);return (typeof TextDecoder!=='undefined')?new TextDecoder('utf-8').decode(by):decodeURIComponent(escape(bin));}
+function readLinkQuot(){try{var m=(location.hash||'').match(/[#&]q=([A-Za-z0-9\-_]+)/);if(!m)return null;var o=JSON.parse(b64uDec(m[1]));if(!o||!o.info||!o.sections||!o.sections.length)return null;return o;}catch(e){return null;}}
+function clearLinkHash(){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){location.hash='';}}
 function ensureH2P(cb){if(typeof html2pdf!=='undefined'){cb();return;}var d=document.getElementById('__h2p');if(d){var t=setInterval(function(){if(typeof html2pdf!=='undefined'){clearInterval(t);cb();}},150);setTimeout(function(){clearInterval(t);cb();},9000);return;}var s=document.createElement('script');s.id='__h2p';s.src='https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js';s.onload=function(){cb();};s.onerror=function(){cb();};document.head.appendChild(s);}
 function showPreview(filename){
   var doc=document.getElementById('doc');
@@ -1342,7 +1352,15 @@ window.__QI={
   totalOf:function(d){var bak=state;state=d;var t=0;try{t=compute().total;}catch(e){t=0;}state=bak;return t;},
   newEmpty:function(){state=emptyQuot();save();bindInfo();bindFee();bindTemplates();renderSections();bindNego();bindInvoice();recalc();window.scrollTo(0,0);},
   loadDemo:function(){state=demo();save();bindInfo();bindFee();bindTemplates();renderSections();bindNego();bindInvoice();recalc();window.scrollTo(0,0);},
-  openById:function(id){loadFromHistory(id,null);}
+  openById:function(id){loadFromHistory(id,null);},
+  linkQuot:readLinkQuot,
+  importLink:function(o){
+    state=applyIdentity(o);
+    if(!state.invoice)state.invoice=defInvoice();
+    try{var a=savedList();a.unshift({id:quid(),name:((state.info.klien||'Tanpa klien')+' — '+(state.info.proyek||'Tanpa proyek')),at:iso(),no:state.info.nomor||'',data:JSON.parse(JSON.stringify(state))});setSaved(a);}catch(e){}
+    save();bindInfo();bindFee();bindTemplates();renderSections();bindNego();bindInvoice();recalc();
+    clearLinkHash();window.scrollTo(0,0);
+  }
 };
 if(window.__onQIReady)window.__onQIReady();
 init();
@@ -1493,7 +1511,9 @@ input:focus,select:focus,.secname:focus{border-color:#F0603C!important;backgroun
    if(e=dash.querySelector('#d-prev'))e.onclick=function(){dashPage--;renderDash();};
    if(e=dash.querySelector('#d-next'))e.onclick=function(){dashPage++;renderDash();};
   }
-  showDash();
+  var __lq=null; try{__lq=QI.linkQuot?QI.linkQuot():null;}catch(e){}
+  if(__lq){ try{ QI.importLink(__lq); showBuilder(); }catch(e){ showDash(); } }
+  else showDash();
  }
  if(document.readyState!=='loading')boot(); else document.addEventListener('DOMContentLoaded',boot);
 })();
