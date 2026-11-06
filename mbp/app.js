@@ -841,20 +841,49 @@ $('b_pdf').onclick = async () => {
 
   const nama = (V('f_no') || (dt === 'inv' ? 'invoice' : 'quotation')).replace(/[^\w]+/g, '-').replace(/^-|-$/g, '') || 'dokumen';
   try {
-    await html2pdf().set({
+    const wk = html2pdf().set({
       margin: [PDF_MM.mt, PDF_MM.mr, PDF_MM.mb, PDF_MM.ml],
       filename: nama + '.pdf',
       image: { type: 'jpeg', quality: 0.96 },
       html2canvas: { scale: 2, useCORS: true, backgroundColor: bgEl || '#ffffff', logging: false },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
       pagebreak: { mode: ['css', 'legacy'] }
-    }).from(clone).save();
-    toast('PDF tersimpan: ' + nama + '.pdf');
+    }).from(clone);
+    await wk.toPdf();
+    const pdf = wk.prop.pdf;
+    showPreview(pdf, nama);
   } catch (e) {
     toast('Gagal membuat PDF: ' + (e.message || e) + ' — pakai tombol Cetak lewat browser.', 1);
   }
   hold.remove(); btn.disabled = false; btn.textContent = 'Download PDF';
 };
+
+/* Intip dulu sebelum tersimpan — tidak langsung mengunduh. */
+let PVURL = '', PVPDF = null, PVNAME = '';
+function showPreview(pdf, nama) {
+  if (PVURL) { try { URL.revokeObjectURL(PVURL); } catch (e) { } }
+  PVPDF = pdf; PVNAME = nama;
+  const blob = pdf.output('blob');
+  PVURL = URL.createObjectURL(blob);
+  const n = pdf.internal.getNumberOfPages();
+  $('pvname').textContent = nama + '.pdf';
+  $('pvinfo').textContent = n + ' halaman · ' + Math.round(blob.size / 1024) + ' KB · belum tersimpan';
+  $('pvframe').src = PVURL;
+  $('pv').classList.add('on');
+}
+function hidePreview() {
+  $('pv').classList.remove('on'); $('pvframe').src = 'about:blank';
+  if (PVURL) { try { URL.revokeObjectURL(PVURL); } catch (e) { } PVURL = ''; }
+  PVPDF = null;
+}
+$('pv_close').onclick = hidePreview;
+$('pv_save').onclick = () => {
+  if (!PVPDF) return;
+  PVPDF.save(PVNAME + '.pdf');
+  toast('Tersimpan: ' + PVNAME + '.pdf');
+  hidePreview();
+};
+addEventListener('keydown', e => { if (e.key === 'Escape' && $('pv').classList.contains('on')) hidePreview(); });
 
 /* ===================== QUOTATION -> INVOICE ===================== */
 $('b_toinv').onclick = () => {

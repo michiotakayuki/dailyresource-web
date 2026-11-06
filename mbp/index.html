@@ -261,6 +261,16 @@ table.trm tr.tt td{font-weight:800;background:#00000008}
 #toast.on{transform:translateX(-50%) translateY(0)}
 #toast.bad{background:#a8291f}
 
+/* intip PDF */
+#pv{display:none;position:fixed;inset:0;background:#141b2dd9;z-index:300;padding:18px}
+#pv.on{display:grid;place-items:center}
+.pvbox{background:#fff;border-radius:16px;width:min(1000px,100%);height:100%;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px #0005}
+.pvtop{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.pvtop b{font-size:13.5px}
+.pvinfo{font-size:11.5px;color:var(--mut);flex:1}
+#pvframe{flex:1;width:100%;border:none;background:#525659}
+@media(max-width:620px){.pvtop{gap:7px}.pvtop b{width:100%}.pvtop .btn{flex:1}}
+
 /* huruf besar untuk yang kurang nyaman baca tulisan kecil */
 body.big{font-size:16px}
 body.big .panel input,body.big .panel textarea,body.big .panel select{font-size:15.5px;padding:11px 12px}
@@ -529,6 +539,19 @@ body.big #t_big{background:#fff7f4;border-color:var(--or);color:var(--or)}
 
 <div class="stage"><div class="paper t-ocean" id="paper"></div></div>
 </div>
+</div>
+
+<!-- layar intip PDF sebelum disimpan -->
+<div id="pv">
+  <div class="pvbox">
+    <div class="pvtop">
+      <b id="pvname">dokumen.pdf</b>
+      <span class="pvinfo" id="pvinfo"></span>
+      <button class="btn g" id="pv_close">Tutup, perbaiki dulu</button>
+      <button class="btn" id="pv_save">Simpan PDF ke komputer</button>
+    </div>
+    <iframe id="pvframe" title="Intip PDF"></iframe>
+  </div>
 </div>
 
 <div id="toast"></div>
