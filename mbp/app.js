@@ -809,46 +809,49 @@ $('b_print').onclick = () => window.print();
    Alasannya: dialog cetak menempelkan tanggal, judul tab, dan alamat
    berkas di pinggir halaman, dan secara bawaan membuang semua warna
    latar — jadi hasilnya beda dari yang terlihat di layar.            */
-function fixForPdf(el) {
-  // aspect-ratio tidak dimengerti mesin penggambar PDF — ubah jadi tinggi tetap
-  el.querySelectorAll('.fr,.gi .fr,td.pic .fr').forEach(f => {
-    const r = f.getBoundingClientRect();
-    if (r.width && r.height) { f.style.height = r.height + 'px'; f.style.aspectRatio = 'auto'; }
-  });
-  el.querySelectorAll('img').forEach(i => { i.crossOrigin = 'anonymous'; });
-  return el;
-}
+/* Lebar kertas A4 dikurangi margin kiri-kanan, dalam piksel layar (96 dpi).
+   Salinan untuk PDF harus dibuat persis selebar ini. Kalau dibiarkan selebar
+   tampilan layar (880 px), sisi kanannya terpotong di PDF. */
+const PDF_MM = { w: 210, ml: 9, mr: 9, mt: 10, mb: 10 };
+const PDF_PX = Math.round((PDF_MM.w - PDF_MM.ml - PDF_MM.mr) * 96 / 25.4);
+
 $('b_pdf').onclick = async () => {
   if (typeof html2pdf === 'undefined')
-    return toast('Pembuat PDF belum termuat. Sambungkan internet sekali, lalu bisa dipakai offline.', 1);
+    return toast('Pembuat PDF belum termuat. Sambungkan internet sekali, setelah itu bisa dipakai offline.', 1);
   const btn = $('b_pdf'); btn.disabled = true; btn.textContent = 'Membuat PDF…';
   const src = $('paper');
-  const clone = src.cloneNode(true);
-  // samakan ukuran & warna latar dengan yang di layar
-  const w = src.getBoundingClientRect().width || 880;
-  clone.style.cssText += ';width:' + w + 'px;max-width:none;margin:0;box-shadow:none;min-height:0';
+  const sw = src.getBoundingClientRect().width || 880;
+  const k = PDF_PX / sw;
   const bgEl = getComputedStyle(src).backgroundColor;
-  const hold = document.createElement('div');
-  hold.style.cssText = 'position:fixed;left:-20000px;top:0;width:' + w + 'px;background:' + bgEl;
-  hold.appendChild(clone); document.body.appendChild(hold);
-  // ukur ulang bingkai foto memakai elemen asli yang masih tampil
-  const oF = [...src.querySelectorAll('.fr')], cF = [...clone.querySelectorAll('.fr')];
-  oF.forEach((o, i) => { const r = o.getBoundingClientRect(); if (cF[i] && r.height) { cF[i].style.height = r.height + 'px'; cF[i].style.aspectRatio = 'auto'; } });
-  clone.querySelectorAll('tr,.gi,.terms>div,.sign').forEach(e => e.style.pageBreakInside = 'avoid');
 
-  const nama = (V('f_no') || (dt === 'inv' ? 'invoice' : 'quotation')).replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
+  const clone = src.cloneNode(true);
+  clone.style.cssText += ';width:' + PDF_PX + 'px;max-width:none;margin:0;box-shadow:none;min-height:0;padding:26px 28px';
+  const hold = document.createElement('div');
+  hold.style.cssText = 'position:fixed;left:0;top:0;width:' + PDF_PX + 'px;z-index:-1;opacity:0;pointer-events:none';
+  hold.appendChild(clone); document.body.appendChild(hold);
+
+  // aspect-ratio tidak dipahami mesin penggambar — ubah jadi tinggi tetap,
+  // diukur dari elemen asli yang sedang tampil lalu dikecilkan sesuai skala.
+  const oF = [...src.querySelectorAll('.fr')], cF = [...clone.querySelectorAll('.fr')];
+  oF.forEach((o, i) => {
+    const r = o.getBoundingClientRect();
+    if (cF[i] && r.height) { cF[i].style.height = Math.round(r.height * k) + 'px'; cF[i].style.aspectRatio = 'auto'; }
+  });
+  clone.querySelectorAll('tr,.gi,.terms>div,.sign,.gal,table.sum,table.trm').forEach(e => e.style.pageBreakInside = 'avoid');
+
+  const nama = (V('f_no') || (dt === 'inv' ? 'invoice' : 'quotation')).replace(/[^\w]+/g, '-').replace(/^-|-$/g, '') || 'dokumen';
   try {
     await html2pdf().set({
-      margin: [10, 9, 10, 9],
+      margin: [PDF_MM.mt, PDF_MM.mr, PDF_MM.mb, PDF_MM.ml],
       filename: nama + '.pdf',
-      image: { type: 'jpeg', quality: 0.95 },
-      html2canvas: { scale: 2, useCORS: true, backgroundColor: bgEl || '#ffffff', logging: false, windowWidth: w },
+      image: { type: 'jpeg', quality: 0.96 },
+      html2canvas: { scale: 2, useCORS: true, backgroundColor: bgEl || '#ffffff', logging: false },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
       pagebreak: { mode: ['css', 'legacy'] }
     }).from(clone).save();
     toast('PDF tersimpan: ' + nama + '.pdf');
   } catch (e) {
-    toast('Gagal membuat PDF: ' + (e.message || e) + ' — coba tombol Cetak lewat browser.', 1);
+    toast('Gagal membuat PDF: ' + (e.message || e) + ' — pakai tombol Cetak lewat browser.', 1);
   }
   hold.remove(); btn.disabled = false; btn.textContent = 'Download PDF';
 };
