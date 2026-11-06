@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ef5f3c">
+<title>Quot-in Pengadaan — CV Makmur Berkah Perkasa</title>
+<link rel="manifest" href="app.webmanifest">
+<link rel="apple-touch-icon" href="ic-180.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--or:#ef5f3c;--ink:#141b2d;--mut:#7b879c;--bd:#e6eaf2;--bg:#f4f6fb}
+body{font:14px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* ===== LOGIN ===== */
+#scr-auth{min-height:100vh;display:grid;place-items:center;padding:22px}
+.auth{background:#fff;border:1px solid var(--bd);border-radius:20px;padding:30px 28px;width:100%;max-width:410px;box-shadow:0 10px 40px #1a233214}
+.auth .lg{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,#ff7a4d,#ef5f3c);color:#fff;display:grid;place-items:center;font-weight:800;font-size:21px;margin-bottom:14px}
+.auth h1{font-size:21px;font-weight:800;letter-spacing:-.4px}
+.auth .sub{font-size:13px;color:var(--mut);margin:4px 0 20px}
+.auth .seg{margin-bottom:16px}
+.auth .big{width:100%;padding:14px;border-radius:11px;border:none;background:var(--or);color:#fff;font:inherit;font-size:15px;font-weight:800;cursor:pointer;margin-top:4px}
+.auth .big:disabled{background:#eef1f7;color:#a3aec0;cursor:not-allowed}
+.auth .lnk{background:none;border:none;color:var(--or);font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:12px 0 0;display:block;width:100%;text-align:center}
+.msg{font-size:12.5px;line-height:1.5;padding:10px 12px;border-radius:10px;margin-bottom:14px;display:none}
+.msg.err{display:block;background:#fdeaea;color:#a8291f}
+.msg.ok{display:block;background:#eafaf1;color:#0d6b40}
+.msg.inf{display:block;background:#eef4ff;color:#1f4fa8}
+
+/* ===== APP ===== */
+#scr-app{display:none}
+.top{background:#fff;border-bottom:1px solid var(--bd);padding:11px 18px;display:flex;align-items:center;gap:13px;position:sticky;top:0;z-index:40;flex-wrap:wrap}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#ff7a4d,#ef5f3c);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px;flex:none}
+.brand b{font-size:15px;font-weight:800;letter-spacing:-.3px;display:block;line-height:1.2}
+.brand small{font-size:11px;color:var(--mut)}
+.spacer{flex:1}
+.pill{display:inline-flex;align-items:center;gap:6px;background:#eafaf1;color:#117a4a;border-radius:999px;padding:5px 11px;font-size:11.5px;font-weight:700}
+.pill.off{background:#fff4e5;color:#9a5b00}
+.pill.wait{background:#eef4ff;color:#1f4fa8}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.me{display:flex;align-items:center;gap:8px}
+.av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:800;color:#fff;background:#2d6cdf;flex:none}
+.me .nmz{font-size:12px;font-weight:700;line-height:1.25}
+.me .nmz small{display:block;font-weight:500;color:var(--mut);font-size:10.5px}
+.out{background:none;border:1.5px solid var(--bd);border-radius:9px;padding:7px 11px;font:inherit;font-size:12px;font-weight:700;color:var(--mut);cursor:pointer}
+
+.wrap{display:grid;grid-template-columns:378px 1fr;align-items:start}
+@media(max-width:1060px){.wrap{grid-template-columns:1fr}}
+.panel{padding:15px;display:flex;flex-direction:column;gap:11px}
+.stage{padding:15px 15px 60px}
+
+.card{background:#fff;border:1px solid var(--bd);border-radius:15px;overflow:hidden}
+.card>summary{padding:14px 16px;cursor:pointer;font-weight:700;font-size:13.5px;list-style:none;display:flex;align-items:center;gap:9px;user-select:none}
+.card>summary::-webkit-details-marker{display:none}
+.card>summary .n{width:21px;height:21px;border-radius:7px;background:var(--bg);color:var(--mut);display:grid;place-items:center;font-size:11px;font-weight:800;flex:none}
+.card[open]>summary .n{background:var(--or);color:#fff}
+.card>summary .cnt{margin-left:auto;font-size:11px;color:var(--mut);font-weight:600}
+.body{padding:2px 16px 17px}
+
+label.f{display:block;margin-bottom:11px}
+label.f span{display:block;font-size:10.5px;color:var(--mut);margin-bottom:5px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+input,textarea,select{width:100%;padding:9px 11px;border:1.5px solid var(--bd);border-radius:9px;font:inherit;font-size:13px;background:#fff;color:var(--ink)}
+textarea{resize:vertical;min-height:60px}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--or);box-shadow:0 0 0 3px #ef5f3c22}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+
+.ci{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1.5px solid var(--bd);border-radius:11px;background:#fff;margin-bottom:6px}
+.ci.on{border-color:var(--or);background:#fff7f4}
+.ci.lk{background:#f7f9fc;border-style:dashed}
+.sw{width:34px;height:20px;border-radius:999px;background:#d6dde8;position:relative;flex:none;cursor:pointer;transition:.15s}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.15s;box-shadow:0 1px 3px #0003}
+.ci.on .sw{background:var(--or)}.ci.on .sw::after{left:16px}
+.ci.lk .sw{background:#aab6c6;cursor:not-allowed}
+.ci .nm{flex:1;font-size:13px;font-weight:600}
+.badge{font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 7px;border-radius:5px;background:#eef1f7;color:#8795aa}
+.badge.int{background:#fdeaea;color:#b8322c}
+.x{background:none;border:none;color:#c0392b;cursor:pointer;font-size:15px;padding:0 3px;line-height:1}
+.addrow{display:flex;gap:8px;margin-top:10px}
+.btn{padding:9px 14px;border-radius:9px;border:none;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;background:var(--or);color:#fff;white-space:nowrap}
+.btn.g{background:#fff;color:var(--or);border:1.5px solid var(--or)}
+.btn:hover{filter:brightness(1.06)}
+
+.seg{display:flex;background:var(--bg);border-radius:11px;padding:3px;margin-bottom:12px}
+.seg button{flex:1;padding:8px;border:none;background:none;border-radius:8px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;color:var(--mut)}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px #0000001a}
+.seg.sm button{font-size:11px;padding:7px 4px}
+.seg.doc{margin-bottom:0}
+.seg.doc button.on{background:var(--or);color:#fff}
+
+.ths{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.th{border:2px solid var(--bd);border-radius:12px;cursor:pointer;overflow:hidden;background:#fff}
+.th.on{border-color:var(--or);box-shadow:0 0 0 3px #ef5f3c22}
+.th .pv{height:50px;padding:7px 8px;display:flex;flex-direction:column;gap:3px;justify-content:center}
+.th .bar{height:5px;border-radius:2px}
+.th .ln{height:3px;border-radius:2px;background:#0000001a}
+.th .lb{padding:7px 9px;border-top:1px solid var(--bd)}
+.th b{font-size:11.5px;display:block;font-weight:800}
+.th small{font-size:9.5px;color:var(--mut);display:block;line-height:1.3}
+
+.up{border:1.5px dashed var(--bd);border-radius:11px;padding:13px;text-align:center;background:#fcfdff;cursor:pointer;position:relative}
+.up:hover{border-color:var(--or);background:#fff7f4}
+.up input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.up .ic{font-size:19px;line-height:1;margin-bottom:4px}
+.up b{font-size:12px;display:block}
+.up small{font-size:10px;color:var(--mut)}
+.prev{display:flex;align-items:center;gap:10px;padding:9px;border:1.5px solid var(--bd);border-radius:11px;background:#fff}
+.prev img{max-height:44px;max-width:120px;object-fit:contain}
+.prev .mt{flex:1;font-size:11px;color:var(--mut)}
+
+.slot{width:100%;aspect-ratio:var(--ar,4/3);border:1.5px dashed var(--bd);border-radius:9px;background:#fbfcfe;position:relative;overflow:hidden;cursor:pointer;display:grid;place-items:center}
+.slot:hover{border-color:var(--or)}
+.slot img{width:100%;height:100%;object-fit:cover;display:block}
+.slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.slot .ph{font-size:10.5px;color:#a3aec0;text-align:center;line-height:1.4;padding:6px}
+.slotwrap{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:start;margin-bottom:11px}
+.slotwrap .hint{font-size:10px;color:var(--mut);line-height:1.5}
+
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.acts .full{grid-column:1/-1}
+.bg{padding:12px;border-radius:11px;border:none;font:inherit;font-weight:800;font-size:13px;cursor:pointer}
+.red{background:#e2493a;color:#fff}.grn{background:#12805a;color:#fff}
+.wht{background:#fff;color:var(--ink);border:1.5px solid var(--bd)}
+.dis{background:#eef1f7;color:#a3aec0;cursor:not-allowed}
+.note{font-size:11px;color:var(--mut);line-height:1.5}
+.note.hi{padding:9px 11px;background:#f0f7ff;border-radius:9px;color:#1f5fbf}
+.note.warn{padding:9px 11px;background:#fff4e5;border-radius:9px;color:#8a4f00}
+.hist{display:flex;flex-direction:column;gap:7px;max-height:420px;overflow:auto}
+.hi2{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid var(--bd);border-radius:11px;cursor:pointer;background:#fff}
+.hi2:hover{border-color:var(--or);background:#fff9f7}
+.hi2.cur{border-color:var(--or);background:#fff7f4}
+.hi2 .no{font-size:11.5px;font-weight:800;color:var(--or)}
+.hi2 .who{font-size:10.5px;color:var(--mut);line-height:1.4}
+.hi2 .amt{margin-left:auto;font-size:12px;font-weight:800;white-space:nowrap;text-align:right}
+.hi2 .amt small{display:block;font-weight:600;color:var(--mut);font-size:10px}
+.tm{display:grid;grid-template-columns:1fr 70px 110px 26px;gap:7px;align-items:center;margin-bottom:7px}
+.tm input{padding:8px 9px;font-size:12.5px}
+.tm .cal{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
+.sumbar{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);font-size:12.5px;font-weight:700;margin-top:4px}
+.sumbar.bad{background:#fdeaea;color:#a8291f}
+.sumbar.good{background:#eafaf1;color:#0d6b40}
+
+/* ===== KERTAS ===== */
+.paper{background:#fff;max-width:880px;margin:0 auto;box-shadow:0 4px 30px #1a233214;padding:44px 46px;min-height:940px;font-family:var(--pf);color:var(--pi)}
+@media(max-width:600px){.paper{padding:22px 18px}}
+.t-exec{--pi:#15202b;--pa:#15202b;--pl:#c8ced6;--ph:#eef1f4;--pf:"Times New Roman",Georgia,serif;--pr:0px}
+.t-ocean{--pi:#132132;--pa:#1565c0;--pl:#cfe0f3;--ph:#e8f1fc;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:7px}
+.t-emerald{--pi:#12261f;--pa:#0f7a52;--pl:#cae3d8;--ph:#e7f5ef;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:7px}
+.t-sunset{--pi:#2b1a11;--pa:#d4722a;--pl:#f0dac6;--ph:#fdf1e6;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:9px}
+.t-mono{--pi:#000;--pa:#000;--pl:#d8d8d8;--ph:#fff;--pf:ui-monospace,"SF Mono",Menlo,monospace;--pr:0px}
+.t-steel{--pi:#101418;--pa:#f0b429;--pl:#2a3340;--ph:#1b232e;--pf:"Helvetica Neue",Arial,sans-serif;--pr:3px}
+.t-pastel{--pi:#2f2a3d;--pa:#6b5a8c;--pl:#d9ecc0;--ph:#C7E89A;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:999px;--pbody:#EEF7DE;--pto:#E7DAF8;--ptoc:#3b2f55;--phc:#33420f;--ptot:#C7E89A;--ptotc:#33420f}
+.t-retro {--pi:#3B4A67;--pa:#F0B32E;--pl:#EFE7D2;--ph:#F0B32E;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:999px;--pbody:#FFFCF4;--pto:#F3B3C6;--ptoc:#6B2740;--phc:#5A3C00;--ptot:#5CB85F;--ptotc:#fff;--pbg:#F8F4E9}
+.t-mint  {--pi:#1C1C1C;--pa:#5E7A33;--pl:#BBD888;--ph:#C4E08C;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:14px;--pbody:#D6EBA8;--pto:#EDF6DA;--ptoc:#2E3F12;--phc:#2E3F12;--ptot:#8FC33F;--ptotc:#1B2A05;--pbg:#F5F4EC}
+
+.paper.fun{background:var(--pbg,#fff)}
+.bigt{display:none}
+.fun .bigt{display:block;font-size:46px;font-weight:900;letter-spacing:-2px;line-height:.95;margin:2px 0 16px;color:var(--pa)}
+.t-mint .bigt{color:#111;font-size:52px}
+.fun .kop{border-bottom:none;padding-bottom:4px;margin-bottom:4px;align-items:flex-start}
+.fun .kop h2{font-size:15px;color:var(--pi);letter-spacing:0}
+.fun .kop .qn b{color:var(--pi)}
+.fun .meta{background:var(--pto);color:var(--ptoc);border-radius:18px;padding:14px 20px;margin-bottom:18px}
+.fun .meta em{color:var(--ptoc);opacity:.7}
+.fun table.it{border-radius:18px;overflow:hidden;border-collapse:separate;border-spacing:0}
+.fun table.it th{background:var(--ph);color:var(--phc);border:none;padding:11px 8px}
+.fun table.it tbody{background:var(--pbody)}
+.fun table.it td{border:none;border-bottom:1px solid var(--pl)}
+.fun table.it tbody tr:last-child td{border-bottom:none}
+.fun tbody tr:nth-child(even) td{background:transparent}
+.fun .sum tr.tt td{background:var(--ptot);color:var(--ptotc);padding:9px 18px}
+.fun .sum tr.tt td:first-child{border-radius:999px 0 0 999px}
+.fun .sum tr.tt td:last-child{border-radius:0 999px 999px 0}
+.t-mint .sum tr.tt td:first-child{border-radius:14px 0 0 14px}
+.t-mint .sum tr.tt td:last-child{border-radius:0 14px 14px 0}
+.fun .gi .fr,.fun td.pic .fr{border-radius:12px;border-color:var(--pl)}
+.fun .terms h4{color:var(--pa)}
+.fun .gal h4{border-bottom-color:var(--pl)}
+
+.kop{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-bottom:14px;border-bottom:2.5px solid var(--pa);margin-bottom:20px}
+.kop .lf{display:flex;gap:14px;align-items:flex-start}
+.kop .lf img{object-fit:contain;flex:none}
+.kop h2{font-size:19px;font-weight:800;letter-spacing:-.3px;color:var(--pa);line-height:1.2}
+.kop p{font-size:10px;color:#6b7684;line-height:1.5;margin-top:5px;max-width:400px}
+.kop .qn{text-align:right;flex:none}
+.kop .qn em{display:block;font-size:9px;font-style:normal;letter-spacing:1px;color:#8a95a3;font-weight:700}
+.kop .qn b{font-size:15px;font-weight:800;color:var(--pa)}
+.kop .qn i{display:block;font-style:normal;font-size:10.5px;color:#6b7684;margin-top:5px}
+.t-mono .kop{border-bottom-width:1px;border-color:#000}
+.t-mono .kop h2{font-size:16px;letter-spacing:2px;text-transform:uppercase}
+.t-steel .kop{background:#141b23;margin:-44px -46px 20px;padding:26px 46px;border:none;align-items:center}
+.t-steel .kop h2{color:#fff;text-transform:uppercase;font-size:21px}
+.t-steel .kop p{color:#93a0ae}
+.t-steel .kop .qn b{color:var(--pa)}
+.t-steel .kop .qn em,.t-steel .kop .qn i{color:#93a0ae}
+.t-sunset .kop{border-bottom:none;background:var(--ph);margin:-44px -46px 20px;padding:26px 46px}
+
+.meta{display:flex;justify-content:space-between;gap:26px;font-size:12px;margin-bottom:18px}
+.meta em{font-style:normal;font-size:9px;letter-spacing:1px;color:#8a95a3;font-weight:800;display:block;margin-bottom:3px}
+.intro{font-size:11.5px;line-height:1.7;margin-bottom:18px;color:#4a5665}
+
+table.it{width:100%;border-collapse:collapse;font-size:11px}
+table.it th{background:var(--ph);color:var(--pi);padding:9px 7px;text-align:left;font-size:9px;letter-spacing:.7px;text-transform:uppercase;font-weight:800;border-bottom:2px solid var(--pa)}
+table.it td{padding:9px 7px;border-bottom:1px solid var(--pl);vertical-align:middle;line-height:1.45}
+.t-exec table.it th,.t-exec table.it td,.t-mono table.it th,.t-mono table.it td{border:1px solid var(--pl)}
+.t-steel table.it th{background:var(--ph);color:var(--pa)}
+.t-steel table.it td{border-bottom:1px solid #dfe4ea}
+.num{text-align:right;white-space:nowrap}.ctr{text-align:center;white-space:nowrap}
+tbody tr:nth-child(even) td{background:#00000004}
+.t-mono tbody tr:nth-child(even) td{background:none}
+td.pic{padding:5px}
+td.pic .fr{width:100%;aspect-ratio:var(--ar);border-radius:3px;overflow:hidden;background:#f2f4f7;border:1px solid var(--pl)}
+td.pic .fr img{width:100%;height:100%;object-fit:cover;display:block}
+
+.gal{margin-top:24px}
+.gal h4{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--pa);font-weight:800;margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid var(--pl)}
+.gg{display:grid;grid-template-columns:repeat(var(--gc,3),1fr);gap:12px}
+.gi .fr{width:100%;aspect-ratio:var(--ar);border-radius:var(--pr);overflow:hidden;background:#f2f4f7;border:1px solid var(--pl)}
+.gi .fr img{width:100%;height:100%;object-fit:cover;display:block}
+.gi .cap{font-size:9.5px;margin-top:5px;line-height:1.4;color:#4a5665}
+.gi .cap b{display:block;color:var(--pi);font-size:10px}
+
+.sum{width:clamp(260px,52%,340px);margin:14px 0 0 auto;border-collapse:collapse;font-size:12px}
+.sum td{padding:7px 9px}
+.sum td:first-child{color:#6b7684;font-size:11px}
+.sum td:last-child{text-align:right;font-weight:700;white-space:nowrap}
+.sum tr.tt td{background:var(--pa);color:#fff;font-size:13.5px;font-weight:800}
+.sum tr.tt td:first-child{border-radius:var(--pr) 0 0 var(--pr)}
+.sum tr.tt td:last-child{border-radius:0 var(--pr) var(--pr) 0}
+.t-steel .sum tr.tt td{color:#141b23}
+.t-mono .sum tr.tt td{background:#000}
+
+table.trm{width:100%;border-collapse:collapse;font-size:11px;margin-top:20px}
+table.trm th{background:var(--ph);color:var(--pi);padding:9px 7px;text-align:left;font-size:9px;letter-spacing:.7px;text-transform:uppercase;font-weight:800;border-bottom:2px solid var(--pa)}
+table.trm td{padding:9px 7px;border-bottom:1px solid var(--pl)}
+table.trm tr.tt td{font-weight:800;background:#00000008}
+.fun table.trm{border-radius:18px;overflow:hidden;border-collapse:separate;border-spacing:0}
+.fun table.trm th{background:var(--ph);color:var(--phc);border:none}
+.fun table.trm tbody{background:var(--pbody)}
+.fun table.trm td{border:none;border-bottom:1px solid var(--pl)}
+
+.terms{margin-top:26px;font-size:10.5px;line-height:1.7;color:#4a5665;display:grid;grid-template-columns:1fr 1fr;gap:18px 26px}
+@media(max-width:600px){.terms{grid-template-columns:1fr}}
+.terms h4{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--pa);font-weight:800;margin-bottom:4px}
+.bk{display:grid;grid-template-columns:96px 1fr;gap:1px 6px}
+.bk i{font-style:normal;color:#8a95a3}
+.sign{margin-top:28px;font-size:10.5px;color:#4a5665}
+.sign .sbox{height:56px;margin:6px 0 0;display:flex;align-items:flex-end}
+.sign .sbox img{max-height:56px;max-width:200px;object-fit:contain}
+.sign .ln{border-bottom:1.5px solid var(--pi);width:220px;margin-top:4px;margin-bottom:6px}
+.sign b{font-size:12px;color:var(--pi)}
+.wm{background:#fdeaea;color:#b8322c;font-size:10px;font-weight:800;padding:5px 11px;border-radius:7px;display:inline-block;margin-bottom:14px}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);background:#141b2d;color:#fff;padding:13px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:200;transition:.25s;max-width:92vw;box-shadow:0 8px 30px #0003}
+#toast.on{transform:translateX(-50%) translateY(0)}
+#toast.bad{background:#a8291f}
+
+/* huruf besar untuk yang kurang nyaman baca tulisan kecil */
+body.big{font-size:16px}
+body.big .panel input,body.big .panel textarea,body.big .panel select{font-size:15.5px;padding:11px 12px}
+body.big label.f span{font-size:12px}
+body.big .card>summary{font-size:15px}
+body.big .bg{font-size:15px;padding:15px}
+body.big .btn{font-size:14px;padding:11px 16px}
+body.big .seg button{font-size:14px;padding:10px}
+body.big .note{font-size:12.5px}
+body.big .hi2 .no{font-size:13px}body.big .hi2 .who{font-size:12px}body.big .hi2 .amt{font-size:13.5px}
+body.big .ci .nm{font-size:14.5px}
+body.big #t_big{background:#fff7f4;border-color:var(--or);color:var(--or)}
+
+@media print{
+ @page{size:A4;margin:11mm}
+ body{background:#fff}
+ .top,.panel,#scr-auth,#toast{display:none!important}
+ .wrap{display:block}
+ .stage{padding:0}
+ .paper{box-shadow:none;max-width:none;min-height:0;padding:0;margin:0}
+ .t-steel .kop,.t-sunset .kop{margin:0 0 20px;padding:20px 22px}
+ table.it,table.trm{page-break-inside:auto}
+ tr{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<div id="scr-auth">
+  <div class="auth">
+    <div class="lg">Q</div>
+    <h1 id="a_h1">Masuk</h1>
+    <p class="sub" id="a_sub">Quot-in Pengadaan — CV Makmur Berkah Perkasa</p>
+
+    <div class="seg" id="a_seg">
+      <button class="on" data-am="in">Masuk</button>
+      <button data-am="up">Daftar Akun</button>
+    </div>
+
+    <div class="msg" id="a_msg"></div>
+
+    <label class="f" id="a_namebox" style="display:none"><span>Nama lengkap</span>
+      <input id="a_name" autocomplete="name" placeholder="Mohammad Ginastra"></label>
+    <label class="f" id="a_codebox" style="display:none"><span>Kode undangan perusahaan</span>
+      <input id="a_code" autocomplete="off" placeholder="Minta ke atasan Anda"></label>
+    <label class="f"><span>Email</span>
+      <input id="a_email" type="email" autocomplete="username" placeholder="nama@perusahaan.com"></label>
+    <label class="f"><span>Password</span>
+      <input id="a_pass" type="password" autocomplete="current-password" placeholder="minimal 8 karakter"></label>
+
+    <button class="big" id="a_go">Masuk</button>
+    <button class="lnk" id="a_forgot">Lupa password?</button>
+    <p class="note" style="margin-top:14px;text-align:center">Sekali masuk, tidak perlu masuk lagi. Mau laptop ditutup berminggu-minggu, buka lagi langsung bisa dipakai.</p>
+  </div>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="scr-app">
+<div class="top">
+  <div class="logo">Q</div>
+  <div class="brand"><b>Quot-in Pengadaan</b><small id="t_comp">CV Makmur Berkah Perkasa</small></div>
+  <div class="spacer"></div>
+  <span class="pill" id="syncpill"><span class="dot"></span> Tersinkron</span>
+  <div class="me"><div class="av" id="t_av">?</div>
+    <div class="nmz" id="t_me">—<small>—</small></div></div>
+  <button class="out" id="t_big" title="Perbesar semua tulisan">A+ Huruf besar</button>
+  <button class="out" id="t_out">Keluar</button>
+</div>
+
+<div class="wrap">
+<div class="panel">
+
+  <div class="card"><div class="body" style="padding:12px">
+    <div class="seg doc" id="doctype">
+      <button class="on" data-dt="quot">Quotation</button>
+      <button data-dt="inv">Invoice</button>
+    </div>
+  </div></div>
+
+  <details class="card" open>
+    <summary><span class="n">1</span> Kolom tabel <span class="cnt" id="cc"></span></summary>
+    <div class="body">
+      <div class="seg">
+        <button class="on" data-mode="klien">Versi Klien</button>
+        <button data-mode="internal">Versi Internal</button>
+      </div>
+      <div id="cols"></div>
+      <div class="addrow"><input id="newcol" placeholder="Nama kolom baru…"><button class="btn" id="b_addcol">Tambah</button></div>
+      <p class="note" style="margin-top:11px">Kolom <b>WAJIB</b> selalu ikut. Sisanya mati-nyala per dokumen, tidak mewarisi dokumen sebelumnya.</p>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><span class="n">2</span> Foto produk <span class="cnt" id="pc"></span></summary>
+    <div class="body">
+      <label class="f"><span>Mau ditaruh di mana</span></label>
+      <div class="seg sm" id="pmode">
+        <button data-pm="off">Tidak dipakai</button>
+        <button class="on" data-pm="gal">Galeri bawah</button>
+        <button data-pm="tab">Dalam tabel</button>
+      </div>
+      <label class="f"><span>Rasio foto — dikunci sistem</span>
+        <select id="ar">
+          <option value="4/3" selected>4 : 3 — mendatar (disarankan)</option>
+          <option value="1/1">1 : 1 — kotak</option>
+          <option value="3/2">3 : 2 — foto kamera</option>
+          <option value="16/9">16 : 9 — lebar</option>
+        </select></label>
+      <label class="f"><span>Jumlah foto per baris galeri</span>
+        <select id="gc"><option>2</option><option selected>3</option><option>4</option></select></label>
+      <p class="note">Foto apa pun yang diunggah dipotong otomatis ke rasio ini dan diratakan tengah. Jadi foto dari HP, foto katalog, atau tangkapan layar tetap terlihat seragam.</p>
+      <p class="note hi" style="margin-top:9px"><b>Slot kosong tidak ikut tercetak.</b> Kotak putus-putus hanya muncul di layar pengisian. Di dokumen dan PDF, barang tanpa foto keluar polos. Kalau satu dokumen tidak ada fotonya sama sekali, bagian foto hilang total.</p>
+      <p class="note" style="margin-top:9px" id="imgsize"></p>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><span class="n">3</span> Pilihan desain <span class="cnt">9 tema</span></summary>
+    <div class="body"><div class="ths" id="ths"></div></div>
+  </details>
+
+  <details class="card">
+    <summary><span class="n">4</span> Logo &amp; tanda tangan</summary>
+    <div class="body">
+      <label class="f"><span>Logo perusahaan</span></label>
+      <div id="logobox"></div>
+      <label class="f" style="margin-top:10px"><span>Tinggi logo di dokumen</span>
+        <select id="logoh"><option value="34">Kecil</option><option value="46" selected>Sedang</option><option value="60">Besar</option></select></label>
+      <label class="f" style="margin-top:6px"><span>Tanda tangan</span></label>
+      <div id="ttdbox"></div>
+      <p class="note" style="margin-top:10px">Sekali unggah, tersimpan untuk seluruh perusahaan — rekan di laptop lain tidak perlu unggah ulang.</p>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="n">5</span> Kop perusahaan</summary>
+    <div class="body">
+      <label class="f"><span>Nama perusahaan</span><input id="f_nama"></label>
+      <label class="f"><span>Alamat</span><textarea id="f_alamat"></textarea></label>
+      <div class="r2">
+        <label class="f"><span>Telepon</span><input id="f_telp"></label>
+        <label class="f"><span>Email</span><input id="f_email"></label>
+      </div>
+      <button class="btn g" style="width:100%" id="b_savekop">Simpan kop untuk seluruh perusahaan</button>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="n">6</span> Klien &amp; nomor</summary>
+    <div class="body">
+      <label class="f"><span>Kepada</span><input id="f_klien"></label>
+      <label class="f"><span>Nama PIC</span><input id="f_pic"></label>
+      <div class="r2">
+        <label class="f"><span>Nomor — dari server</span><input id="f_no" readonly style="background:#f7f9fc;font-weight:700"></label>
+        <label class="f"><span>Tanggal</span><input type="date" id="f_tgl"></label>
+      </div>
+      <p class="note" style="margin:-4px 0 11px">Nomor dikunci server — tiga orang bikin barengan pun tidak kembar.</p>
+      <label class="f" id="box_valid"><span>Berlaku sampai</span><input type="date" id="f_valid"></label>
+      <label class="f" id="box_due" style="display:none"><span>Jatuh tempo pembayaran</span><input type="date" id="f_due"></label>
+      <label class="f" id="box_ref" style="display:none"><span>Mengacu pada quotation no.</span><input id="f_ref" placeholder="0360/Q-MBP/XI/2026"></label>
+      <label class="f"><span>Kalimat pembuka</span><textarea id="f_intro"></textarea></label>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><span class="n">7</span> Daftar barang <span class="cnt" id="rc"></span></summary>
+    <div class="body">
+      <div id="rows"></div>
+      <button class="btn g" style="width:100%;margin-top:9px" id="b_addrow">+ Tambah baris barang</button>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><span class="n">8</span> Hitungan akhir <span class="cnt" id="tc"></span></summary>
+    <div class="body">
+      <label class="f"><span>Pembulatan total</span>
+        <select id="f_round">
+          <option value="0" selected>Tidak dibulatkan</option>
+          <option value="1000">Dibulatkan ke Rp1.000 terdekat</option>
+          <option value="10000">Dibulatkan ke Rp10.000 terdekat</option>
+          <option value="100000">Dibulatkan ke Rp100.000 terdekat</option>
+        </select></label>
+      <div class="r2">
+        <label class="f"><span>Biaya lain (OTHER)</span><input type="number" id="f_other" value="0" step="1"></label>
+        <label class="f"><span>Keterangan biaya lain</span><input id="f_otherlbl" value="Other"></label>
+      </div>
+      <div class="r2">
+        <label class="f"><span>Pajak — persen</span><input type="number" id="f_taxp" value="0" step="0.01" min="0"></label>
+        <label class="f"><span>Nama baris pajak</span><input id="f_taxlbl" value="PPN"></label>
+      </div>
+      <p class="note">Isi persen pajak sendiri. Kalau 0, baris pajak tidak muncul di dokumen.</p>
+      <div id="calcbox" style="margin-top:12px"></div>
+    </div>
+  </details>
+
+  <details class="card" id="card_termin" style="display:none">
+    <summary><span class="n">9</span> Termin pembayaran <span class="cnt" id="trc"></span></summary>
+    <div class="body">
+      <div class="seg sm" id="paymode">
+        <button class="on" data-py="full">Lunas 100%</button>
+        <button data-py="cust">Termin sendiri</button>
+      </div>
+      <div id="terminbox"></div>
+      <div id="terminadd" style="display:none">
+        <button class="btn g" style="width:100%;margin-top:4px" id="b_addtm">+ Tambah termin</button>
+        <div class="r2" style="margin-top:9px">
+          <button class="btn g" id="b_tm5050">50 / 50</button>
+          <button class="btn g" id="b_tm304030">30 / 40 / 30</button>
+        </div>
+      </div>
+      <div id="terminsum"></div>
+      <p class="note" style="margin-top:9px">Persen diisi sendiri. Angka rupiah dihitung otomatis dan termin terakhir disesuaikan supaya jumlahnya pas sama total — tidak ada selisih satu rupiah pun.</p>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="n">10</span> Syarat &amp; rekening</summary>
+    <div class="body">
+      <label class="f"><span>Delivery terms</span><input id="f_deliv"></label>
+      <label class="f"><span>Payment terms</span><input id="f_pay"></label>
+      <div class="r2">
+        <label class="f"><span>Nama bank</span><input id="f_bank"></label>
+        <label class="f"><span>Mata uang</span><input id="f_cur"></label>
+      </div>
+      <label class="f"><span>Atas nama</span><input id="f_bankname"></label>
+      <div class="r2">
+        <label class="f"><span>No. rekening</span><input id="f_bankno"></label>
+        <label class="f"><span>BIC / SWIFT</span><input id="f_swift"></label>
+      </div>
+      <label class="f"><span>Penanda tangan</span><input id="f_signer"></label>
+      <button class="btn g" style="width:100%" id="b_saveterm">Simpan syarat &amp; rekening untuk seluruh perusahaan</button>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><span class="n">11</span> Riwayat bersama <span class="cnt" id="hcnt">—</span></summary>
+    <div class="body">
+      <input id="hq" placeholder="Cari nomor, klien, atau nama pembuat…" style="margin-bottom:10px">
+      <div class="seg sm" id="hfilter">
+        <button class="on" data-hf="quot">Quotation</button>
+        <button data-hf="inv">Invoice</button>
+        <button data-hf="arsip">Arsip</button>
+      </div>
+      <div class="hist" id="hist"></div>
+      <p class="note" style="margin-top:11px">Dibuat di laptop mana pun, muncul di semua. Tetap ada walau cache dibersihkan.</p>
+    </div>
+  </details>
+
+  <div class="acts">
+    <button class="bg grn full" id="b_save">Simpan ke riwayat bersama</button>
+    <button class="bg wht full" id="b_new" style="display:none">Simpan sebagai dokumen baru</button>
+    <button class="bg red" id="b_pdf">Download PDF</button>
+    <button class="bg wht" id="b_csv">Excel / CSV</button>
+    <button class="bg wht full" id="b_blank">Dokumen baru kosong</button>
+    <button class="bg wht full" id="b_arsip" style="display:none">Pindahkan ke arsip</button>
+  </div>
+  <p class="note" id="savestate"></p>
+</div>
+
+<div class="stage"><div class="paper t-ocean" id="paper"></div></div>
+</div>
+</div>
+
+<div id="toast"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
