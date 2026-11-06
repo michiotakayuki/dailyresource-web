@@ -2,7 +2,7 @@
    Tujuan: aplikasi tetap terbuka dan bisa dipakai walau tanpa internet.
    Data tetap disimpan Firestore (cache lokalnya sendiri), bukan di sini. */
 
-const V = 'mbp-v1';
+const V = 'mbp-v2';
 const SHELL = [
   './', './index.html', './app.js', './app.webmanifest',
   './ic-180.png', './ic-192.png', './ic-512.png'
@@ -33,7 +33,7 @@ self.addEventListener('fetch', e => {
   if (/googleapis\.com$|firebaseio\.com$|firebaseinstallations\.googleapis\.com$/.test(u.hostname)) return;
 
   // SDK Firebase dari gstatic: pakai cache dulu supaya aplikasi bisa dibuka offline.
-  if (u.hostname === 'www.gstatic.com') {
+  if (u.hostname === 'www.gstatic.com' || u.hostname === 'cdnjs.cloudflare.com') {
     e.respondWith((async () => {
       const c = await caches.open(V);
       const hit = await c.match(r);

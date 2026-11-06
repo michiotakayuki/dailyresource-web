@@ -81,7 +81,7 @@ let ROWS = [ROW_DEF()];
 let TERMIN = [];
 let theme = 't-ocean', mode = 'klien', pmode = 'gal', dt = 'quot', paymode = 'full';
 let LOGO = '', TTD = '';
-let ME = null, COMP = {}, HIST = [], hfilter = 'quot';
+let ME = null, COMP = {}, HIST = [], hfilter = 'all';
 let CUR = { id: null, no: '', noPending: false, kind: 'quot', by: null };
 let dirty = false;
 
@@ -352,8 +352,7 @@ document.querySelectorAll('#doctype button').forEach(b => b.onclick = () => {
   if (b.dataset.dt === dt) return;
   if (dirty && !confirm('Pindah ke ' + (b.dataset.dt === 'inv' ? 'Invoice' : 'Quotation') + '? Perubahan yang belum disimpan akan hilang.')) return;
   document.querySelectorAll('#doctype button').forEach(x => x.classList.remove('on'));
-  b.classList.add('on'); dt = b.dataset.dt; hfilter = dt;
-  document.querySelectorAll('#hfilter button').forEach(x => x.classList.toggle('on', x.dataset.hf === dt));
+  b.classList.add('on'); dt = b.dataset.dt;
   blank(true); drawHist();
 });
 function dtUI() {
@@ -362,6 +361,7 @@ function dtUI() {
   $('box_valid').style.display = inv ? 'none' : 'block';
   $('box_due').style.display = inv ? 'block' : 'none';
   $('box_ref').style.display = inv ? 'block' : 'none';
+  $('b_toinv').style.display = (!inv && CUR.id) ? '' : 'none';
 }
 
 /* ===================== KOLOM ===================== */
@@ -696,6 +696,7 @@ $('b_arsip').onclick = async () => {
   } catch (e) { toast('Gagal: ' + e.message, 1); }
 };
 function saveState() {
+  dtUI();
   $('b_save').textContent = CUR.id ? 'Simpan perubahan' : 'Simpan ke riwayat bersama';
   $('savestate').textContent = CUR.id
     ? 'Sedang membuka ' + CUR.no + (CUR.by ? ' — dibuat oleh ' + CUR.by.name : '') + '. "Simpan perubahan" menimpa dokumen ini; "Simpan sebagai dokumen baru" membuat nomor baru dan tidak mengubah yang ini.'
@@ -715,13 +716,19 @@ function drawHist() {
   const qq = (V('hq') || '').toLowerCase();
   const list = HIST.filter(h => {
     if (hfilter === 'arsip') { if (h.status !== 'arsip') return false; }
-    else { if (h.status === 'arsip') return false; if ((h.kind || 'quot') !== hfilter) return false; }
+    else {
+      if (h.status === 'arsip') return false;
+      if (hfilter !== 'all' && (h.kind || 'quot') !== hfilter) return false;
+    }
     if (!qq) return true;
     return [h.no, h.klien, h.createdByName, h.createdByEmail, h.pic].some(x => String(x || '').toLowerCase().includes(qq));
   });
-  $('hcnt').textContent = list.length + ' dokumen';
+  const nq = list.filter(h => (h.kind || 'quot') === 'quot').length, ni = list.length - nq;
+  $('hcnt').textContent = hfilter === 'all'
+    ? nq + ' quotation · ' + ni + ' invoice'
+    : list.length + ' dokumen';
   $('hist').innerHTML = list.length ? list.map(h => `<div class="hi2${CUR.id === h.id ? ' cur' : ''}" data-o="${h.id}">
-    <div><div class="no">${es(h.no)}${h.noPending ? ' <span class="badge">NOMOR MENUNGGU</span>' : ''}</div>
+    <div><div class="no"><span class="tp ${h.status === 'arsip' ? 'a' : (h.kind || 'quot') === 'inv' ? 'i' : 'q'}">${h.status === 'arsip' ? 'ARSIP' : (h.kind || 'quot') === 'inv' ? 'INVOICE' : 'QUOTATION'}</span>${es(h.no)}${h.noPending ? ' <span class="tp w">NOMOR MENUNGGU</span>' : ''}</div>
     <div class="who">${es(h.klien || '—')}</div>
     <div class="who">${es(h.createdByName)} · ${es(h.createdByEmail)}</div>
     <div class="who">${tgl(h.tgl)}</div></div>
@@ -742,7 +749,7 @@ async function open(id) {
     if (!s.exists()) return toast('Isi dokumen belum tersedia di perangkat ini. Sambungkan internet lalu coba lagi.', 1);
     load(s.data().data || {});
     CUR = { id, no: h.no, noPending: !!h.noPending, kind: h.kind || 'quot', at: h.at, by: { uid: h.createdByUid, name: h.createdByName, email: h.createdByEmail } };
-    dt = CUR.kind; hfilter = h.status === 'arsip' ? 'arsip' : dt;
+    dt = CUR.kind;
     dirty = false; draw(); saveState();
     $('b_new').style.display = ''; $('b_arsip').style.display = '';
     toast('Dibuka: ' + h.no);
@@ -795,7 +802,74 @@ $('b_csv').onclick = () => {
   a.download = (V('f_no') || 'dokumen').replace(/[^\w]+/g, '-') + '.csv';
   a.click();
 };
-$('b_pdf').onclick = () => window.print();
+$('b_print').onclick = () => window.print();
+
+/* ===================== PDF =====================
+   Dibuat aplikasi sendiri, bukan lewat dialog cetak browser.
+   Alasannya: dialog cetak menempelkan tanggal, judul tab, dan alamat
+   berkas di pinggir halaman, dan secara bawaan membuang semua warna
+   latar — jadi hasilnya beda dari yang terlihat di layar.            */
+function fixForPdf(el) {
+  // aspect-ratio tidak dimengerti mesin penggambar PDF — ubah jadi tinggi tetap
+  el.querySelectorAll('.fr,.gi .fr,td.pic .fr').forEach(f => {
+    const r = f.getBoundingClientRect();
+    if (r.width && r.height) { f.style.height = r.height + 'px'; f.style.aspectRatio = 'auto'; }
+  });
+  el.querySelectorAll('img').forEach(i => { i.crossOrigin = 'anonymous'; });
+  return el;
+}
+$('b_pdf').onclick = async () => {
+  if (typeof html2pdf === 'undefined')
+    return toast('Pembuat PDF belum termuat. Sambungkan internet sekali, lalu bisa dipakai offline.', 1);
+  const btn = $('b_pdf'); btn.disabled = true; btn.textContent = 'Membuat PDF…';
+  const src = $('paper');
+  const clone = src.cloneNode(true);
+  // samakan ukuran & warna latar dengan yang di layar
+  const w = src.getBoundingClientRect().width || 880;
+  clone.style.cssText += ';width:' + w + 'px;max-width:none;margin:0;box-shadow:none;min-height:0';
+  const bgEl = getComputedStyle(src).backgroundColor;
+  const hold = document.createElement('div');
+  hold.style.cssText = 'position:fixed;left:-20000px;top:0;width:' + w + 'px;background:' + bgEl;
+  hold.appendChild(clone); document.body.appendChild(hold);
+  // ukur ulang bingkai foto memakai elemen asli yang masih tampil
+  const oF = [...src.querySelectorAll('.fr')], cF = [...clone.querySelectorAll('.fr')];
+  oF.forEach((o, i) => { const r = o.getBoundingClientRect(); if (cF[i] && r.height) { cF[i].style.height = r.height + 'px'; cF[i].style.aspectRatio = 'auto'; } });
+  clone.querySelectorAll('tr,.gi,.terms>div,.sign').forEach(e => e.style.pageBreakInside = 'avoid');
+
+  const nama = (V('f_no') || (dt === 'inv' ? 'invoice' : 'quotation')).replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
+  try {
+    await html2pdf().set({
+      margin: [10, 9, 10, 9],
+      filename: nama + '.pdf',
+      image: { type: 'jpeg', quality: 0.95 },
+      html2canvas: { scale: 2, useCORS: true, backgroundColor: bgEl || '#ffffff', logging: false, windowWidth: w },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+      pagebreak: { mode: ['css', 'legacy'] }
+    }).from(clone).save();
+    toast('PDF tersimpan: ' + nama + '.pdf');
+  } catch (e) {
+    toast('Gagal membuat PDF: ' + (e.message || e) + ' — coba tombol Cetak lewat browser.', 1);
+  }
+  hold.remove(); btn.disabled = false; btn.textContent = 'Download PDF';
+};
+
+/* ===================== QUOTATION -> INVOICE ===================== */
+$('b_toinv').onclick = () => {
+  if (dt !== 'quot') return;
+  const ref = V('f_no'), p = payload();
+  p.kind = 'inv';
+  p.info.ref = ref;
+  p.info.no = '— diambil saat disimpan —';
+  p.info.due = plus(today(), 30);
+  p.info.tgl = today();
+  p.info.intro = 'Please find below our invoice for the goods delivered. We appreciate your business.';
+  p.paymode = 'full'; p.termin = [];
+  CUR = { id: null, no: '', noPending: false, kind: 'inv', by: null };
+  load(p); dt = 'inv'; hfilter = 'all';
+  dirty = true; draw(); saveState(); drawHist();
+  $('b_new').style.display = 'none'; $('b_arsip').style.display = 'none';
+  toast('Invoice baru dibuat dari ' + ref + '. Quotation aslinya tidak berubah.');
+};
 
 /* ===================== STATUS SINKRON ===================== */
 function sync() {

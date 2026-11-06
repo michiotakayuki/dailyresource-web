@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ef5f3c">
+<title>UJI — Quot-in Pengadaan — CV Makmur Berkah Perkasa</title>
+<link rel="manifest" href="app.webmanifest">
+<link rel="apple-touch-icon" href="ic-180.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--or:#ef5f3c;--ink:#141b2d;--mut:#7b879c;--bd:#e6eaf2;--bg:#f4f6fb}
+body{font:14px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* ===== LOGIN ===== */
+#scr-auth{min-height:100vh;display:grid;place-items:center;padding:22px}
+.auth{background:#fff;border:1px solid var(--bd);border-radius:20px;padding:30px 28px;width:100%;max-width:410px;box-shadow:0 10px 40px #1a233214}
+.auth .lg{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,#ff7a4d,#ef5f3c);color:#fff;display:grid;place-items:center;font-weight:800;font-size:21px;margin-bottom:14px}
+.auth h1{font-size:21px;font-weight:800;letter-spacing:-.4px}
+.auth .sub{font-size:13px;color:var(--mut);margin:4px 0 20px}
+.auth .seg{margin-bottom:16px}
+.auth .big{width:100%;padding:14px;border-radius:11px;border:none;background:var(--or);color:#fff;font:inherit;font-size:15px;font-weight:800;cursor:pointer;margin-top:4px}
+.auth .big:disabled{background:#eef1f7;color:#a3aec0;cursor:not-allowed}
+.auth .lnk{background:none;border:none;color:var(--or);font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:12px 0 0;display:block;width:100%;text-align:center}
+.msg{font-size:12.5px;line-height:1.5;padding:10px 12px;border-radius:10px;margin-bottom:14px;display:none}
+.msg.err{display:block;background:#fdeaea;color:#a8291f}
+.msg.ok{display:block;background:#eafaf1;color:#0d6b40}
+.msg.inf{display:block;background:#eef4ff;color:#1f4fa8}
+
+/* ===== APP ===== */
+#scr-app{display:none}
+.top{background:#fff;border-bottom:1px solid var(--bd);padding:11px 18px;display:flex;align-items:center;gap:13px;position:sticky;top:0;z-index:40;flex-wrap:wrap}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#ff7a4d,#ef5f3c);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px;flex:none}
+.brand b{font-size:15px;font-weight:800;letter-spacing:-.3px;display:block;line-height:1.2}
+.brand small{font-size:11px;color:var(--mut)}
+.spacer{flex:1}
+.pill{display:inline-flex;align-items:center;gap:6px;background:#eafaf1;color:#117a4a;border-radius:999px;padding:5px 11px;font-size:11.5px;font-weight:700}
+.pill.off{background:#fff4e5;color:#9a5b00}
+.pill.wait{background:#eef4ff;color:#1f4fa8}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.me{display:flex;align-items:center;gap:8px}
+.av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:800;color:#fff;background:#2d6cdf;flex:none}
+.me .nmz{font-size:12px;font-weight:700;line-height:1.25}
+.me .nmz small{display:block;font-weight:500;color:var(--mut);font-size:10.5px}
+.out{background:none;border:1.5px solid var(--bd);border-radius:9px;padding:7px 11px;font:inherit;font-size:12px;font-weight:700;color:var(--mut);cursor:pointer}
+
+.wrap{display:grid;grid-template-columns:378px 1fr;align-items:start}
+@media(max-width:1060px){.wrap{grid-template-columns:1fr}}
+.panel{padding:15px;display:flex;flex-direction:column;gap:11px}
+.stage{padding:15px 15px 60px}
+
+.card{background:#fff;border:1px solid var(--bd);border-radius:15px;overflow:hidden}
+.card>summary{padding:14px 16px;cursor:pointer;font-weight:700;font-size:13.5px;list-style:none;display:flex;align-items:center;gap:9px;user-select:none}
+.card>summary::-webkit-details-marker{display:none}
+.card>summary .n{width:21px;height:21px;border-radius:7px;background:var(--bg);color:var(--mut);display:grid;place-items:center;font-size:11px;font-weight:800;flex:none}
+.card[open]>summary .n{background:var(--or);color:#fff}
+.card>summary .cnt{margin-left:auto;font-size:11px;color:var(--mut);font-weight:600}
+.body{padding:2px 16px 17px}
+
+label.f{display:block;margin-bottom:11px}
+label.f span{display:block;font-size:10.5px;color:var(--mut);margin-bottom:5px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+input,textarea,select{width:100%;padding:9px 11px;border:1.5px solid var(--bd);border-radius:9px;font:inherit;font-size:13px;background:#fff;color:var(--ink)}
+textarea{resize:vertical;min-height:60px}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--or);box-shadow:0 0 0 3px #ef5f3c22}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+
+.ci{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1.5px solid var(--bd);border-radius:11px;background:#fff;margin-bottom:6px}
+.ci.on{border-color:var(--or);background:#fff7f4}
+.ci.lk{background:#f7f9fc;border-style:dashed}
+.sw{width:34px;height:20px;border-radius:999px;background:#d6dde8;position:relative;flex:none;cursor:pointer;transition:.15s}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.15s;box-shadow:0 1px 3px #0003}
+.ci.on .sw{background:var(--or)}.ci.on .sw::after{left:16px}
+.ci.lk .sw{background:#aab6c6;cursor:not-allowed}
+.ci .nm{flex:1;font-size:13px;font-weight:600}
+.badge{font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 7px;border-radius:5px;background:#eef1f7;color:#8795aa}
+.badge.int{background:#fdeaea;color:#b8322c}
+.x{background:none;border:none;color:#c0392b;cursor:pointer;font-size:15px;padding:0 3px;line-height:1}
+.addrow{display:flex;gap:8px;margin-top:10px}
+.btn{padding:9px 14px;border-radius:9px;border:none;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;background:var(--or);color:#fff;white-space:nowrap}
+.btn.g{background:#fff;color:var(--or);border:1.5px solid var(--or)}
+.btn:hover{filter:brightness(1.06)}
+
+.seg{display:flex;background:var(--bg);border-radius:11px;padding:3px;margin-bottom:12px}
+.seg button{flex:1;padding:8px;border:none;background:none;border-radius:8px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;color:var(--mut)}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px #0000001a}
+.seg.sm button{font-size:11px;padding:7px 4px}
+.seg.doc{margin-bottom:0}
+.seg.doc button.on{background:var(--or);color:#fff}
+
+.ths{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.th{border:2px solid var(--bd);border-radius:12px;cursor:pointer;overflow:hidden;background:#fff}
+.th.on{border-color:var(--or);box-shadow:0 0 0 3px #ef5f3c22}
+.th .pv{height:50px;padding:7px 8px;display:flex;flex-direction:column;gap:3px;justify-content:center}
+.th .bar{height:5px;border-radius:2px}
+.th .ln{height:3px;border-radius:2px;background:#0000001a}
+.th .lb{padding:7px 9px;border-top:1px solid var(--bd)}
+.th b{font-size:11.5px;display:block;font-weight:800}
+.th small{font-size:9.5px;color:var(--mut);display:block;line-height:1.3}
+
+.up{border:1.5px dashed var(--bd);border-radius:11px;padding:13px;text-align:center;background:#fcfdff;cursor:pointer;position:relative}
+.up:hover{border-color:var(--or);background:#fff7f4}
+.up input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.up .ic{font-size:19px;line-height:1;margin-bottom:4px}
+.up b{font-size:12px;display:block}
+.up small{font-size:10px;color:var(--mut)}
+.prev{display:flex;align-items:center;gap:10px;padding:9px;border:1.5px solid var(--bd);border-radius:11px;background:#fff}
+.prev img{max-height:44px;max-width:120px;object-fit:contain}
+.prev .mt{flex:1;font-size:11px;color:var(--mut)}
+
+.slot{width:100%;aspect-ratio:var(--ar,4/3);border:1.5px dashed var(--bd);border-radius:9px;background:#fbfcfe;position:relative;overflow:hidden;cursor:pointer;display:grid;place-items:center}
+.slot:hover{border-color:var(--or)}
+.slot img{width:100%;height:100%;object-fit:cover;display:block}
+.slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.slot .ph{font-size:10.5px;color:#a3aec0;text-align:center;line-height:1.4;padding:6px}
+.slotwrap{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:start;margin-bottom:11px}
+.slotwrap .hint{font-size:10px;color:var(--mut);line-height:1.5}
+
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.acts .full{grid-column:1/-1}
+.bg{padding:12px;border-radius:11px;border:none;font:inherit;font-weight:800;font-size:13px;cursor:pointer}
+.red{background:#e2493a;color:#fff}.grn{background:#12805a;color:#fff}
+.wht{background:#fff;color:var(--ink);border:1.5px solid var(--bd)}
+.dis{background:#eef1f7;color:#a3aec0;cursor:not-allowed}
+.note{font-size:11px;color:var(--mut);line-height:1.5}
+.note.hi{padding:9px 11px;background:#f0f7ff;border-radius:9px;color:#1f5fbf}
+.note.warn{padding:9px 11px;background:#fff4e5;border-radius:9px;color:#8a4f00}
+.hist{display:flex;flex-direction:column;gap:7px;max-height:420px;overflow:auto}
+.hi2{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid var(--bd);border-radius:11px;cursor:pointer;background:#fff}
+.hi2:hover{border-color:var(--or);background:#fff9f7}
+.hi2.cur{border-color:var(--or);background:#fff7f4}
+.hi2 .no{font-size:11.5px;font-weight:800;color:var(--or)}
+.hi2 .who{font-size:10.5px;color:var(--mut);line-height:1.4}
+.hi2 .amt{margin-left:auto;font-size:12px;font-weight:800;white-space:nowrap;text-align:right}
+.hi2 .amt small{display:block;font-weight:600;color:var(--mut);font-size:10px}
+.tp{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.4px;padding:2px 6px;border-radius:5px;margin-right:6px;vertical-align:1px}
+.tp.q{background:#e8f1fc;color:#1565c0}
+.tp.i{background:#eafaf1;color:#117a4a}
+.tp.a{background:#eef1f7;color:#8795aa}
+.tp.w{background:#fff4e5;color:#9a5b00}
+.tm{display:grid;grid-template-columns:1fr 70px 110px 26px;gap:7px;align-items:center;margin-bottom:7px}
+.tm input{padding:8px 9px;font-size:12.5px}
+.tm .cal{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
+.sumbar{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);font-size:12.5px;font-weight:700;margin-top:4px}
+.sumbar.bad{background:#fdeaea;color:#a8291f}
+.sumbar.good{background:#eafaf1;color:#0d6b40}
+
+/* ===== KERTAS ===== */
+.paper{background:#fff;max-width:880px;margin:0 auto;box-shadow:0 4px 30px #1a233214;padding:44px 46px;min-height:940px;font-family:var(--pf);color:var(--pi)}
+@media(max-width:600px){.paper{padding:22px 18px}}
+.t-exec{--pi:#15202b;--pa:#15202b;--pl:#c8ced6;--ph:#eef1f4;--pf:"Times New Roman",Georgia,serif;--pr:0px}
+.t-ocean{--pi:#132132;--pa:#1565c0;--pl:#cfe0f3;--ph:#e8f1fc;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:7px}
+.t-emerald{--pi:#12261f;--pa:#0f7a52;--pl:#cae3d8;--ph:#e7f5ef;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:7px}
+.t-sunset{--pi:#2b1a11;--pa:#d4722a;--pl:#f0dac6;--ph:#fdf1e6;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:9px}
+.t-mono{--pi:#000;--pa:#000;--pl:#d8d8d8;--ph:#fff;--pf:ui-monospace,"SF Mono",Menlo,monospace;--pr:0px}
+.t-steel{--pi:#101418;--pa:#f0b429;--pl:#2a3340;--ph:#1b232e;--pf:"Helvetica Neue",Arial,sans-serif;--pr:3px}
+.t-pastel{--pi:#2f2a3d;--pa:#6b5a8c;--pl:#d9ecc0;--ph:#C7E89A;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:999px;--pbody:#EEF7DE;--pto:#E7DAF8;--ptoc:#3b2f55;--phc:#33420f;--ptot:#C7E89A;--ptotc:#33420f}
+.t-retro {--pi:#3B4A67;--pa:#F0B32E;--pl:#EFE7D2;--ph:#F0B32E;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:999px;--pbody:#FFFCF4;--pto:#F3B3C6;--ptoc:#6B2740;--phc:#5A3C00;--ptot:#5CB85F;--ptotc:#fff;--pbg:#F8F4E9}
+.t-mint  {--pi:#1C1C1C;--pa:#5E7A33;--pl:#BBD888;--ph:#C4E08C;--pf:ui-sans-serif,"Segoe UI",Roboto,sans-serif;--pr:14px;--pbody:#D6EBA8;--pto:#EDF6DA;--ptoc:#2E3F12;--phc:#2E3F12;--ptot:#8FC33F;--ptotc:#1B2A05;--pbg:#F5F4EC}
+
+.paper.fun{background:var(--pbg,#fff)}
+.bigt{display:none}
+.fun .bigt{display:block;font-size:46px;font-weight:900;letter-spacing:-2px;line-height:.95;margin:2px 0 16px;color:var(--pa)}
+.t-mint .bigt{color:#111;font-size:52px}
+.fun .kop{border-bottom:none;padding-bottom:4px;margin-bottom:4px;align-items:flex-start}
+.fun .kop h2{font-size:15px;color:var(--pi);letter-spacing:0}
+.fun .kop .qn b{color:var(--pi)}
+.fun .meta{background:var(--pto);color:var(--ptoc);border-radius:18px;padding:14px 20px;margin-bottom:18px}
+.fun .meta em{color:var(--ptoc);opacity:.7}
+.fun table.it{border-radius:18px;overflow:hidden;border-collapse:separate;border-spacing:0}
+.fun table.it th{background:var(--ph);color:var(--phc);border:none;padding:11px 8px}
+.fun table.it tbody{background:var(--pbody)}
+.fun table.it td{border:none;border-bottom:1px solid var(--pl)}
+.fun table.it tbody tr:last-child td{border-bottom:none}
+.fun tbody tr:nth-child(even) td{background:transparent}
+.fun .sum tr.tt td{background:var(--ptot);color:var(--ptotc);padding:9px 18px}
+.fun .sum tr.tt td:first-child{border-radius:999px 0 0 999px}
+.fun .sum tr.tt td:last-child{border-radius:0 999px 999px 0}
+.t-mint .sum tr.tt td:first-child{border-radius:14px 0 0 14px}
+.t-mint .sum tr.tt td:last-child{border-radius:0 14px 14px 0}
+.fun .gi .fr,.fun td.pic .fr{border-radius:12px;border-color:var(--pl)}
+.fun .terms h4{color:var(--pa)}
+.fun .gal h4{border-bottom-color:var(--pl)}
+
+.kop{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-bottom:14px;border-bottom:2.5px solid var(--pa);margin-bottom:20px}
+.kop .lf{display:flex;gap:14px;align-items:flex-start}
+.kop .lf img{object-fit:contain;flex:none}
+.kop h2{font-size:19px;font-weight:800;letter-spacing:-.3px;color:var(--pa);line-height:1.2}
+.kop p{font-size:10px;color:#6b7684;line-height:1.5;margin-top:5px;max-width:400px}
+.kop .qn{text-align:right;flex:none}
+.kop .qn em{display:block;font-size:9px;font-style:normal;letter-spacing:1px;color:#8a95a3;font-weight:700}
+.kop .qn b{font-size:15px;font-weight:800;color:var(--pa)}
+.kop .qn i{display:block;font-style:normal;font-size:10.5px;color:#6b7684;margin-top:5px}
+.t-mono .kop{border-bottom-width:1px;border-color:#000}
+.t-mono .kop h2{font-size:16px;letter-spacing:2px;text-transform:uppercase}
+.t-steel .kop{background:#141b23;margin:-44px -46px 20px;padding:26px 46px;border:none;align-items:center}
+.t-steel .kop h2{color:#fff;text-transform:uppercase;font-size:21px}
+.t-steel .kop p{color:#93a0ae}
+.t-steel .kop .qn b{color:var(--pa)}
+.t-steel .kop .qn em,.t-steel .kop .qn i{color:#93a0ae}
+.t-sunset .kop{border-bottom:none;background:var(--ph);margin:-44px -46px 20px;padding:26px 46px}
+
+.meta{display:flex;justify-content:space-between;gap:26px;font-size:12px;margin-bottom:18px}
+.meta em{font-style:normal;font-size:9px;letter-spacing:1px;color:#8a95a3;font-weight:800;display:block;margin-bottom:3px}
+.intro{font-size:11.5px;line-height:1.7;margin-bottom:18px;color:#4a5665}
+
+table.it{width:100%;border-collapse:collapse;font-size:11px}
+table.it th{background:var(--ph);color:var(--pi);padding:9px 7px;text-align:left;font-size:9px;letter-spacing:.7px;text-transform:uppercase;font-weight:800;border-bottom:2px solid var(--pa)}
+table.it td{padding:9px 7px;border-bottom:1px solid var(--pl);vertical-align:middle;line-height:1.45}
+.t-exec table.it th,.t-exec table.it td,.t-mono table.it th,.t-mono table.it td{border:1px solid var(--pl)}
+.t-steel table.it th{background:var(--ph);color:var(--pa)}
+.t-steel table.it td{border-bottom:1px solid #dfe4ea}
+.num{text-align:right;white-space:nowrap}.ctr{text-align:center;white-space:nowrap}
+tbody tr:nth-child(even) td{background:#00000004}
+.t-mono tbody tr:nth-child(even) td{background:none}
+td.pic{padding:5px}
+td.pic .fr{width:100%;aspect-ratio:var(--ar);border-radius:3px;overflow:hidden;background:#f2f4f7;border:1px solid var(--pl)}
+td.pic .fr img{width:100%;height:100%;object-fit:cover;display:block}
+
+.gal{margin-top:24px}
+.gal h4{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--pa);font-weight:800;margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid var(--pl)}
+.gg{display:grid;grid-template-columns:repeat(var(--gc,3),1fr);gap:12px}
+.gi .fr{width:100%;aspect-ratio:var(--ar);border-radius:var(--pr);overflow:hidden;background:#f2f4f7;border:1px solid var(--pl)}
+.gi .fr img{width:100%;height:100%;object-fit:cover;display:block}
+.gi .cap{font-size:9.5px;margin-top:5px;line-height:1.4;color:#4a5665}
+.gi .cap b{display:block;color:var(--pi);font-size:10px}
+
+.sum{width:clamp(260px,52%,340px);margin:14px 0 0 auto;border-collapse:collapse;font-size:12px}
+.sum td{padding:7px 9px}
+.sum td:first-child{color:#6b7684;font-size:11px}
+.sum td:last-child{text-align:right;font-weight:700;white-space:nowrap}
+.sum tr.tt td{background:var(--pa);color:#fff;font-size:13.5px;font-weight:800}
+.sum tr.tt td:first-child{border-radius:var(--pr) 0 0 var(--pr)}
+.sum tr.tt td:last-child{border-radius:0 var(--pr) var(--pr) 0}
+.t-steel .sum tr.tt td{color:#141b23}
+.t-mono .sum tr.tt td{background:#000}
+
+table.trm{width:100%;border-collapse:collapse;font-size:11px;margin-top:20px}
+table.trm th{background:var(--ph);color:var(--pi);padding:9px 7px;text-align:left;font-size:9px;letter-spacing:.7px;text-transform:uppercase;font-weight:800;border-bottom:2px solid var(--pa)}
+table.trm td{padding:9px 7px;border-bottom:1px solid var(--pl)}
+table.trm tr.tt td{font-weight:800;background:#00000008}
+.fun table.trm{border-radius:18px;overflow:hidden;border-collapse:separate;border-spacing:0}
+.fun table.trm th{background:var(--ph);color:var(--phc);border:none}
+.fun table.trm tbody{background:var(--pbody)}
+.fun table.trm td{border:none;border-bottom:1px solid var(--pl)}
+
+.terms{margin-top:26px;font-size:10.5px;line-height:1.7;color:#4a5665;display:grid;grid-template-columns:1fr 1fr;gap:18px 26px}
+@media(max-width:600px){.terms{grid-template-columns:1fr}}
+.terms h4{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--pa);font-weight:800;margin-bottom:4px}
+.bk{display:grid;grid-template-columns:96px 1fr;gap:1px 6px}
+.bk i{font-style:normal;color:#8a95a3}
+.sign{margin-top:28px;font-size:10.5px;color:#4a5665}
+.sign .sbox{height:56px;margin:6px 0 0;display:flex;align-items:flex-end}
+.sign .sbox img{max-height:56px;max-width:200px;object-fit:contain}
+.sign .ln{border-bottom:1.5px solid var(--pi);width:220px;margin-top:4px;margin-bottom:6px}
+.sign b{font-size:12px;color:var(--pi)}
+.wm{background:#fdeaea;color:#b8322c;font-size:10px;font-weight:800;padding:5px 11px;border-radius:7px;display:inline-block;margin-bottom:14px}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);background:#141b2d;color:#fff;padding:13px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:200;transition:.25s;max-width:92vw;box-shadow:0 8px 30px #0003}
+#toast.on{transform:translateX(-50%) translateY(0)}
+#toast.bad{background:#a8291f}
+
+/* huruf besar untuk yang kurang nyaman baca tulisan kecil */
+body.big{font-size:16px}
+body.big .panel input,body.big .panel textarea,body.big .panel select{font-size:15.5px;padding:11px 12px}
+body.big label.f span{font-size:12px}
+body.big .card>summary{font-size:15px}
+body.big .bg{font-size:15px;padding:15px}
+body.big .btn{font-size:14px;padding:11px 16px}
+body.big .seg button{font-size:14px;padding:10px}
+body.big .note{font-size:12.5px}
+body.big .hi2 .no{font-size:13px}body.big .hi2 .who{font-size:12px}body.big .hi2 .amt{font-size:13.5px}
+body.big .ci .nm{font-size:14.5px}
+body.big #t_big{background:#fff7f4;border-color:var(--or);color:var(--or)}
+
+@media print{
+ @page{size:A4;margin:11mm}
+ /* paksa warna latar ikut tercetak — tanpa ini header tabel, kartu TO,
+    dan pil TOTAL keluar putih polos dan hasilnya beda dari yang di layar */
+ *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ body{background:#fff}
+ .top,.panel,#scr-auth,#toast{display:none!important}
+ .wrap{display:block}
+ .stage{padding:0}
+ .paper{box-shadow:none;max-width:none;min-height:0;padding:0;margin:0}
+ .t-steel .kop,.t-sunset .kop{margin:0 0 20px;padding:20px 22px}
+ table.it,table.trm{page-break-inside:auto}
+ tr{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<div id="scr-auth">
+  <div class="auth">
+    <div class="lg">Q</div>
+    <h1 id="a_h1">Masuk</h1>
+    <p class="sub" id="a_sub">Quot-in Pengadaan — CV Makmur Berkah Perkasa</p>
+
+    <div class="seg" id="a_seg">
+      <button class="on" data-am="in">Masuk</button>
+      <button data-am="up">Daftar Akun</button>
+    </div>
+
+    <div class="msg" id="a_msg"></div>
+
+    <label class="f" id="a_namebox" style="display:none"><span>Nama lengkap</span>
+      <input id="a_name" autocomplete="name" placeholder="Mohammad Ginastra"></label>
+    <label class="f" id="a_codebox" style="display:none"><span>Kode undangan perusahaan</span>
+      <input id="a_code" autocomplete="off" placeholder="Minta ke atasan Anda"></label>
+    <label class="f"><span>Email</span>
+      <input id="a_email" type="email" autocomplete="username" placeholder="nama@perusahaan.com"></label>
+    <label class="f"><span>Password</span>
+      <input id="a_pass" type="password" autocomplete="current-password" placeholder="minimal 8 karakter"></label>
+
+    <button class="big" id="a_go">Masuk</button>
+    <button class="lnk" id="a_forgot">Lupa password?</button>
+    <p class="note" style="margin-top:14px;text-align:center">Sekali masuk, tidak perlu masuk lagi. Mau laptop ditutup berminggu-minggu, buka lagi langsung bisa dipakai.</p>
+  </div>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="scr-app">
+<div class="top">
+  <div class="logo">Q</div>
+  <div class="brand"><b>Quot-in Pengadaan</b><small id="t_comp">CV Makmur Berkah Perkasa</small></div>
+  <div class="spacer"></div>
+  <span class="pill" id="syncpill"><span class="dot"></span> Tersinkron</span>
+  <div class="me"><div class="av" id="t_av">?</div>
+    <div class="nmz" id="t_me">—<small>—</small></div></div>
+  <button class="out" id="t_big" title="Perbesar semua tulisan">A+ Huruf besar</button>
+  <button class="out" id="t_out">Keluar</button>
+</div>
+
+<div class="wrap">
+<div class="panel">
+
+  <div class="card"><div class="body" style="padding:12px">
+    <div class="seg doc" id="doctype">
+      <button class="on" data-dt="quot">Quotation</button>
+      <button data-dt="inv">Invoice</button>
+    </div>
+  </div></div>
+
+  <details class="card" open>
+    <summary><span class="n">1</span> Kolom tabel <span class="cnt" id="cc"></span></summary>
+    <div class="body">
+      <div class="seg">
+        <button class="on" data-mode="klien">Versi Klien</button>
+        <button data-mode="internal">Versi Internal</button>
+      </div>
+      <div id="cols"></div>
+      <div class="addrow"><input id="newcol" placeholder="Nama kolom baru…"><button class="btn" id="b_addcol">Tambah</button></div>
+      <p class="note" style="margin-top:11px">Kolom <b>WAJIB</b> selalu ikut. Sisanya mati-nyala per dokumen, tidak mewarisi dokumen sebelumnya.</p>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><span class="n">2</span> Foto produk <span class="cnt" id="pc"></span></summary>
+    <div class="body">
+      <label class="f"><span>Mau ditaruh di mana</span></label>
+      <div class="seg sm" id="pmode">
+        <button data-pm="off">Tidak dipakai</button>
+        <button class="on" data-pm="gal">Galeri bawah</button>
+        <button data-pm="tab">Dalam tabel</button>
+      </div>
+      <label class="f"><span>Rasio foto — dikunci sistem</span>
+        <select id="ar">
+          <option value="4/3" selected>4 : 3 — mendatar (disarankan)</option>
+          <option value="1/1">1 : 1 — kotak</option>
+          <option value="3/2">3 : 2 — foto kamera</option>
+          <option value="16/9">16 : 9 — lebar</option>
+        </select></label>
+      <label class="f"><span>Jumlah foto per baris galeri</span>
+        <select id="gc"><option>2</option><option selected>3</option><option>4</option></select></label>
+      <p class="note">Foto apa pun yang diunggah dipotong otomatis ke rasio ini dan diratakan tengah. Jadi foto dari HP, foto katalog, atau tangkapan layar tetap terlihat seragam.</p>
+      <p class="note hi" style="margin-top:9px"><b>Slot kosong tidak ikut tercetak.</b> Kotak putus-putus hanya muncul di layar pengisian. Di dokumen dan PDF, barang tanpa foto keluar polos. Kalau satu dokumen tidak ada fotonya sama sekali, bagian foto hilang total.</p>
+      <p class="note" style="margin-top:9px" id="imgsize"></p>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><span class="n">3</span> Pilihan desain <span class="cnt">9 tema</span></summary>
+    <div class="body"><div class="ths" id="ths"></div></div>
+  </details>
+
+  <details class="card">
+    <summary><span class="n">4</span> Logo &amp; tanda tangan</summary>
+    <div class="body">
+      <label class="f"><span>Logo perusahaan</span></label>
+      <div id="logobox"></div>
+      <label class="f" style="margin-top:10px"><span>Tinggi logo di dokumen</span>
+        <select id="logoh"><option value="34">Kecil</option><option value="46" selected>Sedang</option><option value="60">Besar</option></select></label>
+      <label class="f" style="margin-top:6px"><span>Tanda tangan</span></label>
+      <div id="ttdbox"></div>
+      <p class="note" style="margin-top:10px">Sekali unggah, tersimpan untuk seluruh perusahaan — rekan di laptop lain tidak perlu unggah ulang.</p>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="n">5</span> Kop perusahaan</summary>
+    <div class="body">
+      <label class="f"><span>Nama perusahaan</span><input id="f_nama"></label>
+      <label class="f"><span>Alamat</span><textarea id="f_alamat"></textarea></label>
+      <div class="r2">
+        <label class="f"><span>Telepon</span><input id="f_telp"></label>
+        <label class="f"><span>Email</span><input id="f_email"></label>
+      </div>
+      <button class="btn g" style="width:100%" id="b_savekop">Simpan kop untuk seluruh perusahaan</button>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="n">6</span> Klien &amp; nomor</summary>
+    <div class="body">
+      <label class="f"><span>Kepada</span><input id="f_klien"></label>
+      <label class="f"><span>Nama PIC</span><input id="f_pic"></label>
+      <div class="r2">
+        <label class="f"><span>Nomor — dari server</span><input id="f_no" readonly style="background:#f7f9fc;font-weight:700"></label>
+        <label class="f"><span>Tanggal</span><input type="date" id="f_tgl"></label>
+      </div>
+      <p class="note" style="margin:-4px 0 11px">Nomor dikunci server — tiga orang bikin barengan pun tidak kembar.</p>
+      <label class="f" id="box_valid"><span>Berlaku sampai</span><input type="date" id="f_valid"></label>
+      <label class="f" id="box_due" style="display:none"><span>Jatuh tempo pembayaran</span><input type="date" id="f_due"></label>
+      <label class="f" id="box_ref" style="display:none"><span>Mengacu pada quotation no.</span><input id="f_ref" placeholder="0360/Q-MBP/XI/2026"></label>
+      <label class="f"><span>Kalimat pembuka</span><textarea id="f_intro"></textarea></label>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><span class="n">7</span> Daftar barang <span class="cnt" id="rc"></span></summary>
+    <div class="body">
+      <div id="rows"></div>
+      <button class="btn g" style="width:100%;margin-top:9px" id="b_addrow">+ Tambah baris barang</button>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><span class="n">8</span> Hitungan akhir <span class="cnt" id="tc"></span></summary>
+    <div class="body">
+      <label class="f"><span>Pembulatan total</span>
+        <select id="f_round">
+          <option value="0" selected>Tidak dibulatkan</option>
+          <option value="1000">Dibulatkan ke Rp1.000 terdekat</option>
+          <option value="10000">Dibulatkan ke Rp10.000 terdekat</option>
+          <option value="100000">Dibulatkan ke Rp100.000 terdekat</option>
+        </select></label>
+      <div class="r2">
+        <label class="f"><span>Biaya lain (OTHER)</span><input type="number" id="f_other" value="0" step="1"></label>
+        <label class="f"><span>Keterangan biaya lain</span><input id="f_otherlbl" value="Other"></label>
+      </div>
+      <div class="r2">
+        <label class="f"><span>Pajak — persen</span><input type="number" id="f_taxp" value="0" step="0.01" min="0"></label>
+        <label class="f"><span>Nama baris pajak</span><input id="f_taxlbl" value="PPN"></label>
+      </div>
+      <p class="note">Isi persen pajak sendiri. Kalau 0, baris pajak tidak muncul di dokumen.</p>
+      <div id="calcbox" style="margin-top:12px"></div>
+    </div>
+  </details>
+
+  <details class="card" id="card_termin" style="display:none">
+    <summary><span class="n">9</span> Termin pembayaran <span class="cnt" id="trc"></span></summary>
+    <div class="body">
+      <div class="seg sm" id="paymode">
+        <button class="on" data-py="full">Lunas 100%</button>
+        <button data-py="cust">Termin sendiri</button>
+      </div>
+      <div id="terminbox"></div>
+      <div id="terminadd" style="display:none">
+        <button class="btn g" style="width:100%;margin-top:4px" id="b_addtm">+ Tambah termin</button>
+        <div class="r2" style="margin-top:9px">
+          <button class="btn g" id="b_tm5050">50 / 50</button>
+          <button class="btn g" id="b_tm304030">30 / 40 / 30</button>
+        </div>
+      </div>
+      <div id="terminsum"></div>
+      <p class="note" style="margin-top:9px">Persen diisi sendiri. Angka rupiah dihitung otomatis dan termin terakhir disesuaikan supaya jumlahnya pas sama total — tidak ada selisih satu rupiah pun.</p>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="n">10</span> Syarat &amp; rekening</summary>
+    <div class="body">
+      <label class="f"><span>Delivery terms</span><input id="f_deliv"></label>
+      <label class="f"><span>Payment terms</span><input id="f_pay"></label>
+      <div class="r2">
+        <label class="f"><span>Nama bank</span><input id="f_bank"></label>
+        <label class="f"><span>Mata uang</span><input id="f_cur"></label>
+      </div>
+      <label class="f"><span>Atas nama</span><input id="f_bankname"></label>
+      <div class="r2">
+        <label class="f"><span>No. rekening</span><input id="f_bankno"></label>
+        <label class="f"><span>BIC / SWIFT</span><input id="f_swift"></label>
+      </div>
+      <label class="f"><span>Penanda tangan</span><input id="f_signer"></label>
+      <button class="btn g" style="width:100%" id="b_saveterm">Simpan syarat &amp; rekening untuk seluruh perusahaan</button>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><span class="n">11</span> Riwayat bersama <span class="cnt" id="hcnt">—</span></summary>
+    <div class="body">
+      <input id="hq" placeholder="Cari nomor, klien, atau nama pembuat…" style="margin-bottom:10px">
+      <div class="seg sm" id="hfilter">
+        <button class="on" data-hf="all">Semua</button>
+        <button data-hf="quot">Quotation</button>
+        <button data-hf="inv">Invoice</button>
+        <button data-hf="arsip">Arsip</button>
+      </div>
+      <div class="hist" id="hist"></div>
+      <p class="note" style="margin-top:11px">Dibuat di laptop mana pun, muncul di semua. Tetap ada walau cache dibersihkan.</p>
+    </div>
+  </details>
+
+  <div class="acts">
+    <button class="bg grn full" id="b_save">Simpan ke riwayat bersama</button>
+    <button class="bg wht full" id="b_new" style="display:none">Simpan sebagai dokumen baru</button>
+    <button class="bg red full" id="b_pdf">Download PDF</button>
+    <button class="bg wht" id="b_print">Cetak lewat browser</button>
+    <button class="bg wht" id="b_csv">Excel / CSV</button>
+    <button class="bg wht full" id="b_toinv" style="display:none">Jadikan Invoice dari quotation ini</button>
+    <button class="bg wht full" id="b_blank">Dokumen baru kosong</button>
+    <button class="bg wht full" id="b_arsip" style="display:none">Pindahkan ke arsip</button>
+  </div>
+  <p class="note" id="savestate"></p>
+</div>
+
+<div class="stage"><div class="paper t-ocean" id="paper"></div></div>
+</div>
+</div>
+
+<div id="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.14.0/html2pdf.bundle.min.js"></script>
+<script>
+const initializeApp=()=>({}), persistentLocalCache=()=>({}), persistentMultipleTabManager=()=>({});
+const initializeFirestore=()=>({}), indexedDBLocalPersistence={}, setPersistence=async()=>{};
+const serverTimestamp=()=>'ts', getAuth=()=>({});
+const collection=(db,...p)=>({p:p.join('/')});
+const doc=(db,...p)=>({p:p.join('/'),id:p.length%2?('auto'+Math.random().toString(36).slice(2,8)):p[p.length-1]});
+const query=(c)=>c, orderBy=()=>({}), limit=()=>({}), where=()=>({});
+const runTransaction=async(db,fn)=>fn({get:async()=>({exists:()=>false,data:()=>({})}),set:()=>{}});
+const getDocs=async()=>({docs:[]}); window.__W=[];
+const setDoc=async(r,d)=>{window.__W.push([r.p,d]);};
+const getDoc=async()=>({exists:()=>false,data:()=>({})});
+const __H=[{id:'a1',no:'0360/Q-MBP/XI/2026',kind:'quot',status:'aktif',klien:'PT Saipem Indonesia – Karimun Yard.',tgl:'2026-11-05',total:63450000,rowCount:1,createdByName:'Mohammad Ginastra',createdByEmail:'ginastra@mbp.co.id',at:'2026-11-05T09:00:00Z'}];
+const onSnapshot=(c,cb)=>{setTimeout(()=>cb({docs:__H.map(h=>({data:()=>h}))}),40);return()=>{};};
+const onAuthStateChanged=(a,cb)=>{setTimeout(()=>cb({uid:'u1',email:'irvandi@mbp.co.id',displayName:'Irvandi'}),20);return()=>{};};
+const createUserWithEmailAndPassword=async()=>({user:{uid:'u9'}});
+const signInWithEmailAndPassword=async()=>({}), signOut=async()=>{}, updateProfile=async()=>{}, sendPasswordResetEmail=async()=>{};
+/* Quot-in Pengadaan — CV Makmur Berkah Perkasa
+   Aplikasi quotation + invoice multi-perangkat.
+   Data: Firebase Firestore (project mbp-quotation), cache lokal penuh supaya tetap jalan tanpa internet. */
+
+
+
+
+
+/* ===================== KONFIGURASI ===================== */
+const firebaseConfig = {
+  apiKey: "AIzaSyCLjpFsXHtNDMV9bp4rG3Fd6Q-bmmU3rho",
+  authDomain: "mbp-quotation.firebaseapp.com",
+  projectId: "mbp-quotation",
+  storageBucket: "mbp-quotation.firebasestorage.app",
+  messagingSenderId: "520015793218",
+  appId: "1:520015793218:web:a9fef573df44e9a9bb71db"
+};
+
+/* Satu aplikasi ini dipakai satu perusahaan. */
+const CID = 'mbp';
+/* Kode undangan untuk daftar akun baru. Ganti baris ini kalau mau menutup pendaftaran. */
+const INVITE = 'MBP2026';
+/* Nomor quotation berikutnya kalau penghitung belum pernah dipakai.
+   361 karena dokumen terakhir mereka 0360/Q-MBP/XI/2026. */
+const START_Q = 361, START_I = 1;
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = initializeFirestore(app, {
+  localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+});
+
+/* ===================== UTIL ===================== */
+const $ = id => document.getElementById(id);
+const V = id => { const e = $(id); return e ? e.value : ''; };
+const SET = (id, v) => { const e = $(id); if (e) e.value = v == null ? '' : v; };
+const es = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const rp = n => { const v = Math.round(Number(n) || 0); return (v < 0 ? '− Rp' : 'Rp') + Math.abs(v).toLocaleString('id-ID'); };
+const pad4 = n => String(n).padStart(4, '0');
+const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+const BLN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+const tgl = s => { if (!s) return ''; const [y, m, d] = s.split('-'); return d + ' ' + BLN[+m - 1] + ' ' + y; };
+const today = () => new Date().toISOString().slice(0, 10);
+const plus = (d, n) => { const t = new Date(d + 'T00:00:00'); t.setDate(t.getDate() + n); return t.toISOString().slice(0, 10); };
+const ini = s => (String(s || '?').trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2) || '?').toUpperCase();
+const AVC = ['#ef5f3c', '#2d6cdf', '#12805a', '#8257c9', '#c2185b', '#00838f', '#ef6c00'];
+const avc = s => AVC[Array.from(String(s || '')).reduce((a, c) => a + c.charCodeAt(0), 0) % AVC.length];
+
+let TT;
+function toast(m, bad) {
+  const t = $('toast'); t.textContent = m; t.className = 'on' + (bad ? ' bad' : '');
+  clearTimeout(TT); TT = setTimeout(() => t.className = '', bad ? 5200 : 2800);
+}
+
+/* ===================== STATE ===================== */
+const COLS_DEF = () => ([
+  { k: 'no', nm: 'No', on: 1, lk: 1, w: '30px', al: 'ctr' },
+  { k: 'desc', nm: 'Description', on: 1, lk: 1, w: 'auto', al: '' },
+  { k: 'qty', nm: 'QTY', on: 1, lk: 1, w: '42px', al: 'ctr' },
+  { k: 'uom', nm: 'UOM', on: 1, lk: 1, w: '48px', al: 'ctr' },
+  { k: 'pn', nm: 'P/N', on: 1, lk: 0, w: '82px', al: 'ctr' },
+  { k: 'maker', nm: 'Maker', on: 1, lk: 0, w: '86px', al: 'ctr' },
+  { k: 'price', nm: 'Unit Price', on: 1, lk: 1, w: '98px', al: 'num' },
+  { k: 'amount', nm: 'Amount', on: 1, lk: 1, w: '108px', al: 'num' },
+  { k: 'lead', nm: 'Lead Time', on: 1, lk: 0, w: '74px', al: 'ctr' },
+  { k: 'modal', nm: 'Harga Modal', on: 0, lk: 0, w: '98px', al: 'num', int: 1 },
+  { k: 'margin', nm: 'Margin', on: 0, lk: 0, w: '66px', al: 'num', int: 1 }
+]);
+const ROW_DEF = () => ({ desc: '', qty: 1, uom: 'PCS', pn: '', maker: '', price: 0, lead: '', modal: 0, img: '', extra: {} });
+
+let COLS = COLS_DEF();
+let ROWS = [ROW_DEF()];
+let TERMIN = [];
+let theme = 't-ocean', mode = 'klien', pmode = 'gal', dt = 'quot', paymode = 'full';
+let LOGO = '', TTD = '';
+let ME = null, COMP = {}, HIST = [], hfilter = 'all';
+let CUR = { id: null, no: '', noPending: false, kind: 'quot', by: null };
+let dirty = false;
+
+const THEMES = [
+  { k: 't-ocean', nm: 'Ocean', d: 'biru korporat, bersih', a: '#1565c0', b: '#e8f1fc' },
+  { k: 't-exec', nm: 'Executive', d: 'serif formal — mirip punya mereka', a: '#15202b', b: '#eef1f4' },
+  { k: 't-emerald', nm: 'Emerald', d: 'hijau tenang, enak dibaca', a: '#0f7a52', b: '#e7f5ef' },
+  { k: 't-steel', nm: 'Steel', d: 'header gelap, tegas industri', a: '#f0b429', b: '#141b23' },
+  { k: 't-sunset', nm: 'Sunset', d: 'hangat, ramah', a: '#d4722a', b: '#fdf1e6' },
+  { k: 't-mono', nm: 'Mono', d: 'hitam putih, sangat ringkas', a: '#000', b: '#fff' },
+  { k: 't-pastel', nm: 'Pastel', d: 'ungu & hijau muda', a: '#C7E89A', b: '#E7DAF8', fun: 1 },
+  { k: 't-retro', nm: 'Retro Pastel', d: 'krem, kuning, pink', a: '#F0B32E', b: '#F3B3C6', fun: 1 },
+  { k: 't-mint', nm: 'Fresh Mint', d: 'gading & hijau muda', a: '#8FC33F', b: '#D6EBA8', fun: 1 }
+];
+const isFun = k => !!(THEMES.find(t => t.k === k) || {}).fun;
+const vis = () => COLS.filter(c => c.on && (!c.int || mode === 'internal'));
+const AR = () => V('ar') || '4/3';
+
+/* ===================== HITUNGAN =====================
+   Semua rupiah disimpan dan dihitung sebagai bilangan bulat.
+   amount per baris dibulatkan dulu, lalu dijumlahkan — supaya
+   angka di kertas persis sama dengan jumlah di bawahnya.          */
+const R = n => Math.round(Number(n) || 0);
+const lineAmt = r => R((Number(r.qty) || 0) * (Number(r.price) || 0));
+
+function calc() {
+  const items = ROWS.map(r => lineAmt(r));
+  const subtotal = items.reduce((a, b) => a + b, 0);
+  const other = R(V('f_other'));
+  const base = subtotal + other;
+  const step = R(V('f_round'));
+  const rounded = step > 0 ? Math.round(base / step) * step : base;
+  const roundAdj = rounded - base;
+  const taxPct = Number(V('f_taxp')) || 0;
+  const tax = R(rounded * taxPct / 100);
+  const total = rounded + tax;
+
+  // Termin: yang terakhir menyerap sisa pembulatan supaya jumlahnya pas.
+  let tms = [];
+  if (dt === 'inv') {
+    const src = paymode === 'full' ? [{ lbl: 'Pelunasan 100%', pct: 100, due: V('f_due') }] : TERMIN;
+    let acc = 0;
+    tms = src.map((t, i) => {
+      let amt;
+      if (i === src.length - 1) amt = total - acc;
+      else { amt = R(total * (Number(t.pct) || 0) / 100); acc += amt; }
+      return { lbl: t.lbl || ('Termin ' + (i + 1)), pct: Number(t.pct) || 0, due: t.due || '', amt };
+    });
+  }
+  const pctSum = (paymode === 'full') ? 100 : TERMIN.reduce((a, t) => a + (Number(t.pct) || 0), 0);
+  return { items, subtotal, other, roundAdj, rounded, taxPct, tax, total, tms, pctSum };
+}
+
+/* ===================== FOTO ===================== */
+function compress(file, maxPx = 1100, targetKB = 75) {
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onerror = () => rej(new Error('gagal baca file'));
+    fr.onload = () => {
+      const im = new Image();
+      im.onerror = () => rej(new Error('bukan gambar yang bisa dibaca'));
+      im.onload = () => {
+        let w = im.width, h = im.height;
+        const sc = Math.min(1, maxPx / Math.max(w, h));
+        w = Math.max(1, Math.round(w * sc)); h = Math.max(1, Math.round(h * sc));
+        const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+        const cx = cv.getContext('2d');
+        cx.fillStyle = '#fff'; cx.fillRect(0, 0, w, h);
+        cx.drawImage(im, 0, 0, w, h);
+        let out = '';
+        for (const q of [0.82, 0.72, 0.62, 0.5, 0.4, 0.3]) {
+          out = cv.toDataURL('image/jpeg', q);
+          if (out.length * 0.75 / 1024 <= targetKB) break;
+        }
+        res(out);
+      };
+      im.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+const bytesOf = () => ROWS.reduce((a, r) => a + (r.img ? r.img.length * 0.75 : 0), 0) + (LOGO.length + TTD.length) * 0.75;
+
+/* ===================== NOMOR DARI SERVER ===================== */
+async function nextNo(kind) {
+  const ref = doc(db, 'companies', CID, 'counters', kind);
+  const n = await runTransaction(db, async tx => {
+    const s = await tx.get(ref);
+    const cur = s.exists() && Number(s.data().next) ? Number(s.data().next) : (kind === 'quotation' ? START_Q : START_I);
+    tx.set(ref, { next: cur + 1, updatedAt: serverTimestamp() }, { merge: true });
+    return cur;
+  });
+  return n;
+}
+function fmtNo(n, kind, dateStr) {
+  const d = (dateStr || today()).split('-');
+  return pad4(n) + (kind === 'quotation' ? '/Q-MBP/' : '/INV-MBP/') + ROMAN[+d[1]] + '/' + d[0];
+}
+async function allocNo(kind, dateStr) {
+  if (!navigator.onLine) return null;
+  try {
+    const n = await Promise.race([
+      nextNo(kind),
+      new Promise((_, rj) => setTimeout(() => rj(new Error('timeout')), 9000))
+    ]);
+    return fmtNo(n, kind, dateStr);
+  } catch (e) { return null; }
+}
+
+/* ===================== AUTH UI ===================== */
+let amode = 'in';
+function authUI() {
+  const up = amode === 'up';
+  $('a_h1').textContent = up ? 'Daftar Akun' : 'Masuk';
+  $('a_namebox').style.display = up ? 'block' : 'none';
+  $('a_codebox').style.display = up ? 'block' : 'none';
+  $('a_go').textContent = up ? 'Buat akun saya' : 'Masuk';
+  $('a_forgot').style.display = up ? 'none' : 'block';
+  $('a_pass').setAttribute('autocomplete', up ? 'new-password' : 'current-password');
+}
+function amsg(t, cls) { const m = $('a_msg'); m.textContent = t || ''; m.className = 'msg' + (t ? ' ' + (cls || 'err') : ''); }
+
+document.querySelectorAll('#a_seg button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#a_seg button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); amode = b.dataset.am; amsg(''); authUI();
+});
+
+const ERRMAP = {
+  'auth/invalid-email': 'Alamat email tidak betul penulisannya.',
+  'auth/invalid-credential': 'Email atau password tidak cocok.',
+  'auth/wrong-password': 'Password salah.',
+  'auth/user-not-found': 'Email ini belum terdaftar. Pilih Daftar Akun dulu.',
+  'auth/email-already-in-use': 'Email ini sudah punya akun. Pilih Masuk.',
+  'auth/weak-password': 'Password terlalu pendek. Minimal 6 karakter, sebaiknya 8.',
+  'auth/too-many-requests': 'Terlalu banyak percobaan. Tunggu beberapa menit.',
+  'auth/network-request-failed': 'Tidak ada internet. Untuk masuk pertama kali di perangkat ini, internet harus nyala.'
+};
+const emsg = e => ERRMAP[e && e.code] || (e && e.message) || 'Ada yang tidak jalan.';
+
+$('a_go').onclick = async () => {
+  const em = V('a_email').trim(), pw = V('a_pass');
+  if (!em || !pw) return amsg('Email dan password harus diisi.');
+  $('a_go').disabled = true;
+  try {
+    if (amode === 'up') {
+      const nm = V('a_name').trim();
+      if (!nm) throw new Error('Nama lengkap harus diisi — nama ini yang muncul di riwayat bersama.');
+      if (V('a_code').trim().toUpperCase() !== INVITE) throw new Error('Kode undangan tidak betul. Minta ke atasan Anda.');
+      if (pw.length < 8) throw new Error('Password minimal 8 karakter.');
+      const cr = await createUserWithEmailAndPassword(auth, em, pw);
+      await updateProfile(cr.user, { displayName: nm });
+      await setDoc(doc(db, 'users', cr.user.uid), {
+        name: nm, email: em, companyId: CID, createdAt: serverTimestamp()
+      });
+    } else {
+      await signInWithEmailAndPassword(auth, em, pw);
+    }
+  } catch (e) { amsg(emsg(e)); }
+  $('a_go').disabled = false;
+};
+$('a_forgot').onclick = async () => {
+  const em = V('a_email').trim();
+  if (!em) return amsg('Tulis email Anda dulu di kolom Email, lalu klik lagi.');
+  try { await sendPasswordResetEmail(auth, em); amsg('Tautan ganti password sudah dikirim ke ' + em + '. Cek inbox dan folder spam.', 'ok'); }
+  catch (e) { amsg(emsg(e)); }
+};
+$('a_pass').addEventListener('keydown', e => { if (e.key === 'Enter') $('a_go').click(); });
+
+/* ===================== MASUK / KELUAR ===================== */
+onAuthStateChanged(auth, async u => {
+  if (!u) { $('scr-auth').style.display = 'grid'; $('scr-app').style.display = 'none'; ME = null; return; }
+  try {
+    const us = await getDoc(doc(db, 'users', u.uid));
+    if (!us.exists()) {
+      await setDoc(doc(db, 'users', u.uid), {
+        name: u.displayName || u.email, email: u.email, companyId: CID, createdAt: serverTimestamp()
+      });
+    }
+    ME = { uid: u.uid, name: (us.exists() && us.data().name) || u.displayName || u.email, email: u.email };
+  } catch (e) {
+    ME = { uid: u.uid, name: u.displayName || u.email, email: u.email };
+  }
+  $('scr-auth').style.display = 'none'; $('scr-app').style.display = 'block';
+  $('t_me').innerHTML = es(ME.name) + '<small>' + es(ME.email) + '</small>';
+  $('t_av').textContent = ini(ME.name); $('t_av').style.background = avc(ME.email);
+  await boot();
+});
+$('t_out').onclick = async () => {
+  if (dirty && !confirm('Ada perubahan yang belum disimpan. Tetap keluar?')) return;
+  await signOut(auth); location.reload();
+};
+
+/* ===================== PROFIL PERUSAHAAN ===================== */
+const COMP_DEF = {
+  nama: 'CV MAKMUR BERKAH PERKASA',
+  alamat: 'JL. ARAH PASIR PANJANG, RT005 RW002, KEL. DARUSSALAM, KEC. MERAL BARAT, KAB. KARIMUN, PROV. KEPRI 29635, INDONESIA',
+  telp: '+6285264843025', email: 'makmurberkahperkasa@gmail.com',
+  deliv: 'Price Basis: DDP (Delivered Duty Paid) — isi lokasi tujuan.',
+  pay: 'Payment is due within 30 days of the invoice date.',
+  bank: '', cur: 'IDR', bankname: '', bankno: '', swift: '', signer: '',
+  logo: '', ttd: ''
+};
+async function boot() {
+  const ref = doc(db, 'companies', CID);
+  try {
+    const s = await getDoc(ref);
+    if (s.exists()) COMP = Object.assign({}, COMP_DEF, s.data());
+    else { COMP = Object.assign({}, COMP_DEF); await setDoc(ref, { ...COMP, createdAt: serverTimestamp() }, { merge: true }); }
+  } catch (e) { COMP = Object.assign({}, COMP_DEF); }
+  $('t_comp').textContent = COMP.nama;
+  LOGO = COMP.logo || ''; TTD = COMP.ttd || '';
+  applyComp();
+  blank(true);
+  watchHist();
+  claimPending();
+  setTimeout(askRestore, 700);
+}
+function applyComp() {
+  SET('f_nama', COMP.nama); SET('f_alamat', COMP.alamat); SET('f_telp', COMP.telp); SET('f_email', COMP.email);
+  SET('f_deliv', COMP.deliv); SET('f_pay', COMP.pay); SET('f_bank', COMP.bank); SET('f_cur', COMP.cur);
+  SET('f_bankname', COMP.bankname); SET('f_bankno', COMP.bankno); SET('f_swift', COMP.swift); SET('f_signer', COMP.signer);
+}
+$('b_savekop').onclick = async () => {
+  Object.assign(COMP, { nama: V('f_nama'), alamat: V('f_alamat'), telp: V('f_telp'), email: V('f_email') });
+  try { await setDoc(doc(db, 'companies', CID), { nama: COMP.nama, alamat: COMP.alamat, telp: COMP.telp, email: COMP.email }, { merge: true }); $('t_comp').textContent = COMP.nama; toast('Kop tersimpan untuk seluruh perusahaan.'); }
+  catch (e) { toast('Gagal menyimpan kop: ' + e.message, 1); }
+};
+$('b_saveterm').onclick = async () => {
+  Object.assign(COMP, { deliv: V('f_deliv'), pay: V('f_pay'), bank: V('f_bank'), cur: V('f_cur'), bankname: V('f_bankname'), bankno: V('f_bankno'), swift: V('f_swift'), signer: V('f_signer') });
+  try {
+    await setDoc(doc(db, 'companies', CID), {
+      deliv: COMP.deliv, pay: COMP.pay, bank: COMP.bank, cur: COMP.cur,
+      bankname: COMP.bankname, bankno: COMP.bankno, swift: COMP.swift, signer: COMP.signer
+    }, { merge: true });
+    toast('Syarat & rekening tersimpan untuk seluruh perusahaan.');
+  } catch (e) { toast('Gagal menyimpan: ' + e.message, 1); }
+};
+async function saveBrand() {
+  try { await setDoc(doc(db, 'companies', CID), { logo: LOGO, ttd: TTD }, { merge: true }); toast('Tersimpan untuk seluruh perusahaan.'); }
+  catch (e) { toast('Gagal menyimpan: ' + e.message, 1); }
+}
+
+/* ===================== DOKUMEN BARU ===================== */
+function blank(silent) {
+  COLS = COLS_DEF(); ROWS = [ROW_DEF()]; TERMIN = []; paymode = 'full';
+  mode = 'klien'; pmode = 'gal'; dt = dt || 'quot';
+  CUR = { id: null, no: '', noPending: false, kind: dt, by: null };
+  SET('f_klien', ''); SET('f_pic', ''); SET('f_ref', '');
+  SET('f_tgl', today()); SET('f_valid', plus(today(), 14)); SET('f_due', plus(today(), 30));
+  SET('f_no', '— diambil saat disimpan —');
+  SET('f_intro', dt === 'inv'
+    ? 'Please find below our invoice for the goods delivered. We appreciate your business.'
+    : 'Thank you for your interest in our quotation. We sincerely appreciate the opportunity to work with you. In response to your request, here is our best offer:');
+  SET('f_other', 0); SET('f_otherlbl', 'Other'); SET('f_taxp', 0); SET('f_taxlbl', 'PPN'); SET('f_round', '0');
+  document.querySelectorAll('.seg button[data-mode]').forEach(x => x.classList.toggle('on', x.dataset.mode === 'klien'));
+  document.querySelectorAll('#pmode button').forEach(x => x.classList.toggle('on', x.dataset.pm === 'gal'));
+  document.querySelectorAll('#paymode button').forEach(x => x.classList.toggle('on', x.dataset.py === 'full'));
+  dirty = false; clearDraft(); draw();
+  if (!silent) toast('Dokumen baru. Yang lama tetap aman di riwayat.');
+}
+$('b_blank').onclick = () => {
+  if (dirty && !confirm('Perubahan yang belum disimpan akan hilang. Lanjut bikin dokumen baru?')) return;
+  blank();
+};
+
+/* ===================== DOC TYPE ===================== */
+document.querySelectorAll('#doctype button').forEach(b => b.onclick = () => {
+  if (b.dataset.dt === dt) return;
+  if (dirty && !confirm('Pindah ke ' + (b.dataset.dt === 'inv' ? 'Invoice' : 'Quotation') + '? Perubahan yang belum disimpan akan hilang.')) return;
+  document.querySelectorAll('#doctype button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); dt = b.dataset.dt;
+  blank(true); drawHist();
+});
+function dtUI() {
+  const inv = dt === 'inv';
+  $('card_termin').style.display = inv ? '' : 'none';
+  $('box_valid').style.display = inv ? 'none' : 'block';
+  $('box_due').style.display = inv ? 'block' : 'none';
+  $('box_ref').style.display = inv ? 'block' : 'none';
+  $('b_toinv').style.display = (!inv && CUR.id) ? '' : 'none';
+}
+
+/* ===================== KOLOM ===================== */
+function drawCols() {
+  const b = $('cols'); b.innerHTML = '';
+  COLS.forEach((c, i) => {
+    if (c.int && mode !== 'internal') return;
+    const d = document.createElement('div');
+    d.className = 'ci' + (c.on ? ' on' : '') + (c.lk ? ' lk' : '');
+    d.innerHTML = `<div class="sw" data-i="${i}"></div><span class="nm">${es(c.nm)}</span>
+     ${c.lk ? '<span class="badge">WAJIB</span>' : c.int ? '<span class="badge int">INTERNAL</span>' : c.cu ? `<button class="x" data-d="${i}">✕</button>` : '<span class="badge">OPSIONAL</span>'}`;
+    b.appendChild(d);
+  });
+  b.querySelectorAll('.sw[data-i]').forEach(s => s.onclick = () => {
+    const c = COLS[+s.dataset.i]; if (c.lk) return; c.on = !c.on; dirty = true; draw();
+  });
+  b.querySelectorAll('.x[data-d]').forEach(x => x.onclick = () => {
+    const i = +x.dataset.d, k = COLS[i].k;
+    COLS.splice(i, 1); ROWS.forEach(r => delete r.extra[k]); dirty = true; draw();
+  });
+  $('cc').textContent = vis().length + ' aktif';
+}
+$('b_addcol').onclick = () => {
+  const el = $('newcol'), nm = el.value.trim(); if (!nm) return;
+  const k = 'x' + Date.now();
+  COLS.splice(COLS.length - 2, 0, { k, nm, on: 1, lk: 0, w: '86px', al: 'ctr', cu: 1 });
+  ROWS.forEach(r => r.extra[k] = ''); el.value = ''; dirty = true; draw();
+};
+
+/* ===================== TEMA / BRAND ===================== */
+function drawThemes() {
+  const b = $('ths'); b.innerHTML = '';
+  THEMES.forEach(t => {
+    const d = document.createElement('div'); d.className = 'th' + (theme === t.k ? ' on' : '');
+    d.innerHTML = `<div class="pv" style="background:${t.b}"><div class="bar" style="background:${t.a};width:58%"></div>
+     <div class="ln" style="width:88%"></div><div class="ln" style="width:72%"></div>
+     <div class="bar" style="background:${t.a};width:34%;opacity:.45;margin-top:2px"></div></div>
+     <div class="lb"><b>${t.nm}</b><small>${t.d}</small></div>`;
+    d.onclick = () => { theme = t.k; dirty = true; draw(); };
+    b.appendChild(d);
+  });
+}
+function drawBrand() {
+  $('logobox').innerHTML = LOGO
+    ? `<div class="prev"><img src="${LOGO}"><div class="mt">Logo terpasang</div><button class="x" id="xlogo">✕</button></div>`
+    : `<div class="up"><div class="ic">🏷️</div><b>Unggah logo</b><small>PNG latar transparan paling rapi</small><input type="file" accept="image/*" id="iLogo"></div>`;
+  $('ttdbox').innerHTML = TTD
+    ? `<div class="prev"><img src="${TTD}"><div class="mt">Tanda tangan terpasang</div><button class="x" id="xttd">✕</button></div>`
+    : `<div class="up"><div class="ic">✍️</div><b>Unggah tanda tangan</b><small>foto tanda tangan di kertas putih juga bisa</small><input type="file" accept="image/*" id="iTtd"></div>`;
+  const a = $('iLogo'), c = $('iTtd');
+  if (a) a.onchange = async e => { const f = e.target.files[0]; if (!f) return; try { LOGO = await compress(f, 700, 55); draw(); saveBrand(); } catch (x) { toast('Foto tidak bisa dibaca.', 1); } };
+  if (c) c.onchange = async e => { const f = e.target.files[0]; if (!f) return; try { TTD = await compress(f, 700, 45); draw(); saveBrand(); } catch (x) { toast('Foto tidak bisa dibaca.', 1); } };
+  const xl = $('xlogo'), xt = $('xttd');
+  if (xl) xl.onclick = () => { LOGO = ''; draw(); saveBrand(); };
+  if (xt) xt.onclick = () => { TTD = ''; draw(); saveBrand(); };
+}
+
+/* ===================== BARIS BARANG ===================== */
+function drawRows() {
+  const b = $('rows'); b.innerHTML = '';
+  const act = vis().filter(c => !['no', 'amount'].includes(c.k));
+  ROWS.forEach((r, i) => {
+    let h = `<div style="border:1.5px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:10px;background:#fcfdff">
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+     <b style="font-size:10.5px;color:var(--mut);letter-spacing:.5px">BARANG ${i + 1} · ${rp(lineAmt(r))}</b>
+     <button class="x" data-del="${i}">✕</button></div>`;
+    if (pmode !== 'off') {
+      h += `<div class="slotwrap"><div class="slot" style="--ar:${AR()}">
+       ${r.img ? `<img src="${r.img}">` : '<div class="ph">klik untuk<br>unggah foto</div>'}
+       <input type="file" accept="image/*" data-img="${i}"></div>
+       <div class="hint"><b style="color:var(--ink);font-size:11px">Slot foto ${AR().replace('/', ' : ')}</b><br>
+       Fotonya dipotong otomatis ke rasio ini. Mau foto HP atau tangkapan layar, hasilnya tetap senada.
+       ${r.img ? `<br><button class="x" style="padding:0" data-noimg="${i}">hapus foto</button>` : ''}</div></div>`;
+    }
+    act.forEach(c => {
+      const v = c.cu ? (r.extra[c.k] || '') : (r[c.k] == null ? '' : r[c.k]);
+      const t = ['qty', 'price', 'modal'].includes(c.k) ? 'number' : 'text';
+      h += `<label class="f"><span>${es(c.nm)}</span><input type="${t}" value="${es(v)}" data-r="${i}" data-k="${c.k}" data-c="${c.cu ? 1 : 0}"></label>`;
+    });
+    b.insertAdjacentHTML('beforeend', h + '</div>');
+  });
+  b.querySelectorAll('input[data-r]').forEach(p => p.oninput = e => {
+    const r = ROWS[+e.target.dataset.r], k = e.target.dataset.k;
+    const v = ['qty', 'price', 'modal'].includes(k) ? (Number(e.target.value) || 0) : e.target.value;
+    if (e.target.dataset.c === '1') r.extra[k] = v; else r[k] = v;
+    dirty = true; paper(); calcBox(); drawTermin();
+  });
+  b.querySelectorAll('input[data-img]').forEach(p => p.onchange = async e => {
+    const i = +e.target.dataset.img, f = e.target.files[0]; if (!f) return;
+    try { ROWS[i].img = await compress(f); dirty = true; draw(); }
+    catch (x) { toast('Foto tidak bisa dibaca.', 1); }
+  });
+  b.querySelectorAll('[data-del]').forEach(x => x.onclick = () => {
+    if (ROWS.length === 1) { ROWS[0] = ROW_DEF(); } else { ROWS.splice(+x.dataset.del, 1); }
+    dirty = true; draw();
+  });
+  b.querySelectorAll('[data-noimg]').forEach(x => x.onclick = () => { ROWS[+x.dataset.noimg].img = ''; dirty = true; draw(); });
+  $('rc').textContent = ROWS.length + ' barang';
+  $('pc').textContent = pmode === 'off' ? 'mati' : ROWS.filter(r => r.img).length + '/' + ROWS.length + ' terisi';
+  const kb = Math.round(bytesOf() / 1024);
+  const el = $('imgsize');
+  el.className = 'note' + (kb > 820 ? ' warn' : '');
+  el.textContent = kb > 820
+    ? 'Ukuran dokumen ' + kb + ' KB — sudah mendekati batas 1.000 KB per dokumen. Kurangi beberapa foto supaya bisa disimpan.'
+    : 'Ukuran dokumen sekarang ' + kb + ' KB dari batas 1.000 KB.';
+}
+$('b_addrow').onclick = () => { ROWS.push(ROW_DEF()); dirty = true; draw(); };
+
+/* ===================== TERMIN ===================== */
+function drawTermin() {
+  if (dt !== 'inv') return;
+  const c = calc();
+  $('terminadd').style.display = paymode === 'cust' ? 'block' : 'none';
+  const box = $('terminbox');
+  if (paymode === 'full') {
+    box.innerHTML = `<div class="sumbar good"><span>Lunas 100% — satu kali bayar</span><span>${rp(c.total)}</span></div>`;
+    $('terminsum').innerHTML = '';
+    $('trc').textContent = 'lunas';
+    return;
+  }
+  if (!TERMIN.length) TERMIN = [{ lbl: 'Down Payment', pct: 50, due: V('f_due') }, { lbl: 'Pelunasan', pct: 50, due: '' }];
+  box.innerHTML = TERMIN.map((t, i) => `<div class="tm">
+    <input value="${es(t.lbl)}" data-tl="${i}" placeholder="Nama termin">
+    <input type="number" value="${t.pct}" data-tp="${i}" step="0.01" min="0" placeholder="%">
+    <div class="cal">${rp((c.tms[i] || {}).amt || 0)}</div>
+    <button class="x" data-tx="${i}">✕</button>
+    </div><label class="f" style="margin:-2px 0 12px"><span>Jatuh tempo termin ${i + 1}</span><input type="date" value="${es(t.due || '')}" data-td="${i}"></label>`).join('');
+  box.querySelectorAll('[data-tl]').forEach(e => e.oninput = ev => { TERMIN[+ev.target.dataset.tl].lbl = ev.target.value; dirty = true; paper(); });
+  box.querySelectorAll('[data-tp]').forEach(e => e.oninput = ev => { TERMIN[+ev.target.dataset.tp].pct = Number(ev.target.value) || 0; dirty = true; drawTermin(); paper(); });
+  box.querySelectorAll('[data-td]').forEach(e => e.onchange = ev => { TERMIN[+ev.target.dataset.td].due = ev.target.value; dirty = true; paper(); });
+  box.querySelectorAll('[data-tx]').forEach(e => e.onclick = ev => {
+    if (TERMIN.length <= 1) return toast('Minimal satu termin.', 1);
+    TERMIN.splice(+ev.target.dataset.tx, 1); dirty = true; drawTermin(); paper();
+  });
+  const ok = Math.abs(c.pctSum - 100) < 0.005;
+  $('terminsum').innerHTML = `<div class="sumbar ${ok ? 'good' : 'bad'}">
+    <span>Jumlah persen: ${(Math.round(c.pctSum * 100) / 100)}%${ok ? ' — pas' : ' — harus 100%'}</span>
+    <span>${rp(c.tms.reduce((a, t) => a + t.amt, 0))}</span></div>`;
+  $('trc').textContent = TERMIN.length + ' termin';
+}
+document.querySelectorAll('#paymode button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#paymode button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); paymode = b.dataset.py; dirty = true; drawTermin(); paper();
+});
+$('b_addtm').onclick = () => { TERMIN.push({ lbl: 'Termin ' + (TERMIN.length + 1), pct: 0, due: '' }); dirty = true; drawTermin(); paper(); };
+$('b_tm5050').onclick = () => { TERMIN = [{ lbl: 'Down Payment 50%', pct: 50, due: V('f_due') }, { lbl: 'Pelunasan 50%', pct: 50, due: '' }]; dirty = true; drawTermin(); paper(); };
+$('b_tm304030').onclick = () => { TERMIN = [{ lbl: 'Down Payment 30%', pct: 30, due: V('f_due') }, { lbl: 'Progress 40%', pct: 40, due: '' }, { lbl: 'Pelunasan 30%', pct: 30, due: '' }]; dirty = true; drawTermin(); paper(); };
+
+/* ===================== KOTAK HITUNGAN ===================== */
+function calcBox() {
+  const c = calc();
+  const L = (a, b, w) => `<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:12.5px${w ? ';font-weight:800' : ''}"><span style="color:${w ? 'var(--ink)' : 'var(--mut)'}">${a}</span><span style="font-weight:700">${b}</span></div>`;
+  let h = L('Jumlah ' + ROWS.length + ' baris barang', rp(c.subtotal));
+  if (c.other) h += L(es(V('f_otherlbl') || 'Other'), rp(c.other));
+  if (c.roundAdj) h += L('Pembulatan', (c.roundAdj > 0 ? '+ ' : '') + rp(c.roundAdj));
+  if (c.tax) h += L(es(V('f_taxlbl') || 'Pajak') + ' ' + c.taxPct + '%', rp(c.tax));
+  h += '<div style="height:1px;background:var(--bd);margin:5px 0"></div>' + L('TOTAL', rp(c.total), 1);
+  $('calcbox').innerHTML = h;
+  $('tc').textContent = rp(c.total);
+}
+
+/* ===================== KERTAS ===================== */
+function paper() {
+  const c = calc(), act = vis(), ar = AR();
+  const adaFoto = ROWS.some(r => r.img);
+  const inTab = pmode === 'tab' && adaFoto;
+  const inv = dt === 'inv';
+
+  let th = (inTab ? '<th class="ctr" style="width:62px">Foto</th>' : '')
+    + act.map(x => `<th class="${x.al}" style="width:${x.w}">${es(x.nm)}</th>`).join('');
+  const tb = ROWS.map((r, i) => {
+    let cells = inTab ? `<td class="pic">${r.img ? `<div class="fr" style="--ar:${ar}"><img src="${r.img}"></div>` : ''}</td>` : '';
+    cells += act.map(x => {
+      let v = '';
+      if (x.k === 'no') v = i + 1;
+      else if (x.k === 'amount') v = rp(c.items[i]);
+      else if (x.k === 'price') v = rp(r.price);
+      else if (x.k === 'modal') v = rp(r.modal);
+      else if (x.k === 'margin') v = r.price ? Math.round((1 - (Number(r.modal) || 0) / Number(r.price)) * 100) + '%' : '—';
+      else v = x.cu ? es(r.extra[x.k] || '') : es(r[x.k]);
+      return `<td class="${x.al}">${v === '' || v == null ? '&nbsp;' : v}</td>`;
+    }).join('');
+    return '<tr>' + cells + '</tr>';
+  }).join('');
+
+  let gal = '';
+  if (pmode === 'gal' && adaFoto) {
+    gal = `<div class="gal"><h4>Product Reference</h4><div class="gg" style="--gc:${V('gc') || 3}">`
+      + ROWS.map((r, i) => r.img ? `<div class="gi"><div class="fr" style="--ar:${ar}"><img src="${r.img}"></div>
+        <div class="cap"><b>${i + 1}. ${es(r.desc) || '—'}</b>${r.pn ? 'P/N ' + es(r.pn) : ''}${r.pn && r.maker ? ' · ' : ''}${es(r.maker)}</div></div>` : '').join('')
+      + '</div></div>';
+  }
+
+  let sumrows = `<tr><td>Subtotal</td><td>${rp(c.subtotal)}</td></tr>`;
+  if (c.other) sumrows += `<tr><td>${es(V('f_otherlbl') || 'Other')}</td><td>${rp(c.other)}</td></tr>`;
+  if (c.roundAdj) sumrows += `<tr><td>Round-off</td><td>${(c.roundAdj > 0 ? '+ ' : '') + rp(c.roundAdj)}</td></tr>`;
+  if (c.tax) sumrows += `<tr><td>${es(V('f_taxlbl') || 'Pajak')} ${c.taxPct}%</td><td>${rp(c.tax)}</td></tr>`;
+  sumrows += `<tr class="tt"><td>TOTAL</td><td>${rp(c.total)}</td></tr>`;
+
+  let trm = '';
+  if (inv) {
+    trm = `<table class="trm"><thead><tr><th style="width:36px">No</th><th>Payment Schedule</th><th class="ctr" style="width:70px">Portion</th><th class="ctr" style="width:110px">Due Date</th><th class="num" style="width:120px">Amount</th></tr></thead><tbody>`
+      + c.tms.map((t, i) => `<tr><td class="ctr">${i + 1}</td><td>${es(t.lbl)}</td><td class="ctr">${t.pct}%</td><td class="ctr">${tgl(t.due) || '—'}</td><td class="num">${rp(t.amt)}</td></tr>`).join('')
+      + `<tr class="tt"><td></td><td>TOTAL TAGIHAN</td><td class="ctr">${Math.round(c.pctSum * 100) / 100}%</td><td></td><td class="num">${rp(c.tms.reduce((a, t) => a + t.amt, 0))}</td></tr>`
+      + `</tbody></table>`;
+  }
+
+  const lh = V('logoh') || 46, fun = isFun(theme);
+  const P = $('paper');
+  P.className = 'paper ' + theme + (fun ? ' fun' : '');
+  P.innerHTML = `
+  ${mode === 'internal' ? '<div class="wm">● SALINAN INTERNAL — jangan dikirim ke klien</div>' : ''}
+  <div class="kop">
+    <div class="lf">
+      ${LOGO ? `<img src="${LOGO}" style="height:${lh}px">` : ''}
+      <div><h2>${es(V('f_nama'))}</h2><p>${es(V('f_alamat'))}<br>${es(V('f_telp'))} &nbsp;·&nbsp; ${es(V('f_email'))}</p></div>
+    </div>
+    <div class="qn"><em>${inv ? 'INVOICE NO.' : 'QUOTE NO.'}</em><b>${es(V('f_no'))}</b><i>${tgl(V('f_tgl'))}</i></div>
+  </div>
+  <div class="bigt">${inv ? 'INVOICE' : 'QUOTATION'}</div>
+  <div class="meta">
+    <div><em>TO</em><b>${es(V('f_klien'))}</b>${V('f_pic') ? '<br>Attn: ' + es(V('f_pic')) : ''}</div>
+    <div style="text-align:right"><em>${inv ? 'PAYMENT DUE' : 'VALID UNTIL'}</em>${tgl(inv ? V('f_due') : V('f_valid'))}
+    ${inv && V('f_ref') ? `<em style="margin-top:7px">REF. QUOTATION</em>${es(V('f_ref'))}` : ''}</div>
+  </div>
+  <p class="intro">${es(V('f_intro'))}</p>
+  <table class="it"><thead><tr>${th}</tr></thead><tbody>${tb}</tbody></table>
+  <table class="sum">${sumrows}</table>
+  ${trm}
+  ${gal}
+  <div class="terms">
+   <div><h4>${inv ? 'Delivery' : 'Delivery Terms'}</h4>${es(V('f_deliv'))}
+        <h4 style="margin-top:14px">Payment Terms</h4>${es(V('f_pay'))}</div>
+   <div><h4>Bank Details</h4><div class="bk">
+     <i>Bank</i><div>${es(V('f_bank')) || '—'}</div>
+     <i>Account Name</i><div>${es(V('f_bankname')) || '—'}</div>
+     <i>Account No.</i><div>${es(V('f_bankno')) || '—'}</div>
+     <i>Currency</i><div>${es(V('f_cur')) || '—'}</div>
+     <i>BIC / SWIFT</i><div>${es(V('f_swift')) || '—'}</div>
+   </div></div>
+  </div>
+  <div class="sign">${inv ? 'ISSUED BY' : 'SIGN BELOW TO ACCEPT QUOTE'}
+    <div class="sbox">${TTD ? `<img src="${TTD}">` : ''}</div>
+    <div class="ln"></div><b>${es(V('f_signer'))}</b></div>`;
+}
+
+/* ===================== SIMPAN ===================== */
+function payload() {
+  return {
+    cols: COLS, rows: ROWS, termin: TERMIN, paymode, theme, mode, pmode, kind: dt,
+    ar: V('ar'), gc: V('gc'), logoh: V('logoh'),
+    info: {
+      klien: V('f_klien'), pic: V('f_pic'), no: V('f_no'), tgl: V('f_tgl'),
+      valid: V('f_valid'), due: V('f_due'), ref: V('f_ref'), intro: V('f_intro'),
+      round: V('f_round'), other: V('f_other'), otherlbl: V('f_otherlbl'),
+      taxp: V('f_taxp'), taxlbl: V('f_taxlbl'),
+      nama: V('f_nama'), alamat: V('f_alamat'), telp: V('f_telp'), email: V('f_email'),
+      deliv: V('f_deliv'), pay: V('f_pay'), bank: V('f_bank'), cur: V('f_cur'),
+      bankname: V('f_bankname'), bankno: V('f_bankno'), swift: V('f_swift'), signer: V('f_signer')
+    }
+  };
+}
+function load(p) {
+  COLS = (p.cols && p.cols.length) ? p.cols : COLS_DEF();
+  ROWS = (p.rows && p.rows.length) ? p.rows.map(r => Object.assign(ROW_DEF(), r, { extra: r.extra || {} })) : [ROW_DEF()];
+  TERMIN = p.termin || []; paymode = p.paymode || 'full';
+  theme = p.theme || 't-ocean'; mode = p.mode || 'klien'; pmode = p.pmode || 'gal';
+  dt = p.kind || 'quot';
+  SET('ar', p.ar || '4/3'); SET('gc', p.gc || '3'); SET('logoh', p.logoh || '46');
+  const i = p.info || {};
+  ['klien', 'pic', 'no', 'tgl', 'valid', 'due', 'ref', 'intro', 'round', 'other', 'otherlbl', 'taxp', 'taxlbl',
+    'nama', 'alamat', 'telp', 'email', 'deliv', 'pay', 'bank', 'cur', 'bankname', 'bankno', 'swift', 'signer']
+    .forEach(k => SET('f_' + k, i[k]));
+  document.querySelectorAll('#doctype button').forEach(x => x.classList.toggle('on', x.dataset.dt === dt));
+  document.querySelectorAll('.seg button[data-mode]').forEach(x => x.classList.toggle('on', x.dataset.mode === mode));
+  document.querySelectorAll('#pmode button').forEach(x => x.classList.toggle('on', x.dataset.pm === pmode));
+  document.querySelectorAll('#paymode button').forEach(x => x.classList.toggle('on', x.dataset.py === paymode));
+}
+
+async function save(asNew) {
+  if (!ME) return;
+  const kb = bytesOf() / 1024;
+  if (kb > 900) return toast('Dokumen ' + Math.round(kb) + ' KB, batasnya 1.000 KB. Kurangi atau hapus beberapa foto dulu.', 1);
+  const c = calc();
+  if (dt === 'inv' && paymode === 'cust' && Math.abs(c.pctSum - 100) >= 0.005)
+    return toast('Jumlah persen termin ' + (Math.round(c.pctSum * 100) / 100) + '%, harus pas 100% sebelum disimpan.', 1);
+  if (!V('f_klien').trim()) return toast('Kolom "Kepada" masih kosong.', 1);
+
+  $('b_save').disabled = true; $('b_save').textContent = 'Menyimpan…';
+  try {
+    const isNew = asNew || !CUR.id;
+    const id = isNew ? (doc(collection(db, 'companies', CID, 'docs')).id) : CUR.id;
+    let no = CUR.no, pend = CUR.noPending;
+    if (isNew || !no || pend) {
+      const got = await allocNo(dt === 'inv' ? 'invoice' : 'quotation', V('f_tgl'));
+      if (got) { no = got; pend = false; }
+      else if (!no) { no = 'MENUNGGU NOMOR'; pend = true; }
+    }
+    SET('f_no', no);
+    const by = isNew ? { uid: ME.uid, name: ME.name, email: ME.email } : (CUR.by || { uid: ME.uid, name: ME.name, email: ME.email });
+    const at = isNew ? new Date().toISOString() : (CUR.at || new Date().toISOString());
+
+    const p = payload(); p.info.no = no;
+    await setDoc(doc(db, 'companies', CID, 'payloads', id), { data: p, updatedAt: serverTimestamp() });
+    await setDoc(doc(db, 'companies', CID, 'docs', id), {
+      id, no, noPending: pend, kind: dt, status: 'aktif',
+      klien: V('f_klien'), pic: V('f_pic'), tgl: V('f_tgl'),
+      total: c.total, rowCount: ROWS.length, theme,
+      createdByUid: by.uid, createdByName: by.name, createdByEmail: by.email, at,
+      editedByName: ME.name, editedByEmail: ME.email, editedAt: new Date().toISOString(),
+      serverAt: serverTimestamp()
+    });
+    CUR = { id, no, noPending: pend, kind: dt, by, at };
+    dirty = false; clearDraft(); saveState();
+    $('b_new').style.display = ''; $('b_arsip').style.display = '';
+    toast(navigator.onLine
+      ? (pend ? 'Tersimpan. Nomor resmi diambil begitu internet nyala.' : 'Tersimpan — rekan di laptop lain langsung melihatnya.')
+      : 'Tersimpan di perangkat ini. Terkirim sendiri begitu internet nyala.');
+  } catch (e) {
+    toast('Gagal menyimpan: ' + (e.message || e), 1);
+  }
+  $('b_save').disabled = false; $('b_save').textContent = CUR.id ? 'Simpan perubahan' : 'Simpan ke riwayat bersama';
+}
+$('b_save').onclick = () => save(false);
+$('b_new').onclick = () => save(true);
+$('b_arsip').onclick = async () => {
+  if (!CUR.id) return;
+  if (!confirm('Pindahkan ' + CUR.no + ' ke arsip? Dokumennya tidak dihapus, hanya disembunyikan dari daftar utama.')) return;
+  try {
+    await setDoc(doc(db, 'companies', CID, 'docs', CUR.id), { status: 'arsip', editedByName: ME.name, editedAt: new Date().toISOString() }, { merge: true });
+    toast('Dipindahkan ke arsip.'); blank(true);
+  } catch (e) { toast('Gagal: ' + e.message, 1); }
+};
+function saveState() {
+  dtUI();
+  $('b_save').textContent = CUR.id ? 'Simpan perubahan' : 'Simpan ke riwayat bersama';
+  $('savestate').textContent = CUR.id
+    ? 'Sedang membuka ' + CUR.no + (CUR.by ? ' — dibuat oleh ' + CUR.by.name : '') + '. "Simpan perubahan" menimpa dokumen ini; "Simpan sebagai dokumen baru" membuat nomor baru dan tidak mengubah yang ini.'
+    : 'Dokumen baru, belum tersimpan.';
+}
+
+/* ===================== RIWAYAT ===================== */
+let unsubHist = null;
+function watchHist() {
+  if (unsubHist) unsubHist();
+  const q = query(collection(db, 'companies', CID, 'docs'), orderBy('at', 'desc'), limit(300));
+  unsubHist = onSnapshot(q, s => { HIST = s.docs.map(d => d.data()); drawHist(); }, e => {
+    $('hist').innerHTML = '<p class="note">Riwayat belum bisa dibaca: ' + es(e.message) + '</p>';
+  });
+}
+function drawHist() {
+  const qq = (V('hq') || '').toLowerCase();
+  const list = HIST.filter(h => {
+    if (hfilter === 'arsip') { if (h.status !== 'arsip') return false; }
+    else {
+      if (h.status === 'arsip') return false;
+      if (hfilter !== 'all' && (h.kind || 'quot') !== hfilter) return false;
+    }
+    if (!qq) return true;
+    return [h.no, h.klien, h.createdByName, h.createdByEmail, h.pic].some(x => String(x || '').toLowerCase().includes(qq));
+  });
+  const nq = list.filter(h => (h.kind || 'quot') === 'quot').length, ni = list.length - nq;
+  $('hcnt').textContent = hfilter === 'all'
+    ? nq + ' quotation · ' + ni + ' invoice'
+    : list.length + ' dokumen';
+  $('hist').innerHTML = list.length ? list.map(h => `<div class="hi2${CUR.id === h.id ? ' cur' : ''}" data-o="${h.id}">
+    <div><div class="no"><span class="tp ${h.status === 'arsip' ? 'a' : (h.kind || 'quot') === 'inv' ? 'i' : 'q'}">${h.status === 'arsip' ? 'ARSIP' : (h.kind || 'quot') === 'inv' ? 'INVOICE' : 'QUOTATION'}</span>${es(h.no)}${h.noPending ? ' <span class="tp w">NOMOR MENUNGGU</span>' : ''}</div>
+    <div class="who">${es(h.klien || '—')}</div>
+    <div class="who">${es(h.createdByName)} · ${es(h.createdByEmail)}</div>
+    <div class="who">${tgl(h.tgl)}</div></div>
+    <div class="amt">${rp(h.total)}<small>${h.rowCount || 0} baris</small></div></div>`).join('')
+    : '<p class="note">Belum ada dokumen di daftar ini.</p>';
+  $('hist').querySelectorAll('[data-o]').forEach(e => e.onclick = () => open(e.dataset.o));
+}
+$('hq').oninput = drawHist;
+document.querySelectorAll('#hfilter button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#hfilter button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); hfilter = b.dataset.hf; drawHist();
+});
+async function open(id) {
+  if (dirty && !confirm('Perubahan yang belum disimpan akan hilang. Buka dokumen ini?')) return;
+  const h = HIST.find(x => x.id === id); if (!h) return;
+  try {
+    const s = await getDoc(doc(db, 'companies', CID, 'payloads', id));
+    if (!s.exists()) return toast('Isi dokumen belum tersedia di perangkat ini. Sambungkan internet lalu coba lagi.', 1);
+    load(s.data().data || {});
+    CUR = { id, no: h.no, noPending: !!h.noPending, kind: h.kind || 'quot', at: h.at, by: { uid: h.createdByUid, name: h.createdByName, email: h.createdByEmail } };
+    dt = CUR.kind;
+    dirty = false; draw(); saveState();
+    $('b_new').style.display = ''; $('b_arsip').style.display = '';
+    toast('Dibuka: ' + h.no);
+  } catch (e) { toast('Gagal membuka: ' + e.message, 1); }
+}
+
+/* Nomor yang tertunda karena dibuat saat offline. */
+async function claimPending() {
+  if (!navigator.onLine) return;
+  try {
+    const s = await getDocs(query(collection(db, 'companies', CID, 'docs'), where('noPending', '==', true), limit(20)));
+    for (const d of s.docs) {
+      const h = d.data();
+      const no = await allocNo((h.kind || 'quot') === 'inv' ? 'invoice' : 'quotation', h.tgl);
+      if (!no) continue;
+      await setDoc(doc(db, 'companies', CID, 'docs', h.id), { no, noPending: false }, { merge: true });
+      const ps = await getDoc(doc(db, 'companies', CID, 'payloads', h.id));
+      if (ps.exists()) {
+        const p = ps.data().data || {}; if (p.info) p.info.no = no;
+        await setDoc(doc(db, 'companies', CID, 'payloads', h.id), { data: p, updatedAt: serverTimestamp() }, { merge: true });
+      }
+      if (CUR.id === h.id) { CUR.no = no; CUR.noPending = false; SET('f_no', no); paper(); saveState(); }
+    }
+  } catch (e) { /* diam saja — akan dicoba lagi saat online berikutnya */ }
+}
+
+/* ===================== CSV ===================== */
+$('b_csv').onclick = () => {
+  const c = calc(), act = vis();
+  const L = a => a.map(v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"').join(',');
+  const o = [
+    L([dt === 'inv' ? 'INVOICE' : 'QUOTATION', V('f_no')]),
+    L(['Kepada', V('f_klien')]), L(['PIC', V('f_pic')]), L(['Tanggal', V('f_tgl')]), L([]),
+    L(act.map(x => x.nm))
+  ];
+  ROWS.forEach((r, i) => o.push(L(act.map(x =>
+    x.k === 'no' ? i + 1 :
+      x.k === 'amount' ? c.items[i] :
+        x.k === 'margin' ? (r.price ? Math.round((1 - (Number(r.modal) || 0) / Number(r.price)) * 100) + '%' : '') :
+          (x.cu ? (r.extra[x.k] || '') : (r[x.k] == null ? '' : r[x.k]))))));
+  o.push(L([]));
+  o.push(L(['Subtotal', c.subtotal]));
+  if (c.other) o.push(L([V('f_otherlbl') || 'Other', c.other]));
+  if (c.roundAdj) o.push(L(['Round-off', c.roundAdj]));
+  if (c.tax) o.push(L([(V('f_taxlbl') || 'Pajak') + ' ' + c.taxPct + '%', c.tax]));
+  o.push(L(['TOTAL', c.total]));
+  if (dt === 'inv') { o.push(L([])); o.push(L(['Termin', 'Persen', 'Jatuh tempo', 'Nominal'])); c.tms.forEach(t => o.push(L([t.lbl, t.pct + '%', t.due, t.amt]))); }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿' + o.join('\n')], { type: 'text/csv;charset=utf-8' }));
+  a.download = (V('f_no') || 'dokumen').replace(/[^\w]+/g, '-') + '.csv';
+  a.click();
+};
+$('b_print').onclick = () => window.print();
+
+/* ===================== PDF =====================
+   Dibuat aplikasi sendiri, bukan lewat dialog cetak browser.
+   Alasannya: dialog cetak menempelkan tanggal, judul tab, dan alamat
+   berkas di pinggir halaman, dan secara bawaan membuang semua warna
+   latar — jadi hasilnya beda dari yang terlihat di layar.            */
+function fixForPdf(el) {
+  // aspect-ratio tidak dimengerti mesin penggambar PDF — ubah jadi tinggi tetap
+  el.querySelectorAll('.fr,.gi .fr,td.pic .fr').forEach(f => {
+    const r = f.getBoundingClientRect();
+    if (r.width && r.height) { f.style.height = r.height + 'px'; f.style.aspectRatio = 'auto'; }
+  });
+  el.querySelectorAll('img').forEach(i => { i.crossOrigin = 'anonymous'; });
+  return el;
+}
+$('b_pdf').onclick = async () => {
+  if (typeof html2pdf === 'undefined')
+    return toast('Pembuat PDF belum termuat. Sambungkan internet sekali, lalu bisa dipakai offline.', 1);
+  const btn = $('b_pdf'); btn.disabled = true; btn.textContent = 'Membuat PDF…';
+  const src = $('paper');
+  const clone = src.cloneNode(true);
+  // samakan ukuran & warna latar dengan yang di layar
+  const w = src.getBoundingClientRect().width || 880;
+  clone.style.cssText += ';width:' + w + 'px;max-width:none;margin:0;box-shadow:none;min-height:0';
+  const bgEl = getComputedStyle(src).backgroundColor;
+  const hold = document.createElement('div');
+  hold.style.cssText = 'position:fixed;left:-20000px;top:0;width:' + w + 'px;background:' + bgEl;
+  hold.appendChild(clone); document.body.appendChild(hold);
+  // ukur ulang bingkai foto memakai elemen asli yang masih tampil
+  const oF = [...src.querySelectorAll('.fr')], cF = [...clone.querySelectorAll('.fr')];
+  oF.forEach((o, i) => { const r = o.getBoundingClientRect(); if (cF[i] && r.height) { cF[i].style.height = r.height + 'px'; cF[i].style.aspectRatio = 'auto'; } });
+  clone.querySelectorAll('tr,.gi,.terms>div,.sign').forEach(e => e.style.pageBreakInside = 'avoid');
+
+  const nama = (V('f_no') || (dt === 'inv' ? 'invoice' : 'quotation')).replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
+  try {
+    await html2pdf().set({
+      margin: [10, 9, 10, 9],
+      filename: nama + '.pdf',
+      image: { type: 'jpeg', quality: 0.95 },
+      html2canvas: { scale: 2, useCORS: true, backgroundColor: bgEl || '#ffffff', logging: false, windowWidth: w },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+      pagebreak: { mode: ['css', 'legacy'] }
+    }).from(clone).save();
+    toast('PDF tersimpan: ' + nama + '.pdf');
+  } catch (e) {
+    toast('Gagal membuat PDF: ' + (e.message || e) + ' — coba tombol Cetak lewat browser.', 1);
+  }
+  hold.remove(); btn.disabled = false; btn.textContent = 'Download PDF';
+};
+
+/* ===================== QUOTATION -> INVOICE ===================== */
+$('b_toinv').onclick = () => {
+  if (dt !== 'quot') return;
+  const ref = V('f_no'), p = payload();
+  p.kind = 'inv';
+  p.info.ref = ref;
+  p.info.no = '— diambil saat disimpan —';
+  p.info.due = plus(today(), 30);
+  p.info.tgl = today();
+  p.info.intro = 'Please find below our invoice for the goods delivered. We appreciate your business.';
+  p.paymode = 'full'; p.termin = [];
+  CUR = { id: null, no: '', noPending: false, kind: 'inv', by: null };
+  load(p); dt = 'inv'; hfilter = 'all';
+  dirty = true; draw(); saveState(); drawHist();
+  $('b_new').style.display = 'none'; $('b_arsip').style.display = 'none';
+  toast('Invoice baru dibuat dari ' + ref + '. Quotation aslinya tidak berubah.');
+};
+
+/* ===================== STATUS SINKRON ===================== */
+function sync() {
+  const p = $('syncpill');
+  if (navigator.onLine) { p.className = 'pill'; p.innerHTML = '<span class="dot"></span> Tersinkron'; }
+  else { p.className = 'pill off'; p.innerHTML = '<span class="dot"></span> Offline — tersimpan di perangkat'; }
+}
+addEventListener('online', () => { sync(); claimPending(); });
+addEventListener('offline', sync);
+addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+/* ===================== GAMBAR ULANG ===================== */
+function draw() { dtUI(); drawCols(); drawThemes(); drawBrand(); drawRows(); drawTermin(); calcBox(); paper(); }
+['ar'].forEach(id => $(id).onchange = () => { dirty = true; draw(); });
+['gc', 'logoh'].forEach(id => $(id).onchange = () => { dirty = true; paper(); });
+['f_round', 'f_other', 'f_otherlbl', 'f_taxp', 'f_taxlbl'].forEach(id => $(id).addEventListener('input', () => { dirty = true; calcBox(); drawTermin(); paper(); }));
+['f_nama', 'f_alamat', 'f_telp', 'f_email', 'f_klien', 'f_pic', 'f_tgl', 'f_valid', 'f_due', 'f_ref', 'f_intro',
+  'f_deliv', 'f_pay', 'f_bank', 'f_cur', 'f_bankname', 'f_bankno', 'f_swift', 'f_signer']
+  .forEach(id => $(id).addEventListener('input', () => { dirty = true; paper(); }));
+document.querySelectorAll('.seg button[data-mode]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.seg button[data-mode]').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); mode = b.dataset.mode;
+  COLS.forEach(c => { if (c.int) c.on = (mode === 'internal'); });
+  dirty = true; draw();
+});
+document.querySelectorAll('#pmode button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#pmode button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); pmode = b.dataset.pm; dirty = true; draw();
+});
+
+/* ===================== HURUF BESAR ===================== */
+function bigUI() {
+  const on = localStorage.getItem('mbp_big') === '1';
+  document.body.classList.toggle('big', on);
+  $('t_big').textContent = on ? 'A− Huruf normal' : 'A+ Huruf besar';
+}
+$('t_big').onclick = () => { localStorage.setItem('mbp_big', localStorage.getItem('mbp_big') === '1' ? '0' : '1'); bigUI(); };
+bigUI();
+
+/* ===================== JARING PENGAMAN LOKAL =====================
+   Isian disalin ke perangkat tiap beberapa detik. Kalau laptop mati,
+   browser tertutup, atau listrik padam, isinya bisa dikembalikan.     */
+const DK = 'mbp_draft';
+setInterval(() => {
+  if (!ME || !dirty) return;
+  try { localStorage.setItem(DK, JSON.stringify({ cur: CUR, p: payload(), at: Date.now() })); } catch (e) { }
+}, 4000);
+function askRestore() {
+  let d; try { d = JSON.parse(localStorage.getItem(DK) || 'null'); } catch (e) { return; }
+  if (!d || !d.p) return;
+  const jam = Math.round((Date.now() - (d.at || 0)) / 60000);
+  const nm = (d.p.info && d.p.info.klien) || 'tanpa nama klien';
+  if (!confirm('Ada isian yang belum sempat disimpan (' + nm + ', ' + (jam < 1 ? 'baru saja' : jam + ' menit lalu') + ').\n\nKembalikan isian itu sekarang?\n\nOK = kembalikan.  Batal = buang dan mulai bersih.')) {
+    localStorage.removeItem(DK); return;
+  }
+  load(d.p); CUR = d.cur || CUR; dirty = true; draw(); saveState();
+  toast('Isian dikembalikan. Jangan lupa tekan Simpan.');
+}
+function clearDraft() { try { localStorage.removeItem(DK); } catch (e) { } }
+
+/* ===================== PWA ===================== */
+setPersistence(auth, indexedDBLocalPersistence).catch(() => { });
+if ('serviceWorker' in navigator) {
+  addEventListener('load', () => Promise.resolve().catch(() => { }));
+}
+sync(); authUI();
+
+setTimeout(()=>{
+ ROWS=[{desc:'Element Assy, Filter',qty:5,uom:'PCS',pn:'90047539',maker:'MANITOWOC',price:12690000,lead:'1-2 Weeks',modal:10500000,img:'data:image/jpeg;base64,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YVwdFHsKfYPbT7nuNhdfbtPtrvZs8+JZNuc7dwBxn8a5n4kf8i9B/wBfa/8AoD1v6D/yL2m/9ekX/oArA+JH/IvQf9fa/wDoD1xU9KqOmf8ADZ5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/8AZK4Ou8+J3/MM/wC2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAet/Qf+Re03/r0i/9AFYHxI/5F6D/AK+1/wDQHry6f8Vep3T/AIZ5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/9krg67z4nf8wz/tr/AOyVwdbUP4aM63xsKKKK3MgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD2rQf+Re03/r0i/wDQBWB8SP8AkXoP+vtf/QHrf0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAevLp/wAVep3T/hnmlFFFeocIUUUUAFFFFABRRRQAUUUUAFe814NXvNcWL6HTh+pwXxO/5hn/AG1/9krg67z4nf8AMM/7a/8AslcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/AEAVgfEj/kXoP+vtf/QHrf0H/kXtN/69Iv8A0AVgfEj/AJF6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv8AmGf9tf8A2SuDrvPid/zDP+2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/QBWB8SP+Reg/wCvtf8A0B639B/5F7Tf+vSL/wBAFYHxI/5F6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/8AZK4Ou8+J3/MM/wC2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAet/Qf+Re03/r0i/9AFYHxI/5F6D/AK+1/wDQHry6f8Vep3T/AIZ5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/9krg67z4nf8wz/tr/AOyVwdbUP4aM63xsKKKK3MgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD2rQf+Re03/r0i/wDQBWB8SP8AkXoP+vtf/QHrf0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAevLp/wAVep3T/hnmlFFFeocIUUUUAFFFFABRRRQAUUUUAFe814NXvNcWL6HTh+pwXxO/5hn/AG1/9krg67z4nf8AMM/7a/8AslcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/AEAVgfEj/kXoP+vtf/QHrf0H/kXtN/69Iv8A0AVgfEj/AJF6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv8AmGf9tf8A2SuDrvPid/zDP+2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/QBWB8SP+Reg/wCvtf8A0B639B/5F7Tf+vSL/wBAFYHxI/5F6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/8AZK4Ou8+J3/MM/wC2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAet/Qf+Re03/r0i/9AFYHxI/5F6D/AK+1/wDQHry6f8Vep3T/AIZ5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/9krg67z4nf8wz/tr/AOyVwdbUP4aM63xsKKKK3MgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD2rQf+Re03/r0i/wDQBWB8SP8AkXoP+vtf/QHrf0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAevLp/wAVep3T/hnmlFFFeocIUUUUAFFFFABRRRQAUUUUAFe814NXvNcWL6HTh+pwXxO/5hn/AG1/9krg67z4nf8AMM/7a/8AslcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/AEAVgfEj/kXoP+vtf/QHrf0H/kXtN/69Iv8A0AVgfEj/AJF6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv8AmGf9tf8A2SuDrvPid/zDP+2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/QBWB8SP+Reg/wCvtf8A0B639B/5F7Tf+vSL/wBAFYHxI/5F6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/8AZK4Ou8+J3/MM/wC2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAet/Qf+Re03/r0i/9AFYHxI/5F6D/AK+1/wDQHry6f8Vep3T/AIZ5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/9krg67z4nf8wz/tr/AOyVwdbUP4aM63xsKKKK3MgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoq9pFtHcXhMyK8MSGR1eQIG7AFiRjLEDrUF9bfZL6e3B3LG5CtnO4dj+Iwam+th20uQUUUVQgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/AEAVgfEj/kXoP+vtf/QHrf0H/kXtN/69Iv8A0AVgfEj/AJF6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv8AmGf9tf8A2SuDrvPid/zDP+2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAek0iRSRK2FkxuGOuORRNNJO4eVtzBVQHGOAAB+gFMopAFFFFMAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/AEAVgfEj/kXoP+vtf/QHrf0H/kXtN/69Iv8A0AVgfEj/AJF6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv8AmGf9tf8A2SuDrvPid/zDP+2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/QBWB8SP+Reg/wCvtf8A0B639B/5F7Tf+vSL/wBAFYHxI/5F6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/8AZK4Ou8+J3/MM/wC2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAet/Qf+Re03/r0i/9AFYHxI/5F6D/AK+1/wDQHry6f8Vep3T/AIZ5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/9krg67z4nf8wz/tr/AOyVwdbUP4aM63xsKKKK3MgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD2rQf+Re03/r0i/wDQBWB8SP8AkXoP+vtf/QHrf0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAevLp/wAVep3T/hnmlFFFeocIUUUUAFFFFABRRRQAUUUUAFe814NXvNcWL6HTh+pwXxO/5hn/AG1/9krg67z4nf8AMM/7a/8AslcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/AEAVgfEj/kXoP+vtf/QHrf0H/kXtN/69Iv8A0AVgfEj/AJF6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv8AmGf9tf8A2SuDrvPid/zDP+2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/QBWB8SP+Reg/wCvtf8A0B639B/5F7Tf+vSL/wBAFYHxI/5F6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/8AZK4Ou8+J3/MM/wC2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAet/Qf+Re03/r0i/9AFYHxI/5F6D/AK+1/wDQHry6f8Vep3T/AIZ5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/9krg67z4nf8wz/tr/AOyVwdbUP4aM63xsKKKK3MgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD2rQf+Re03/r0i/wDQBWB8SP8AkXoP+vtf/QHrf0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAevLp/wAVep3T/hnmlFFFeocIUUUUAFFFFABRRRQAUUUUAFe814NXvNcWL6HTh+pwXxO/5hn/AG1/9krg67z4nf8AMM/7a/8AslcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/AEAVgfEj/kXoP+vtf/QHrf0H/kXtN/69Iv8A0AVgfEj/AJF6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv8AmGf9tf8A2SuDrvPid/zDP+2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/QBWB8SP+Reg/wCvtf8A0B639B/5F7Tf+vSL/wBAFYHxI/5F6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/8AZK4Ou8+J3/MM/wC2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAet/Qf+Re03/r0i/9AFYHxI/5F6D/AK+1/wDQHry6f8Vep3T/AIZ5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/9krg67z4nf8wz/tr/AOyVwdbUP4aM63xsKKKK3MgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD2rQf+Re03/r0i/wDQBWB8SP8AkXoP+vtf/QHrf0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAevLp/wAVep3T/hnmlFFFeocIUUUUAFFFFABRRRQAUUUUAFe814NXvNcWL6HTh+pwXxO/5hn/AG1/9krg67z4nf8AMM/7a/8AslcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/AEAVgfEj/kXoP+vtf/QHrf0H/kXtN/69Iv8A0AVgfEj/AJF6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv8AmGf9tf8A2SuDrvPid/zDP+2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/kXtN/69Iv/QBWB8SP+Reg/wCvtf8A0B639B/5F7Tf+vSL/wBAFYHxI/5F6D/r7X/0B68un/FXqd0/4Z5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/8AZK4Ou8+J3/MM/wC2v/slcHW1D+GjOt8bCiiitzIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9q0H/AJF7Tf8Ar0i/9AFYHxI/5F6D/r7X/wBAet/Qf+Re03/r0i/9AFYHxI/5F6D/AK+1/wDQHry6f8Vep3T/AIZ5pRRRXqHCFFFFABRRRQAUUUUAFFFFABXvNeDV7zXFi+h04fqcF8Tv+YZ/21/9krg67z4nf8wz/tr/AOyVwdbUP4aM63xsKKKK3MgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACii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ANvaz/0Fr7/wIf8Axo/t7Wf+gtff+BD/AONUKKOVdg5n3L/9vaz/ANBa+/8AAh/8aP7e1n/oLX3/AIEP/jVCijlXYOZ9y/8A29rP/QWvv/Ah/wDGj+3tZ/6C19/4EP8A41Qoo5V2Dmfcv/29rP8A0Fr7/wACH/xo/t7Wf+gtff8AgQ/+NUKKOVdg5n3L/wDb2s/9Ba+/8CH/AMaP7e1n/oLX3/gQ/wDjVCijlXYOZ9y//b2s/wDQWvv/AAIf/Gj+3tZ/6C19/wCBD/41Qoo5V2Dmfcv/ANvaz/0Fr7/wIf8Axo/t7Wf+gtff+BD/AONUKKOVdg5n3L/9vaz/ANBa+/8AAh/8aP7e1n/oLX3/AIEP/jVCijlXYOZ9y/8A29rP/QWvv/Ah/wDGj+3tZ/6C19/4EP8A41Qoo5V2Dmfcv/29rP8A0Fr7/wACH/xo/t7Wf+gtff8AgQ/+NUKKOVdg5n3L/wDb2s/9Ba+/8CH/AMaP7e1n/oLX3/gQ/wDjVCijlXYOZ9y//b2s/wDQWvv/AAIf/Gj+3tZ/6C19/wCBD/41Qoo5V2Dmfcv/ANvaz/0Fr7/wIf8Axo/t7Wf+gtff+BD/AONUKKOVdg5n3L/9vaz/ANBa+/8AAh/8aP7e1n/oLX3/AIEP/jVCijlXYOZ9y/8A29rP/QWvv/Ah/wDGj+3tZ/6C19/4EP8A41Qoo5V2Dmfcv/29rP8A0Fr7/wACH/xo/t7Wf+gtff8AgQ/+NUKKOVdg5n3L/wDb2s/9Ba+/8CH/AMaP7e1n/oLX3/gQ/wDjVCijlXYOZ9y//b2s/wDQWvv/AAIf/GobnU7+9jEd1fXM6A7gssrMAfXBPvVaijlXYLsKKKKoQUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH/9k=',extra:{}},
+  {desc:'Fully threaded rod stud M16 x 550 mm',qty:8,uom:'PCS',pn:'',maker:'',price:208000,lead:'1-2 Weeks',modal:160000,img:'',extra:{}},
+  {desc:'Safety Shoes, Composite Toe',qty:12,uom:'PRS',pn:'',maker:'',price:685000,lead:'2-3 Weeks',modal:520000,img:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAJYA4QDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCGiiivJPWCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoor2ytaVL2l9TKrV9nbQ8Tor2yitvq3mY/WfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbKKPq3mH1nyPE6K9soo+reYfWfI8Tor2yij6t5h9Z8jxOivbK5b4g/wDICg/6+l/9Bapnh+WLdyoYjmklY88ooormOkKKKKACiiigAooooAKKKKACvbK8Tr2yuvDdTkxPQxPEfiP/AIR/7N/on2jz93/LTbtxj2PrWJ/wsb/qFf8Akx/9jR8Rv+Yd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AFFFFABRRRQAUUUUAFFFFABRV7S4I5xds8UUrRQb0Esmxc70HJyOxPemapAttfvEkYjAVDtDbgCVBODk5GTx7Yp20uK+tipRRRSGFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAHr2if8AIC0//r1j/wDQRWJ8Qf8AkBQf9fS/+gtW3on/ACAtP/69Y/8A0EVifEH/AJAUH/X0v/oLV6E/4Z58P4h55RRRXnnoBRRRQAUUUUAFFFFABRRRQAV7ZXide2V14bqcmJ6HE/Eb/mHf9tf/AGSuJrtviN/zDv8Atr/7JXE1jX/iM2ofw0FFFFZGoUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBLb3UtqXMRX94uxg6K4IyD0II6gflTZppJ5TJI25jjtjpwBjsMUyii4WCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9e0T/AJAWn/8AXrH/AOgisT4g/wDICg/6+l/9BatvRP8AkBaf/wBesf8A6CKxPiD/AMgKD/r6X/0Fq9Cf8M8+H8Q88ooorzz0AooooAKKKKACiiigAooooAK9srxOvbK68N1OTE9DifiN/wAw7/tr/wCyVxNdt8Rv+Yd/21/9kriaxr/xGbUP4aCiiisjUKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9e0T/kBaf8A9esf/oIrE+IP/ICg/wCvpf8A0Fq29E/5AWn/APXrH/6CKxPiD/yAoP8Ar6X/ANBavQn/AAzz4fxDzyiiivPPQCiiigAooooAKKKKACiiigAr2yvE69srrw3U5MT0OJ+I3/MO/wC2v/slcTXbfEb/AJh3/bX/ANkriaxr/wARm1D+GgooorI1CiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAPXtE/wCQFp//AF6x/wDoIrE+IP8AyAoP+vpf/QWrb0T/AJAWn/8AXrH/AOgisT4g/wDICg/6+l/9BavQn/DPPh/EPPKKKK889AKKKKACiiigAooooAKKKKACvbK8Tr2yuvDdTkxPQ4n4jf8AMO/7a/8AslcTXbfEb/mHf9tf/ZK4msa/8Rm1D+GgooorI1CiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAPXtE/5AWn/APXrH/6CKxPiD/yAoP8Ar6X/ANBatvRP+QFp/wD16x/+gisT4g/8gKD/AK+l/wDQWr0J/wAM8+H8Q88ooorzz0AooooAKKKKACiiigAooooAK9srxOvbK68N1OTE9DifiN/zDv8Atr/7JXE123xG/wCYd/21/wDZK4msa/8AEZtQ/hoKKKKyNQooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD17RP8AkBaf/wBesf8A6CKxPiD/AMgKD/r6X/0Fq29E/wCQFp//AF6x/wDoIrE+IP8AyAoP+vpf/QWr0J/wzz4fxDzyiiivPPQCiiigAooooAKKKKACiiigAr2yvE69srrw3U5MT0OJ+I3/ADDv+2v/ALJXE123xG/5h3/bX/2SuJrGv/EZtQ/hoKKKKyNQooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD17RP+QFp/wD16x/+gisT4g/8gKD/AK+l/wDQWrb0T/kBaf8A9esf/oIrE+IP/ICg/wCvpf8A0Fq9Cf8ADPPh/EPPKKKK889AKKKKACiiigAooooAKKKKACvbK8Tr2yuvDdTkxPQ4n4jf8w7/ALa/+yVxNdt8Rv8AmHf9tf8A2SuJrGv/ABGbUP4aCiiisjUKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9e0T/AJAWn/8AXrH/AOgisT4g/wDICg/6+l/9BatvRP8AkBaf/wBesf8A6CKxPiD/AMgKD/r6X/0Fq9Cf8M8+H8Q88ooorzz0AooooAKKKKACiiigAooooAK9srxOvbK68N1OTE9DifiN/wAw7/tr/wCyVxNdt8Rv+Yd/21/9kriaxr/xGbUP4aCiiisjUKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9e0T/kBaf8A9esf/oIrE+IP/ICg/wCvpf8A0Fq29E/5AWn/APXrH/6CKxPiD/yAoP8Ar6X/ANBavQn/AAzz4fxDzyiiivPPQCiiigAooooAKKKKACiiigAr2yvE69srrw3U5MT0OJ+I3/MO/wC2v/slcTXbfEb/AJh3/bX/ANkriaxr/wARm1D+GgooorI1CiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAPXtE/wCQFp//AF6x/wDoIrE+IP8AyAoP+vpf/QWrb0T/AJAWn/8AXrH/AOgisT4g/wDICg/6+l/9BavQn/DPPh/EPPKKKK889AKKKKACiiigAooooAKKKKACvbK8Tr2yuvDdTkxPQ4n4jf8AMO/7a/8AslcTXbfEb/mHf9tf/ZK4msa/8Rm1D+GgooorI1CiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAPXtE/5AWn/APXrH/6CKxPiD/yAoP8Ar6X/ANBatvRP+QFp/wD16x/+gisT4g/8gKD/AK+l/wDQWr0J/wAM8+H8Q88ooorzz0AooooAKKKKACiiigAooooAK9srxOvbK68N1OTE9DifiN/zDv8Atr/7JXE123xG/wCYd/21/wDZK4msa/8AEZtQ/hoKKKKyNQooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD17RP8AkBaf/wBesf8A6CKxPiD/AMgKD/r6X/0Fq29E/wCQFp//AF6x/wDoIrE+IP8AyAoP+vpf/QWr0J/wzz4fxDzyiiivPPQCiiigAooooAKKKKACiiigAr2yvE69srrw3U5MT0OJ+I3/ADDv+2v/ALJXE123xG/5h3/bX/2SuJrGv/EZtQ/hoKKKKyNQooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD17RP+QFp/wD16x/+gisT4g/8gKD/AK+l/wDQWrb0T/kBaf8A9esf/oIrE+IP/ICg/wCvpf8A0Fq9Cf8ADPPh/EPPKKKK889AKKKKACiiigAooooAKKKKACvbK8Tr2yuvDdTkxPQ4n4jf8w7/ALa/+yVxNdt8Rv8AmHf9tf8A2SuJrGv/ABGbUP4aCiiisjUKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9e0T/AJAWn/8AXrH/AOgisT4g/wDICg/6+l/9BatvRP8AkBaf/wBesf8A6CKxPiD/AMgKD/r6X/0Fq9Cf8M8+H8Q88ooorzz0AooooAKKKKACiiigAooooAK9srxOvbK68N1OTE9DifiN/wAw7/tr/wCyVxNdt8Rv+Yd/21/9kriaxr/xGbUP4aCiiisjUKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA9e0T/kBaf8A9esf/oIrE+IP/ICg/wCvpf8A0Fq29E/5AWn/APXrH/6CKxPiD/yAoP8Ar6X/ANBavQn/AAzz4fxDzyiiivPPQCiiigAooooAKKKKACiiigAr2yvE69srrw3U5MT0OJ+I3/MO/wC2v/slcTXbfEb/AJh3/bX/ANkriaxr/wARm1D+GgooorI1CiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAPXtE/wCQFp//AF6x/wDoIrE+IP8AyAoP+vpf/QWrb0T/AJAWn/8AXrH/AOgisT4g/wDICg/6+l/9BavQn/DPPh/EPPKKKK889AKKKKACiiigAooooAKKKKACvbK8Tr2yuvDdTkxPQ4n4jf8AMO/7a/8AslcTXbfEb/mHf9tf/ZK4msa/8Rm1D+GgooorI1CiiigAooooAKKKKACiiigAooooAKKK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If8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNH9t6t/0FLz/wIf8AxqlRRzPuHKuxd/tvVv8AoKXn/gQ/+NH9t6t/0FLz/wACH/xqlRRzPuHKuxd/tvVv+gpef+BD/wCNRXGo313GI7m8uJ0ByFklZgD64JqvRRdhZBRRRSGFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB//2Q==',extra:{}}];
+ SET('f_klien','PT Saipem Indonesia \u2013 Karimun Yard.');SET('f_pic','Bapak Jawahir Husnul');
+ SET('f_no','0361/Q-MBP/XI/2026');SET('f_round','10000');
+ SET('f_bank','BANK RIAU SYARIAH');SET('f_bankname','MAKMUR BERKAH PERKASA CV');
+ SET('f_bankno','111-08-05086');SET('f_swift','PDRIIDJAXXX');SET('f_signer','MOHAMMAD GINASTRA');
+ SET('f_deliv','Price Basis: DDP (Delivered Duty Paid) Saipem Indonesia \u2013 Karimun Yard.');
+ const h=(location.hash||'#q').slice(1);
+ if(h==='retro')theme='t-retro'; if(h==='mint')theme='t-mint'; if(h==='exec')theme='t-exec';
+ if(h==='inv'){dt='inv';SET('f_no','0003/INV-MBP/XI/2026');SET('f_ref','0361/Q-MBP/XI/2026');SET('f_taxp','11');
+   SET('f_intro','Please find below our invoice for the goods delivered. We appreciate your business.');
+   paymode='cust';TERMIN=[{lbl:'Down Payment 30%',pct:30,due:'2026-11-13'},{lbl:'Progress 40%',pct:40,due:'2026-11-27'},{lbl:'Pelunasan 30%',pct:30,due:'2026-12-11'}];}
+ draw();},350);
+
+</script>
+</body>
+</html>

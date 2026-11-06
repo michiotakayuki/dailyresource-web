@@ -133,6 +133,11 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--or);box-
 .hi2 .who{font-size:10.5px;color:var(--mut);line-height:1.4}
 .hi2 .amt{margin-left:auto;font-size:12px;font-weight:800;white-space:nowrap;text-align:right}
 .hi2 .amt small{display:block;font-weight:600;color:var(--mut);font-size:10px}
+.tp{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.4px;padding:2px 6px;border-radius:5px;margin-right:6px;vertical-align:1px}
+.tp.q{background:#e8f1fc;color:#1565c0}
+.tp.i{background:#eafaf1;color:#117a4a}
+.tp.a{background:#eef1f7;color:#8795aa}
+.tp.w{background:#fff4e5;color:#9a5b00}
 .tm{display:grid;grid-template-columns:1fr 70px 110px 26px;gap:7px;align-items:center;margin-bottom:7px}
 .tm input{padding:8px 9px;font-size:12.5px}
 .tm .cal{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
@@ -271,6 +276,9 @@ body.big #t_big{background:#fff7f4;border-color:var(--or);color:var(--or)}
 
 @media print{
  @page{size:A4;margin:11mm}
+ /* paksa warna latar ikut tercetak — tanpa ini header tabel, kartu TO,
+    dan pil TOTAL keluar putih polos dan hasilnya beda dari yang di layar */
+ *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
  body{background:#fff}
  .top,.panel,#scr-auth,#toast{display:none!important}
  .wrap{display:block}
@@ -496,7 +504,8 @@ body.big #t_big{background:#fff7f4;border-color:var(--or);color:var(--or)}
     <div class="body">
       <input id="hq" placeholder="Cari nomor, klien, atau nama pembuat…" style="margin-bottom:10px">
       <div class="seg sm" id="hfilter">
-        <button class="on" data-hf="quot">Quotation</button>
+        <button class="on" data-hf="all">Semua</button>
+        <button data-hf="quot">Quotation</button>
         <button data-hf="inv">Invoice</button>
         <button data-hf="arsip">Arsip</button>
       </div>
@@ -508,8 +517,10 @@ body.big #t_big{background:#fff7f4;border-color:var(--or);color:var(--or)}
   <div class="acts">
     <button class="bg grn full" id="b_save">Simpan ke riwayat bersama</button>
     <button class="bg wht full" id="b_new" style="display:none">Simpan sebagai dokumen baru</button>
-    <button class="bg red" id="b_pdf">Download PDF</button>
+    <button class="bg red full" id="b_pdf">Download PDF</button>
+    <button class="bg wht" id="b_print">Cetak lewat browser</button>
     <button class="bg wht" id="b_csv">Excel / CSV</button>
+    <button class="bg wht full" id="b_toinv" style="display:none">Jadikan Invoice dari quotation ini</button>
     <button class="bg wht full" id="b_blank">Dokumen baru kosong</button>
     <button class="bg wht full" id="b_arsip" style="display:none">Pindahkan ke arsip</button>
   </div>
@@ -521,6 +532,7 @@ body.big #t_big{background:#fff7f4;border-color:var(--or);color:var(--or)}
 </div>
 
 <div id="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.14.0/html2pdf.bundle.min.js"></script>
 <script type="module" src="app.js"></script>
 </body>
 </html>
