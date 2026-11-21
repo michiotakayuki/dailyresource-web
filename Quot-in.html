@@ -399,6 +399,29 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
   #doc{display:block!important}
   #doc *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* ===== Split view: preview realtime di sisi kanan (desktop >= 1200px) ===== */
+#qi-live{display:none}
+@media (min-width:1200px){
+  body.qi-split{--qi-lw:clamp(540px,44vw,680px)}
+  body.qi-split .wrap{max-width:none;margin:0;width:var(--qi-lw);padding:0 24px 140px;box-sizing:border-box}
+  body.qi-split .top{margin:0 -24px 4px;padding-top:62px}
+  body.qi-split .sumbar{right:auto;width:var(--qi-lw)}
+  body.qi-split #qi-live{display:flex;position:fixed;top:0;right:0;bottom:0;left:var(--qi-lw);flex-direction:column;background:#e6e3f1;border-left:1px solid #d6d1ea;z-index:30}
+  #qi-live .qi-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#fff;border-bottom:1px solid #e3dff2;flex-shrink:0}
+  #qi-live .qi-bar b{font-size:13px;color:var(--pri-d)}
+  #qi-live .qi-bar span{font-size:11px;color:#7b7790;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #qi-live .qi-seg{display:flex;gap:0;border:1px solid #d9d4ee;border-radius:10px;overflow:hidden}
+  #qi-live .qi-bar .qi-seg button{border-radius:0;background:#fff;color:#5b4fa0;padding:7px 12px}
+  #qi-live .qi-bar .qi-seg button.on{background:var(--pri-d,#5B3FD6);color:#fff}
+  #qi-live .qi-bar select{font:700 12px inherit;font-family:inherit;border:1px solid #d9d4ee;border-radius:10px;padding:7px 8px;background:#fff;color:#3a3560;max-width:210px}
+  #qi-live .qi-bar button{border:0;border-radius:10px;padding:8px 14px;font:800 12px/1 inherit;font-family:inherit;background:var(--pri-d,#5B3FD6);color:#fff;cursor:pointer}
+  #qi-live .qi-scroll{flex:1;overflow:auto;padding:22px 20px 40px}
+  #qi-live .qi-holder{margin:0 auto;position:relative;box-shadow:0 10px 34px rgba(30,20,70,.22);background:#fff}
+  #qi-live iframe{border:0;width:794px;display:block;transform-origin:top left;background:transparent}
+  #qi-live .qi-err{display:none;margin:0 auto 12px;max-width:560px;font-size:12px;color:#8a4b00;background:#fff3dc;border:1px solid #f1d49a;border-radius:10px;padding:8px 12px}
+}
+@media print{#qi-live{display:none!important}}
 </style>
 
 <div class="wrap">
@@ -962,7 +985,7 @@ function updateInvoiceAmounts(c){
 }
 
 /* build printable quotation (client-facing — no internal markup shown) */
-function buildDoc(){
+function buildDoc(silent){
   var c=compute(),i=state.info,tpl=state.template||'pastel',T=L();
   var berlakuDate=new Date(new Date(i.tgl||iso()).getTime()+(parseInt(i.berlaku)||14)*864e5).toLocaleDateString(T.locale,{day:'numeric',month:'long',year:'numeric'});
   function rowHtml(l){
@@ -1059,7 +1082,7 @@ function buildDoc(){
       qBankHtml+
     '</div>'+signRowHtml(i,T)+'</div>';
   var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;
-  showPreview('Quotation.pdf');
+  if(!silent)showPreview('Quotation.pdf');
 }
 
 /* bind info fields */
@@ -1235,9 +1258,9 @@ function renderTermins(){
   box.querySelectorAll('[data-ivpaid]').forEach(function(b){b.onclick=function(){var i=+b.getAttribute('data-ivpaid');state.invoice.termins[i].paid=!state.invoice.termins[i].paid;save();renderTermins();};});
   updateInvoiceAmounts();
 }
-function buildInvoice(idx){
+function buildInvoice(idx,silent){
   var c=compute(),iv=state.invoice,i=state.info,tpl=state.template||'pastel',total=c.total,T=L();
-  var terms=iv.termins||[];if(!terms.length){alert('Tambahkan minimal 1 termin dulu.');return;}
+  var terms=iv.termins||[];if(!terms.length){if(!silent)alert('Tambahkan minimal 1 termin dulu.');return false;}
   if(idx==null||idx<0||idx>=terms.length)idx=0;
   var amts=[],sum=0;terms.forEach(function(t,k){var amt=(k===terms.length-1)?(total-sum):Math.round(total*(parseFloat(t.pct)||0)/100);sum+=amt;amts.push(amt);});
   var t=terms[idx],amt=amts[idx],paidBefore=amts.slice(0,idx).reduce(function(a,b){return a+b;},0),sisa=total-paidBefore-amt;
@@ -1265,7 +1288,7 @@ function buildInvoice(idx){
       '<div class="notes">'+(iv.notes?('<div class="ttl">'+T.notes+'</div>'+mdLite(iv.notes)):'')+((curOf().sec&&curOf().rate>0&&!curOf().hideNote)?('<div class="taxnote">• '+T.nKurs(curOf(),curFmt(curOf().rate,curOf().pri))+'</div>'):'')+'</div>'+
       bankHtml+
     '</div>'+signRowHtml(i,T)+'</div>';
-  var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;showPreview('Invoice.pdf');
+  var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;if(!silent)showPreview('Invoice.pdf');return true;
 }
 function quid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 function loadClients(){try{return JSON.parse(localStorage.getItem('quotin_clients')||'[]');}catch(e){return [];}}
@@ -1334,7 +1357,7 @@ function init(){
   (function(){var ls=document.querySelectorAll('#langsel button');ls.forEach(function(b){b.classList.toggle('on',b.getAttribute('data-lang')===(state.lang||'id'));b.onclick=function(){state.lang=b.getAttribute('data-lang');ls.forEach(function(x){x.classList.remove('on');});b.classList.add('on');save();};});})();
   document.querySelectorAll('#presetBar button').forEach(function(b){b.onclick=function(){applyPreset(b.getAttribute('data-preset'));};});
   document.getElementById('addSection').onclick=function(){state.sections.push({name:'Bagian '+(state.sections.length+1),items:[]});save();renderSections();recalc();};
-  document.getElementById('sb-pdf').onclick=buildDoc;
+  document.getElementById('sb-pdf').onclick=function(){buildDoc();};
   var _ab=document.getElementById('btn-autobak');if(_ab)_ab.onclick=function(){try{var r=localStorage.getItem(KEY+'_bak');if(!r){alert('Belum ada cadangan otomatis tersimpan.');return;}var at=localStorage.getItem(KEY+'_bak_at');if(!confirm('Pulihkan ke cadangan otomatis terakhir'+(at?(' ('+new Date(at).toLocaleString('id-ID')+')'):'')+'? Data saat ini akan diganti.'))return;state=JSON.parse(r);if(!state.nego)state.nego={on:false,target:0,mode:'auto',overrides:{}};if(!state.nego.overrides)state.nego.overrides={};if(!state.invoice)state.invoice=defInvoice();save();bindInfo();bindFee();bindTemplates();renderSections();bindNego();bindInvoice();recalc();window.scrollTo(0,0);}catch(e){alert('Gagal memulihkan cadangan.');}};
   var _bcl=document.getElementById('btn-clear');if(_bcl)_bcl.onclick=function(){if(confirm('Kosongkan SEMUA (item, klien, info usaha, invoice) dan mulai dari 0? Tidak bisa dibatalkan.')){state=emptyQuot();save();bindInfo();bindFee();bindTemplates();renderSections();bindNego();bindInvoice();recalc();window.scrollTo(0,0);}};
   document.getElementById('sb-save').onclick=function(){save();addClient(state.info.klien);var b=document.getElementById('sb-save');b.textContent='✓';setTimeout(function(){b.textContent='💾';},1000);};
@@ -1364,6 +1387,99 @@ window.__QI={
 };
 if(window.__onQIReady)window.__onQIReady();
 init();
+
+/* ===== Preview realtime (split view) =====
+   Hanya MEMBACA state dan merender dokumen ke iframe terpisah.
+   Tidak menyimpan apa pun, tidak menyentuh localStorage, tidak mengubah state. */
+(function(){
+  var MQ=window.matchMedia('(min-width:1200px)');
+  var wrap=document.querySelector('.wrap');
+  if(!wrap)return;
+  var pane=document.createElement('div');pane.id='qi-live';
+  pane.innerHTML='<div class="qi-bar"><b>Preview</b><div class="qi-seg"><button type="button" id="qi-m-q" class="on">Quotation</button><button type="button" id="qi-m-i">Invoice</button></div><select id="qi-term" style="display:none" title="Pilih termin"></select><span>Berubah otomatis saat kamu mengisi</span><button type="button" id="qi-pdf">📄 Download PDF</button></div>'+
+    '<div class="qi-scroll" id="qi-scroll"><div class="qi-err" id="qi-err">Preview belum bisa ditampilkan. Data kamu tetap aman, lanjutkan saja mengisi.</div><div class="qi-holder" id="qi-holder"><iframe id="qi-frame" title="Preview quotation"></iframe></div></div>';
+  document.body.appendChild(pane);
+  var frame=pane.querySelector('#qi-frame'),holder=pane.querySelector('#qi-holder'),scroller=pane.querySelector('#qi-scroll'),errEl=pane.querySelector('#qi-err');
+  var mode='q',tIdx=0,btnQ=pane.querySelector('#qi-m-q'),btnI=pane.querySelector('#qi-m-i'),selT=pane.querySelector('#qi-term');
+  var ivCard=(document.getElementById('iv-no')||{}).closest?document.getElementById('iv-no').closest('.card'):null;
+  pane.querySelector('#qi-pdf').onclick=function(){if(mode==='i'){try{buildInvoice(tIdx);}catch(e){}return;}var b=document.getElementById('sb-pdf');if(b)b.click();};
+  function setMode(m){mode=m;btnQ.classList.toggle('on',m==='q');btnI.classList.toggle('on',m==='i');schedule();}
+  btnQ.onclick=function(){setMode('q');};btnI.onclick=function(){setMode('i');};
+  selT.onchange=function(){tIdx=+selT.value||0;schedule();};
+  function fillTerms(){
+    var ts=(state.invoice&&state.invoice.termins)||[];
+    selT.style.display=(mode==='i'&&ts.length)?'':'none';
+    var sig=ts.map(function(t,i){return (i+1)+'|'+(t.label||'');}).join('~');
+    if(selT.getAttribute('data-sig')!==sig){
+      selT.innerHTML=ts.map(function(t,i){return '<option value="'+i+'">T'+(i+1)+(t.label?(' · '+String(t.label).replace(/</g,'&lt;').slice(0,24)):'')+'</option>';}).join('');
+      selT.setAttribute('data-sig',sig);
+    }
+    if(tIdx>=ts.length)tIdx=Math.max(0,ts.length-1);
+    selT.value=String(tIdx);
+  }
+  /* preview mengikuti bagian yang sedang diisi: area Invoice -> invoice, selain itu -> quotation */
+  document.addEventListener('focusin',function(e){
+    if(!active()||!e.target||!e.target.closest)return;
+    if(e.target.closest('#qi-live'))return;
+    if(ivCard&&ivCard.contains(e.target)){
+      var ii=e.target.getAttribute&&e.target.getAttribute('data-ivi');
+      if(ii!=null&&ii!=='')tIdx=+ii||0;
+      if(mode!=='i')setMode('i');else schedule();
+    }else if(mode!=='q'&&e.target.closest('.wrap')){setMode('q');}
+  },true);
+  var ready=false,timer=null,inited=false;
+  function pageCss(){var t='';var st=document.querySelectorAll('style');for(var i=0;i<st.length;i++)t+=st[i].textContent+'\n';return t;}
+  function init(){
+    if(inited)return;inited=true;
+    frame.addEventListener('load',function(){ready=true;render();});
+    frame.srcdoc='<!doctype html><html><head><meta charset="utf-8"><style>'+pageCss()+'</style><style>html,body{margin:0;padding:0;background:#fff}body{display:block}#doc{display:block!important;width:794px!important;max-width:none!important;margin:0!important}</style></head><body><div id="doc"></div></body></html>';
+  }
+  function active(){return MQ.matches&&wrap.style.display!=='none';}
+  function fit(){
+    try{
+      var fd=frame.contentDocument;if(!fd||!fd.documentElement)return;
+      var h=fd.getElementById('doc').scrollHeight||fd.documentElement.scrollHeight;
+      frame.style.height=h+'px';
+      var avail=scroller.clientWidth-40,sc=Math.min(1,Math.max(.3,avail/794));
+      frame.style.transform='scale('+sc+')';
+      holder.style.width=Math.round(794*sc)+'px';holder.style.height=Math.round(h*sc)+'px';
+    }catch(e){}
+  }
+  function render(){
+    timer=null;
+    if(!active()||!ready)return;
+    try{
+      fillTerms();
+      var okb=(mode==='i')?buildInvoice(tIdx,true):(buildDoc(true),true);
+      if(okb===false){errEl.textContent='Invoice belum bisa ditampilkan: tambahkan minimal 1 termin di bagian Invoice.';errEl.style.display='block';return;}
+      errEl.textContent='Preview belum bisa ditampilkan. Data kamu tetap aman, lanjutkan saja mengisi.';
+      var d=document.getElementById('doc'),fd=frame.contentDocument,t=fd&&fd.getElementById('doc');
+      if(!d||!t)return;
+      t.className=d.className;t.innerHTML=d.innerHTML;
+      var bg=getComputedStyle(document.documentElement).getPropertyValue('--docbg')||'#fff';
+      fd.documentElement.style.setProperty('--docbg',bg);
+      errEl.style.display='none';
+      fit();
+      /* gambar (logo/ttd) dimuat belakangan: ukur ulang */
+      var im=t.querySelectorAll('img');for(var i=0;i<im.length;i++){if(!im[i].complete)im[i].addEventListener('load',fit);}
+    }catch(e){errEl.style.display='block';}
+  }
+  function schedule(){if(!active())return;if(timer)clearTimeout(timer);timer=setTimeout(render,220);}
+  function sync(){
+    var on=active();
+    document.body.classList.toggle('qi-split',on);
+    if(on){init();schedule();setTimeout(fit,50);}
+  }
+  /* event di seluruh dokumen (panel riwayat, dialog, dll berada di luar .wrap) */
+  ['input','change','click','keyup'].forEach(function(ev){document.addEventListener(ev,schedule,true);});
+  /* state juga berganti lewat save()/recalc() (mis. tombol "Buka" di riwayat): ikut dipantau tanpa mengubah perilakunya */
+  try{var _save=save;save=function(){var r=_save.apply(this,arguments);schedule();return r;};}catch(e){}
+  try{var _recalc=recalc;recalc=function(){var r=_recalc.apply(this,arguments);schedule();return r;};}catch(e){}
+  window.addEventListener('resize',function(){sync();fit();});
+  if(MQ.addEventListener)MQ.addEventListener('change',sync);
+  new MutationObserver(sync).observe(wrap,{attributes:true,attributeFilter:['style']});
+  sync();
+})();
 })();
 </script>
 
