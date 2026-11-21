@@ -206,6 +206,11 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
 #doc .ttl{display:block;margin:0 0 9px;padding-bottom:6px;border-bottom:1px solid rgba(128,128,128,.3);
   font-size:9px;font-weight:800;text-align:left;letter-spacing:1.2px;text-transform:uppercase;opacity:.9}
 #doc .notes b{font-weight:700}
+/* Syarat & Ketentuan: nomor di kolom sendiri (angka sejajar), teks rata kiri-kanan, baris lanjutan lurus di bawah teks */
+#doc .tcn,#doc .tcb{display:flex;gap:7px;margin:0 0 2.5px;line-height:1.52}
+#doc .tcn .tn{flex:0 0 1.85em;text-align:right;font-variant-numeric:tabular-nums}
+#doc .tcb .tn{flex:0 0 1.2em;text-align:center}
+#doc .tcn .tt,#doc .tcb .tt{flex:1 1 auto;min-width:0;text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
 #doc .taxnote{margin-top:8px;font-size:10px;opacity:.8}
 
 /* --- Baris tanda tangan: 1 utama + sebanyak apa pun tambahan.
@@ -651,8 +656,11 @@ function mdLite(t){
     var h=ln.match(/^\s*#{1,6}\s*(.+)$/);
     if(h)return '<div style="font-weight:800;margin:6px 0 2px">'+h[1]+'</div>';
     if(ln.trim()==='')return '<div style="height:5px"></div>';
-    if(/^\s*[-•·*]\s+/.test(ln))return '<div style="padding-left:15px;text-indent:-15px;text-align:left">•&nbsp;'+ln.replace(/^\s*[-•·*]\s+/,'')+'</div>';
-    if(/^\s*\d+[.)]\s+/.test(ln)){var mm=ln.trim().match(/^(\d+[.)])\s+([\s\S]*)$/);return '<div style="padding-left:19px;text-indent:-19px;text-align:left">'+mm[1]+'&nbsp;'+mm[2]+'</div>';}
+    if(/^\s*[-•·*]\s+/.test(ln))return '<div class="tcb"><span class="tn">•</span><span class="tt">'+ln.replace(/^\s*[-•·*]\s+/,'')+'</span></div>';
+    if(/^\s*\d+[.)]\s+/.test(ln)){var mm=ln.trim().match(/^(\d+[.)])\s+([\s\S]*)$/);var tb=mm[2];
+      /* "Payment Terms: ..." -> label tebal (hanya label pendek, maks 6 kata, dan belum ada tebal manual) */
+      if(tb.indexOf('<b>')<0){var lm=tb.match(/^([^:<>]{2,42}?):\s+([\s\S]+)$/);if(lm&&lm[1].split(/\s+/).length<=6)tb='<b>'+lm[1]+':</b> '+lm[2];}
+      return '<div class="tcn"><span class="tn">'+mm[1]+'</span><span class="tt">'+tb+'</span></div>';}
     return '<div>'+ln+'</div>';
   }).join('');
 }
@@ -1432,7 +1440,7 @@ init();
   function init(){
     if(inited)return;inited=true;
     frame.addEventListener('load',function(){ready=true;render();});
-    frame.srcdoc='<!doctype html><html><head><meta charset="utf-8"><style>'+pageCss()+'</style><style>html,body{margin:0;padding:0;background:#fff}body{display:block}#doc{display:block!important;width:794px!important;max-width:none!important;margin:0!important}</style></head><body><div id="doc"></div></body></html>';
+    frame.srcdoc='<!doctype html><html lang="id"><head><meta charset="utf-8"><style>'+pageCss()+'</style><style>html,body{margin:0;padding:0;background:#fff}body{display:block}#doc{display:block!important;width:794px!important;max-width:none!important;margin:0!important}</style></head><body><div id="doc"></div></body></html>';
   }
   function active(){return MQ.matches&&wrap.style.display!=='none';}
   function fit(){
