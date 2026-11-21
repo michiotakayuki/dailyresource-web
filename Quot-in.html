@@ -182,8 +182,8 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
 #doc .subtot td{font-weight:700;font-size:11.5px;padding-top:9px;padding-bottom:9px;
   border-top:1px solid rgba(128,128,128,.35);border-bottom:0!important;opacity:.9}
 /* --- Ringkasan total: menempel rapat di bawah tabel, rata kanan --- */
-#doc .totwrap{display:flex;justify-content:flex-end;margin-top:10px;break-inside:avoid;page-break-inside:avoid}
-#doc .summary{width:255px;flex-shrink:0}
+#doc .totwrap{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-top:10px;break-inside:avoid;page-break-inside:avoid}
+#doc .summary{width:255px;flex-shrink:0;margin-left:auto}
 #doc .srow{display:flex;justify-content:space-between;padding:5px 13px;font-size:12px}
 #doc .srow.total{font-weight:800;font-size:15px;border-radius:11px;padding:12px 13px;margin-top:5px}
 
@@ -193,14 +193,14 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
 /* padding-top (bukan margin) supaya tetap ada jarak dari tepi kertas
    ketika blok ini jatuh ke halaman baru — margin dibuang browser di awal halaman. */
 #doc .closing{margin-top:4px;margin-bottom:4px;padding-top:30px;break-inside:avoid;page-break-inside:avoid}
-/* Dua kotak berdampingan. Kotak T&C menahan teks supaya tidak melebar penuh
-   selebar kertas. Kotak rekening mengikuti banyaknya isi (tidak ikut memanjang
-   setinggi kotak T&C): align-items:flex-start. */
+/* Blok penutup = kotak Syarat & Ketentuan selebar halaman (+ tanda tangan).
+   Kotak rekening sekarang ada di baris total (.totwrap), di kiri ringkasan total,
+   dan tingginya mengikuti isinya. */
 #doc .cl-grid{display:flex;gap:16px;align-items:flex-start}
 #doc .notes,#doc .payto{border:1px solid rgba(128,128,128,.36);border-radius:12px;
   background:rgba(128,128,128,.07);padding:13px 17px 14px;box-sizing:border-box}
 #doc .notes{flex:1 1 auto;min-width:0;font-size:10.5px;opacity:.92;line-height:1.6;text-align:left}
-#doc .payto{flex:0 0 234px;width:234px;font-size:10.5px;opacity:.92;line-height:1.75;text-align:left}
+#doc .payto{flex:0 1 auto;width:auto;min-width:230px;max-width:calc(100% - 255px - 18px);font-size:10.5px;opacity:.92;line-height:1.75;text-align:left}
 #doc .payto .val{letter-spacing:.3px}
 /* Garis tipis hanya di bawah judul, di dalam kotak — tidak ada garis panjang
    di atas blok, jadi saat blok ini pindah halaman tidak ada garis nyasar di pucuk. */
@@ -1085,10 +1085,9 @@ function buildDoc(silent){
     '<div class="title"><h2>'+T.quotation+'</h2><div class="metano">'+T.no+': '+(i.nomor||'-')+'<br>'+T.date+': '+new Date(i.tgl||iso()).toLocaleDateString(T.locale,{day:'numeric',month:'short',year:'numeric'})+'<br>'+T.validUntil+': '+berlakuDate+'</div></div></div>'+
     '<div class="parties"><div class="to"><span class="lbl">'+T.to+'</span><div class="klien">'+(i.klien||'-')+'</div><div class="proyek">'+T.project+': '+(i.proyek||'-')+'</div></div></div>'+
     '<table class="items"><thead><tr><th>'+T.desc+'</th><th class="c">'+T.qty+'</th><th class="n">'+T.price+'</th><th class="n">'+T.amount+'</th></tr></thead>'+body+'</table>'+
-    '<div class="totwrap"><div class="summary">'+sumRows+'</div></div>'+
+    '<div class="totwrap">'+qBankHtml+'<div class="summary">'+sumRows+'</div></div>'+
     '<div class="closing"><div class="cl-grid">'+
       '<div class="notes"><div class="ttl">'+T.tc+'</div>'+mdLite(i.tc)+(taxNote?('<div class="taxnote">'+taxNote+'</div>'):'')+'</div>'+
-      qBankHtml+
     '</div>'+signRowHtml(i,T)+'</div>';
   var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;
   if(!silent)showPreview('Quotation.pdf');
@@ -1292,10 +1291,9 @@ function buildInvoice(idx,silent){
     '<div class="title"><h2>'+T.invoice+'</h2><div class="metano">'+T.no+': '+(iv.no||'-')+'/T'+(idx+1)+'<br>'+T.date+': '+new Date(iv.tgl||iso()).toLocaleDateString(T.locale,{day:'numeric',month:'short',year:'numeric'})+'<br>'+T.termOf(idx+1,terms.length)+'<br><b style="color:'+stCol+'">'+stTxt+'</b></div></div></div>'+
     '<div class="parties"><div class="to"><span class="lbl">'+T.billedTo+'</span><div class="klien">'+(i.klien||'-')+'</div><div class="proyek">'+T.project+': '+(i.proyek||'-')+'</div></div></div>'+
     '<table class="items"><thead><tr><th>'+T.ket+'</th><th class="c">'+T.portion+'</th><th class="n">'+T.amount+'</th></tr></thead><tbody>'+rows+'</tbody></table>'+
-    '<div class="totwrap"><div class="summary">'+ctx+'</div></div>'+
+    '<div class="totwrap">'+bankHtml+'<div class="summary">'+ctx+'</div></div>'+
     '<div class="closing"><div class="cl-grid">'+
       '<div class="notes">'+(iv.notes?('<div class="ttl">'+T.notes+'</div>'+mdLite(iv.notes)):'')+((curOf().sec&&curOf().rate>0&&!curOf().hideNote)?('<div class="taxnote">• '+T.nKurs(curOf(),curFmt(curOf().rate,curOf().pri))+'</div>'):'')+'</div>'+
-      bankHtml+
     '</div>'+signRowHtml(i,T)+'</div>';
   var doc=document.getElementById('doc');doc.className='t-'+tpl;doc.innerHTML=html;if(!silent)showPreview('Invoice.pdf');return true;
 }
