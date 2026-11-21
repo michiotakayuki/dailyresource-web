@@ -193,9 +193,10 @@ input:focus,select:focus{outline:0;border-color:var(--pri);background:#fff}
 /* padding-top (bukan margin) supaya tetap ada jarak dari tepi kertas
    ketika blok ini jatuh ke halaman baru — margin dibuang browser di awal halaman. */
 #doc .closing{margin-top:4px;margin-bottom:4px;padding-top:30px;break-inside:avoid;page-break-inside:avoid}
-/* Dua kotak berdampingan, tingginya disamakan. Kotak menahan teks Syarat &
-   Ketentuan supaya tidak melebar penuh selebar kertas. */
-#doc .cl-grid{display:flex;gap:16px;align-items:stretch}
+/* Dua kotak berdampingan. Kotak T&C menahan teks supaya tidak melebar penuh
+   selebar kertas. Kotak rekening mengikuti banyaknya isi (tidak ikut memanjang
+   setinggi kotak T&C): align-items:flex-start. */
+#doc .cl-grid{display:flex;gap:16px;align-items:flex-start}
 #doc .notes,#doc .payto{border:1px solid rgba(128,128,128,.36);border-radius:12px;
   background:rgba(128,128,128,.07);padding:13px 17px 14px;box-sizing:border-box}
 #doc .notes{flex:1 1 auto;min-width:0;font-size:10.5px;opacity:.92;line-height:1.6;text-align:left}
