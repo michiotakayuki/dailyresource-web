@@ -7,6 +7,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Quot-in">
+<link rel="icon" type="image/png" sizes="32x32" href="/ic-quotin-favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/ic-quotin-favicon-16.png">
 <link rel="apple-touch-icon" href="/ic-quotin-180.png">
 <script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){})});}</script>
 <meta charset="UTF-8">
@@ -18,13 +20,13 @@
 <!-- LICENSE GATE -->
 <div id="drlock" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(160deg,#1b1830,#2a2350);display:flex;align-items:center;justify-content:center;padding:22px;font-family:system-ui,-apple-system,'Segoe UI',sans-serif">
   <div style="background:#fff;border-radius:22px;max-width:380px;width:100%;padding:30px 26px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.5)">
-    <div style="font-size:40px;margin-bottom:4px">&#128274;</div>
+    <div style="margin:0 auto 10px;width:72px;height:72px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="72" height="72" style="display:block"><rect width="512" height="512" rx="112" fill="#111310"/><path d="M224.6 340.5A100 100 0 1 1 340.5 224.6" fill="none" stroke="#F4F3EE" stroke-width="56" stroke-linecap="round"/><path d="M268 268L378 378" fill="none" stroke="#111310" stroke-width="80" stroke-linecap="round"/><path d="M268 268L378 378" fill="none" stroke="#C4F74A" stroke-width="56" stroke-linecap="round"/></svg></div>
     <div style="font-weight:800;font-size:20px;color:#1b1830">Quot-in</div>
     <div style="color:#7a7690;font-size:13.5px;margin:8px 0 20px;line-height:1.55">Masukkan <b>kode lisensi</b> yang kamu terima setelah pembelian untuk membuka aplikasi.</div>
     <input id="drlock-in" placeholder="QOT-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" style="width:100%;padding:14px;border:1.5px solid #e7e4f2;border-radius:12px;font-size:16px;text-align:center;text-transform:uppercase;letter-spacing:1px;font-family:inherit;color:#1b1830;background:#fbfaff">
     <div id="drlock-err" style="font-size:12.5px;height:16px;margin:8px 0 0;color:#e0356b"></div>
     <button id="drlock-go" style="width:100%;margin-top:10px;padding:15px;border:0;border-radius:12px;background:#F0603C;color:#fff;font-weight:800;font-size:15.5px;cursor:pointer;font-family:inherit">Buka aplikasi &rarr;</button>
-    <a href="https://lynk.id/michiotakayuki/pm4nn2erxln6/checkout" style="display:block;margin-top:16px;color:#0E9E76;font-weight:700;font-size:13.5px;text-decoration:none">Belum punya kode? Beli di sini &rarr;</a>
+    <a href="https://lynk.id/maretaputri/1r10r395dl57/checkout" style="display:block;margin-top:16px;color:#0E9E76;font-weight:700;font-size:13.5px;text-decoration:none">Belum punya kode? Beli di sini &rarr;</a>
     <div style="color:#b7b2c8;font-size:11px;margin-top:14px;line-height:1.5">1 kode untuk 1 pengguna &middot; Simpan kodemu baik-baik</div>
   </div>
 </div>
@@ -1529,7 +1531,7 @@ input:focus,select:focus,.secname:focus{border-color:#F0603C!important;backgroun
 #dash .panel{background:#fff;border:1px solid #eef1f6;border-radius:26px;box-shadow:0 20px 50px rgba(30,40,60,.08);padding:20px}
 #dash .flag{color:#c94a2a;font-size:12px;font-weight:700;margin-bottom:10px}
 #dash .hd{display:flex;align-items:center;gap:12px}
-#dash .logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#F0603C,#ff8a5c);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
+#dash .logo{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 #dash h1{font-size:19px;margin:0;font-weight:800}
 #dash .sp{flex:1}
 #dash .strip{background:#f6f8fb;border:1px solid #eef1f6;border-radius:20px;padding:16px 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
@@ -1602,7 +1604,7 @@ input:focus,select:focus,.secname:focus{border-color:#F0603C!important;backgroun
    dash.innerHTML=''+
     '' +
     '<div class="panel">'+
-     '<div class="hd"><div class="logo">Q</div><h1>Quot-in</h1><div class="sp"></div>'+
+     '<div class="hd"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="36" height="36" style="display:block"><rect width="512" height="512" rx="112" fill="#111310"/><path d="M224.6 340.5A100 100 0 1 1 340.5 224.6" fill="none" stroke="#F4F3EE" stroke-width="56" stroke-linecap="round"/><path d="M268 268L378 378" fill="none" stroke="#111310" stroke-width="80" stroke-linecap="round"/><path d="M268 268L378 378" fill="none" stroke="#C4F74A" stroke-width="56" stroke-linecap="round"/></svg></div><h1>Quot-in</h1><div class="sp"></div>'+
        '<button class="cta" id="d-new2">+ Quotation baru</button></div>'+
      '<div class="strip">'+
        '<div class="st"><div class="l">Total nilai quotation</div><div class="v">'+rp(sum)+'</div></div>'+

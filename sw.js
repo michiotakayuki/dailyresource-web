@@ -8,7 +8,7 @@
    - Aset berat (video, gambar, font) tetap diambil dari simpanan dulu
      supaya cepat & hemat kuota, lalu diperbarui diam-diam di belakang.
 */
-const C = "dr-cache-v2";
+const C = "dr-cache-v3";
 const NET_TIMEOUT = 6000; // ms — kalau internet lemot, jangan bikin app menggantung
 
 self.addEventListener("install", e => self.skipWaiting());
