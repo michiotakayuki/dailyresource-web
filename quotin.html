@@ -319,7 +319,18 @@ body:has(dialog[open]){overflow:hidden}
 .vtabs button b{font-weight:600}.vtabs button span{font-family:var(--mono);font-size:12px;color:var(--mu)}
 .vtabs button[aria-selected="true"]{border-color:var(--lime);background:rgba(196,247,74,.08)}
 .vtabs button[aria-selected="true"] span{color:var(--lime)}
-.vplayer{margin-top:14px;background:#000}.vplayer video{display:block;width:100%;height:100%;background:#000;object-fit:contain}
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+.cust{position:relative;isolation:isolate;display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:22px;padding:16px 20px}
+.cust::before,.cust::after{content:"";position:absolute;inset:-1px;border-radius:17px;pointer-events:none;background:conic-gradient(from var(--ang),transparent 0 62%,rgba(196,247,74,.15) 70%,var(--lime) 92%,#fff 100%);animation:neonrun 3.4s linear infinite}
+.cust::before{padding:2px;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.cust::after{inset:-3px;border-radius:19px;filter:blur(10px);opacity:.6;z-index:-1;clip-path:polygon(evenodd,-40px -40px,calc(100% + 40px) -40px,calc(100% + 40px) calc(100% + 40px),-40px calc(100% + 40px),-40px -40px,4px 4px,4px calc(100% - 4px),calc(100% - 4px) calc(100% - 4px),calc(100% - 4px) 4px,4px 4px)}
+@keyframes neonrun{to{--ang:360deg}}
+@media(prefers-reduced-motion:reduce){.cust::before,.cust::after{animation:none}}
+.cust p{margin:0;flex:1 1 240px;font-size:15px;color:var(--tx);line-height:1.5}
+.cust a.ig{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 18px 0 14px;border-radius:12px;border:1px solid var(--ln);color:var(--tx);font-weight:600;font-size:15px;text-decoration:none;transition:transform .2s,border-color .2s}
+.cust a.ig:hover{transform:translateY(-2px);border-color:var(--lime)}
+.cust a.ig svg{width:24px;height:24px;flex:none}
+.vplayer{aspect-ratio:1920/1230;margin-top:14px;background:#000}.vplayer video{display:block;width:100%;height:100%;background:#000;object-fit:contain}
 </style>
 <link rel="canonical" href="https://dailyresource.id/quotin">
 <meta property="og:url" content="https://dailyresource.id/quotin">
@@ -588,6 +599,10 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
   <a class="btn" data-checkout href="https://lynk.id/maretaputri/1r10r395dl57/checkout">Beli Quot-in <span data-price>Rp89.000</span></a>
  </div>
  <p class="note pnote">Checkout lewat lynk.id. Setelah dibuka pertama kali, aplikasi bisa dipakai tanpa internet. Data tersimpan di perangkatmu, jadi simpan backup berkala.</p>
+ <div class="cust panel">
+  <p>Ingin custom quotation/invoice untuk perusahaan kamu? Kontak di sini.</p>
+  <a class="ig" href="https://instagram.com/michiotakayuki" target="_blank" rel="noopener noreferrer" aria-label="Kontak lewat Instagram @michiotakayuki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg>@michiotakayuki</a>
+ </div>
 </div></section>
 
 <section class="sec" id="faq"><div class="c">
