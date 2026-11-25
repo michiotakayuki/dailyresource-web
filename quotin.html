@@ -194,6 +194,20 @@ html.js .fl h3{display:none}
 #akhir .small{font-size:13px;color:#43473d;margin-top:12px}
 footer{padding:28px 0 40px;font-size:13px;color:var(--mu2);background:var(--bg)}
 footer p{max-width:70ch}
+/* saran */
+#saran{padding:64px 0;background:var(--bg)}
+#saran .sgrid{display:grid;gap:28px;align-items:start}
+@media(min-width:900px){#saran .sgrid{grid-template-columns:1fr 1fr;gap:56px}}
+#saran form{display:grid;gap:12px}
+#saran label{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mu2);margin:0 0 6px}
+#saran textarea,#saran input[type=text]{width:100%;border-radius:12px;border:1px solid var(--ln);background:var(--s1);color:var(--tx);font:inherit;font-size:16px;padding:12px 14px}
+#saran textarea{min-height:140px;resize:vertical}
+#saran input[type=text]{min-height:48px}
+#saran .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+#saran .cnt{font-size:12px;color:var(--mu2);text-align:right;margin-top:4px}
+#saran .msg{font-size:15px;min-height:24px}
+#saran .msg.ok{color:var(--lime)}#saran .msg.err{color:var(--amber)}
+#saran .btn[disabled]{opacity:.55;cursor:default;transform:none}
 /* sticky */
 .stk{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(26,29,23,.97);border-top:1px solid var(--ln);transform:translateY(110%);visibility:hidden;transition:transform .25s,visibility .25s}
 .stk.show{transform:none;visibility:visible}
@@ -353,8 +367,7 @@ fbq('track','ViewContent',{content_name:'Quot-in',content_type:'product',value:8
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="lynk.id/maretaputri"]');if(a){fbq('track','InitiateCheckout',{content_name:'Quot-in',value:89000,currency:'IDR'});}},true);
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1437402825143995&ev=PageView&noscript=1"/></noscript>
-<!-- End Meta Pixel Code -->
-</head>
+<!-- End Meta Pixel Code --></head>
 <body>
 <header class="top"><div class="c">
  <a class="logo" href="#hero" aria-label="Quot-in, ke atas"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="28" height="28" aria-hidden="true"><rect width="28" height="28" aria-hidden="true" rx="112" fill="#111310"/><path d="M224.6 340.5A100 100 0 1 1 340.5 224.6" fill="none" stroke="#F4F3EE" stroke-width="56" stroke-linecap="round"/><path d="M268 268L378 378" fill="none" stroke="#111310" stroke-width="80" stroke-linecap="round"/><path d="M268 268L378 378" fill="none" stroke="#C4F74A" stroke-width="56" stroke-linecap="round"/></svg>Quot-in</a>
@@ -523,7 +536,7 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
 <li class="fc panel"><h3>Panduan nego dan Harga deal</h3><p>Lihat batas aman sebelum menjawab tawaran. Turunkan harga otomatis proporsional atau atur per item.</p><div class="vz" aria-hidden="true"><div class="vzb"><div class="vrow"><span class="tagx">Batas aman</span><span class="tagx on">Harga deal</span></div><span class="skl" style="width:85%"></span><span class="skl" style="width:60%"></span></div></div></li>
 <li class="fc panel"><h3>Rincian terbuka atau tertutup per bagian</h3><p>Klien melihat subtotal bagian, bukan harga satuan.</p><div class="vz" aria-hidden="true"><div class="vzb"><div class="vrow"><b>Pra-produksi</b><span style="flex:1"></span><span>—</span><b>subtotal</b></div></div></div></li>
 <li class="fc panel star"><span class="stbadge"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z"/></svg>Unggulan</span><h3>Dua mata uang dan dua bahasa</h3><p>Mata uang utama plus mata uang kedua dengan kurs yang kamu kunci. Dokumen berbahasa Indonesia atau English.</p><div class="vz" aria-hidden="true"><div class="vzb"><div class="vrow"><span class="tagx">IDR</span><span class="tagx">USD</span><span class="tagx">kurs terkunci</span><span class="tagx">ID | EN</span></div></div></div></li>
-<li class="fc panel"><h3>Riwayat dan backup</h3><p>Simpan, buka, duplikat, hapus. Backup JSON, cadangan otomatis, dan pengingat.</p><div class="vz" aria-hidden="true"><div class="vzb"><div class="vrow"><span class="tagx">Simpan</span><span class="tagx">Duplikat</span><span class="tagx on">Backup JSON</span></div></div></div></li>
+<li class="fc panel"><h3>Riwayat dan backup</h3><p>Simpan, buka, duplikat, hapus. Backup data, cadangan otomatis, dan pengingat.</p><div class="vz" aria-hidden="true"><div class="vzb"><div class="vrow"><span class="tagx">Simpan</span><span class="tagx">Duplikat</span><span class="tagx on">Backup data</span></div></div></div></li>
 <li class="fc panel"><h3>Identitas tersimpan</h3><p>Logo, data usaha, rekening, dan tanda tangan diisi sekali, dipakai di semua dokumen.</p><div class="vz" aria-hidden="true"><div class="vzb"><div class="vrow"><span class="logo2">LOGO</span><div style="flex:1;display:grid;gap:6px"><span class="skl" style="width:80%"></span><span class="skl" style="width:55%"></span></div></div><div>Rekening (contoh)</div></div></div></li>
 <li class="fc panel"><h3>Beranda</h3><p>Total nilai, jumlah quotation, jumlah klien, dan grafik 6 bulan.</p><div class="vz" aria-hidden="true"><div class="vzb"><div class="bars"><i style="height:35%"></i><i style="height:55%"></i><i style="height:40%"></i><i style="height:75%"></i><i style="height:60%"></i><i style="height:90%"></i></div><div>6 bulan (ilustrasi)</div></div></div></li>
  </ul>
@@ -565,7 +578,7 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
  <ol class="trust">
   <li class="panel"><b>01</b><span>Datamu tersimpan di browser perangkatmu. Tidak ada server dan tidak ada akun.</span></li>
   <li class="panel"><b>02</b><span>Setelah dibuka pertama kali, bisa dipakai tanpa internet. Saat offline, font tampil memakai font sistem.</span></li>
-  <li class="panel"><b>03</b><span>Ada tombol Backup JSON untuk mengunduh datamu. Restore menambah data, tidak menimpa. Ada cadangan otomatis dan pengingat setelah lebih dari 14 hari tanpa backup.</span></li>
+  <li class="panel"><b>03</b><span>Ada tombol Backup data untuk mengunduh datamu jadi satu file. Restore menambah data, tidak menimpa. Ada cadangan otomatis dan pengingat setelah lebih dari 14 hari tanpa backup.</span></li>
   <li class="panel"><b>04</b><span>Hitungan dilakukan otomatis. Tetap cek angka sebelum kamu kirim ke klien.</span></li>
   <li class="panel"><b>05</b><span>Update gratis selama Quot-in masih saya kembangkan. Kalau pengembangan berhenti, versi terakhir tetap bisa kamu pakai.</span></li>
  </ol>
@@ -611,7 +624,7 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
  <h2>Yang sering ditanyakan.</h2>
  <div class="faq">
   <details><summary>Perlu internet?</summary><p>Dibuka pertama kali butuh internet. Setelah itu bisa dipakai tanpa internet. Saat offline, font tampil memakai font sistem. Kalau dibuka dari link aplikasi, Quot-in juga bisa dipasang seperti aplikasi (PWA).</p></details>
-  <details><summary>Datanya disimpan di mana? Kalau hilang bagaimana?</summary><p>Di browser perangkatmu (localStorage), tanpa server dan tanpa akun. Kalau kamu menghapus data situs, data ikut hilang. Karena itu ada Backup JSON untuk mengunduh data, restore yang menambah tanpa menimpa, cadangan otomatis, dan pengingat setelah lebih dari 14 hari.</p></details>
+  <details><summary>Datanya disimpan di mana? Kalau hilang bagaimana?</summary><p>Di browser perangkatmu (localStorage), tanpa server dan tanpa akun. Kalau kamu menghapus data situs, data ikut hilang. Karena itu ada tombol Backup data untuk mengunduh datamu, restore yang menambah tanpa menimpa, cadangan otomatis, dan pengingat setelah lebih dari 14 hari.</p></details>
   <details><summary>Bisa dipakai di HP?</summary><p>Tampilan berdampingan (form kiri, dokumen kanan) hanya muncul di layar desktop 1200 px ke atas. Di HP dan tablet tidak ada tampilan berdampingan. Untuk pengalaman terbaik, pakai laptop.</p></details>
   <details><summary>Bagaimana dengan PDF?</summary><p>Tombol Download PDF membuka dialog cetak browser. Dari sana kamu pilih Simpan sebagai PDF. Perlu beberapa klik, tapi gampang dan hasilnya sesuai tampilan dokumen.</p></details>
   <details><summary>Apakah pajaknya otomatis benar?</summary><p>Tersedia PPN 11% (tidak, dibebankan, atau termasuk) dan PPh 23 2%. Hitungannya otomatis, tapi tetap cek angka sebelum kirim. Quot-in tidak memberi nasihat pajak, jadi untuk urusan pajak tanyakan ke konsultan atau akuntanmu.</p></details>
@@ -628,6 +641,21 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
  <a class="btn" data-checkout href="https://lynk.id/maretaputri/1r10r395dl57/checkout">Beli Quot-in <span data-price>Rp89.000</span></a>
  <p class="small">Harga peluncuran <span data-price>Rp89.000</span>, <s data-normal>Rp199.000</s>. Harga normal nanti <span data-normal>Rp199.000</span>, naik bertahap. Setelah dibuka pertama kali, bisa dipakai tanpa internet.</p>
 </div></section>
+<section id="saran"><div class="c sgrid">
+ <div>
+  <span class="lbl">SARAN KAMU</span>
+  <h2>Saran kamu menentukan Quot-in berikutnya.</h2>
+  <p class="lead">Ada fitur yang kamu butuhkan, atau bagian yang masih terasa kurang pas? Tulis di sini. Setiap saran masuk langsung ke saya dan saya baca sendiri, jadi apa yang kamu tulis ikut menentukan apa yang saya kerjakan di update berikutnya.</p>
+ </div>
+ <form id="fSaran" novalidate>
+  <div><label for="sMsg">Saran atau ide kamu</label><textarea id="sMsg" name="message" maxlength="1000" placeholder="Contoh: saya butuh kolom ..., atau bagian ... bisa dibuat lebih gampang." required></textarea><div class="cnt"><span id="sCnt">0</span> / 1000</div></div>
+  <div><label for="sKon">Nama atau email (boleh dikosongkan)</label><input id="sKon" name="kontak" type="text" maxlength="120" autocomplete="off" placeholder="Isi kalau mau dibalas"></div>
+  <div class="hp" aria-hidden="true"><label for="sWeb">Jangan diisi</label><input id="sWeb" name="botcheck" type="text" tabindex="-1" autocomplete="off"></div>
+  <div><button class="btn" id="sBtn" type="submit">Kirim saran</button></div>
+  <p class="msg" id="sMsgOut" role="status" aria-live="polite"></p>
+ </form>
+</div></section>
+
 </main>
 
 <footer><div class="c"><p><a class="link" href="/quotin-perangkat.html">Soal perangkat dan lisensi</a></p><p style="margin-top:8px">Quot-in oleh DailyResource. Perhitungan pajak dan angka adalah bantuan, mohon dicek sebelum dikirim.</p><p style="margin-top:8px">Tanya-tanya: DM Instagram <a class="link" href="https://instagram.com/michiotakayuki" target="_blank" rel="noopener noreferrer">@michiotakayuki</a> (follow dulu)</p></div></footer>
@@ -636,6 +664,28 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
 
 <dialog id="dlg" aria-label="Contoh dokumen diperbesar"><button class="dclose" id="dClose" type="button" aria-label="Tutup"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16" stroke="#F4F3EE" stroke-width="2" stroke-linecap="round"/></svg></button><div class="dbody" id="dBody"></div></dialog>
 
+<script>
+(function(){var f=document.getElementById("fSaran");if(!f)return;
+var KEY="d1f0449a-deb3-4263-af60-294fe99d29c0",m=document.getElementById("sMsg"),k=document.getElementById("sKon"),h=document.getElementById("sWeb"),b=document.getElementById("sBtn"),o=document.getElementById("sMsgOut"),c=document.getElementById("sCnt");
+function say(t,cl){o.textContent=t;o.className="msg "+(cl||"")}
+function lastTs(){try{return +localStorage.getItem("qi_saran_ts")||0}catch(e){return 0}}
+m.addEventListener("input",function(){c.textContent=m.value.length});
+f.addEventListener("submit",function(e){e.preventDefault();
+ var t=m.value.trim();
+ if(KEY.indexOf("ISI_")===0){say("Form belum aktif.","err");return}
+ if(h.value){say("Terima kasih, saranmu sudah masuk.","ok");return}
+ if(t.length<5){say("Tulis sarannya dulu ya, minimal beberapa kata.","err");m.focus();return}
+ if(Date.now()-lastTs()<864e5){say("Saranmu hari ini sudah terkirim. Kalau masih ada ide, kirim lagi besok.","err");return}
+ b.disabled=true;say("Mengirim...");
+ var done=false,ctl=window.AbortController?new AbortController():null,to=setTimeout(function(){if(ctl)ctl.abort()},15000);
+ fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:KEY,subject:"Saran Quot-in",from_name:"Saran Quot-in",message:t+(k.value.trim()?"\n\nKontak: "+k.value.trim():""),botcheck:""}),signal:ctl?ctl.signal:undefined})
+ .then(function(r){return r.json()}).then(function(j){clearTimeout(to);
+  if(j&&j.success){try{localStorage.setItem("qi_saran_ts",String(Date.now()))}catch(e){}m.value="";k.value="";c.textContent="0";say("Terima kasih. Saranmu sudah masuk dan akan saya baca.","ok")}
+  else{say("Saran belum terkirim. Coba lagi nanti, atau kirim lewat DM Instagram @michiotakayuki.","err")}
+ }).catch(function(){clearTimeout(to);say("Saran belum terkirim. Cek koneksi internetmu, atau kirim lewat DM Instagram @michiotakayuki.","err")})
+ .then(function(){b.disabled=false});
+});})();
+</script>
 <script>
 const PRICE="Rp89.000";
 const NORMAL_PRICE="Rp199.000";
